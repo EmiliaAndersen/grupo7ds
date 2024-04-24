@@ -8,4 +8,5 @@ public class Empleado {
         this.tipoEmpleado = tipoEmpleado;
         this.nombre = nombre;
     }
+
 }

@@ -4,14 +4,17 @@ public class Envio {
     float precio;
     int codRastreo;
 
-    public Envio(Entidad destinatario, Entidad remitente, float precio, int codRastreo) {
+    public Envio(Entidad destinatario, Entidad remitente) {
         this.destinatario = destinatario;
         this.remitente = remitente;
-        this.precio = precio;
-        this.codRastreo = codRastreo;
     }
 
-    public Envio enviar(Entidad destinatario, Entidad remitente ){
-        return new Envio(destinatario,remitente,4550,0);
+    public float precio(){
+        return 0;
     }
+
+    public void asignarPrecio(){
+        this.precio = this.precio();
+    }
+
 }
