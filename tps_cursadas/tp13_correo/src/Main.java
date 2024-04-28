@@ -12,8 +12,8 @@ public class Main {
 
     //LISTA EMPLEADOS
 
-    ArrayList<Empleado> listaEmpleados1 = new ArrayList();
-    ArrayList<Empleado> listaEmpleados2 = new ArrayList();
+    ArrayList<Empleado> listaEmpleados1 = new ArrayList<>();
+    ArrayList<Empleado> listaEmpleados2 = new ArrayList<>();
 
     listaEmpleados1.add(emp1);
     listaEmpleados2.add(emp2);
@@ -37,14 +37,14 @@ public class Main {
     Envio envio3= new Carta(persona1,persona3,"certificada","negro");
 
     // Movimientos
-        ArrayList<Sucursal> sucursalesVisitadas1 = new ArrayList();
+        ArrayList<Sucursal> sucursalesVisitadas1 = new ArrayList<>();
 
         Movimiento mov1= new Movimiento(envio1,sucursalesVisitadas1,false);
         mov1.iniciarEnvio(envio1,emp1,0);
         mov1.agregarParada(suc2);
         mov1.actualizarEstado();
 
-        ArrayList<Sucursal> sucursalesVisitadas2 = new ArrayList();
+        ArrayList<Sucursal> sucursalesVisitadas2 = new ArrayList<>();
         Movimiento mov2= new Movimiento(envio2,sucursalesVisitadas2,false);
         mov2.iniciarEnvio(envio1,emp2,1);
         mov2.agregarParada(suc1);
