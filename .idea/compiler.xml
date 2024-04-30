@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="validador_V2" />
         <module name="Verficicar_contrasenias" />
       </profile>
     </annotationProcessing>
