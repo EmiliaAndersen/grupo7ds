@@ -11,20 +11,16 @@ public class Nist800 implements Condicion {
     return (passsword.length() <= MIN_LENGTH || passsword.length() >= MAX_LENGTH) ? false : true;
   }
 
-  private Boolean passwordCompleja(String passsword) {
-    return true;
-  }
 
-  private Boolean passwordRotacion(String passsword) {
-    return true;
+  private Boolean passwordHasNumber(String password){
+    return password.matches(".*\\d.*");
   }
 
   @Override
   public Boolean validar(String password) {
     return Stream.of(
         passwordLongitud(password),
-        passwordCompleja(password),
-        passwordRotacion(password)
+        passwordHasNumber(password)
     ).allMatch(Boolean::booleanValue);
   }
 }

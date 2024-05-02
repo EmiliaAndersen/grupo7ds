@@ -7,8 +7,7 @@ public class ControlPasswordDebil implements Condicion {
   private static String commonPasswordsPath;
 
   public ControlPasswordDebil() {
-    //TODO: cambiar path a tu passwords.txt
-    commonPasswordsPath = "C:\\Users\\judzi\\OneDrive\\Documentos\\2024\\DDS\\TP\\grupo7ds\\validador_V2\\src\\main\\java\\org\\example\\passwords.txt";
+    commonPasswordsPath = "Entrega_1/src/main/java/org/example/passwords.txt";
   }
 
   @Override
