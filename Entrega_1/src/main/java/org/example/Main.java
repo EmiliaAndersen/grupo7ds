@@ -1,4 +1,9 @@
-package org.example.Validador;
+package org.example;
+
+import org.example.Validador.ControlPasswordDebil;
+import org.example.Validador.Nist800;
+import org.example.Validador.Usuario;
+import org.example.Validador.Validador;
 
 import java.util.Scanner;
 
