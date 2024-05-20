@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Validador;
 
 import java.util.stream.Stream;
 

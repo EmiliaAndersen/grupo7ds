@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Validador;
 
 import java.util.ArrayList;
 import java.util.List;
