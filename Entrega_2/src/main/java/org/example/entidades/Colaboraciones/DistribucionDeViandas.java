@@ -2,16 +2,17 @@ package org.example.entidades.Colaboraciones;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.entidades.Heladeras.Heladera;
 
 import java.time.LocalDate;
 
 public class DistribucionDeViandas implements Colaboracion{
   @Getter
   @Setter
-  private String heladeraOrigen;
+  private Heladera heladeraOrigen;
   @Getter
   @Setter
-  private String heladeraDestino;
+  private Heladera heladeraDestino;
   @Getter
   @Setter
   private String motivo;
