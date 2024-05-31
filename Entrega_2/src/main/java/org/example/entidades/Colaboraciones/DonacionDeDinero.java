@@ -15,6 +15,13 @@ public class DonacionDeDinero implements Colaboracion{
   @Getter
   @Setter
   private LocalDate frecuencia;
+
+  public DonacionDeDinero(LocalDate fecha, Double monto, LocalDate frecuencia) {
+    this.fecha = fecha;
+    this.monto = monto;
+    this.frecuencia = frecuencia;
+  }
+
   @Override
   public void colaborar() {
 

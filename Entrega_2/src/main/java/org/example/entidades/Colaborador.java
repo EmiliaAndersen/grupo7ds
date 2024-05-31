@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.example.entidades.Colaboraciones.Colaboracion;
 import org.example.entidades.Colaboraciones.DonacionDeDinero;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Colaborador {
@@ -20,6 +21,11 @@ public abstract class Colaborador {
   @Getter
   @Setter
   private Double puntos;
+
+
+  public Colaborador() {
+    colaboraciones = new ArrayList<>();
+  }
 
   public void agregarColaboracion(Colaboracion colaboracion){
     colaboraciones.add(colaboracion);
