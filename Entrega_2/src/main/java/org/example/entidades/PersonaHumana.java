@@ -10,11 +10,7 @@ public class PersonaHumana extends Colaborador{
   // habria q agregar esto al der: {
   @Getter
   @Setter
-  private String TipoDoc;
-
-  @Getter
-  @Setter
-  private Integer Documento;
+  private Documento Documento;
 // }
   @Getter
   @Setter

@@ -26,7 +26,7 @@ public class RegistradorMasivo {
 
         for (String[] row : filas) {
             String tipoDoc = row[0];
-            Integer documento = Integer.valueOf(row[1]);
+            Integer numDocumento = Integer.valueOf(row[1]);
             String nombre = row[2];
             String apellido = row[3];
             String mail = row[4];
@@ -35,10 +35,10 @@ public class RegistradorMasivo {
             double cantidad = Double.parseDouble(row[7]);
 
 
-            PersonaHumana persona = buscarPersona(personas, tipoDoc, documento);
+            PersonaHumana persona = buscarPersona(personas, tipoDoc, numDocumento);
             if (persona == null) {
                 persona = new PersonaHumana();
-                persona.setTipoDoc(tipoDoc);
+                Documento documento = new Documento(numDocumento, tipoDoc, "", "");
                 persona.setDocumento(documento);
                 persona.setNombre(nombre);
                 persona.setApellido(apellido);
@@ -92,8 +92,8 @@ public class RegistradorMasivo {
 
     private PersonaHumana buscarPersona(List<PersonaHumana> personas, String tipoDoc,Integer documento) {
         for (PersonaHumana persona : personas) {
-            if (persona.getTipoDoc().equals(tipoDoc) &&
-                    persona.getDocumento().equals(documento)) {
+            if (persona.getDocumento().getTipo().equals(tipoDoc) &&
+                    persona.getDocumento().getDocumento().equals(documento)) {
                 return persona; // La persona ya está registrada
             }
         }
