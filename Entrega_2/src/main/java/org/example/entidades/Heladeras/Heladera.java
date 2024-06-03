@@ -14,4 +14,15 @@ public class Heladera {
     public boolean validarTemperaturaFuncional(float unaTemperatura){
         return unaTemperatura >= temperaturaMinima && unaTemperatura <= temperaturaMaxima;
     }
+    
+    public void agregarVianda(){
+        cantidadDeViandas++;
+        //generar vianda y guardarla
+    }
+
+    public void retirarVianda(){
+        cantidadDeViandas--;
+        //retirar vianda de donde se guardaba
+    }
+
 }

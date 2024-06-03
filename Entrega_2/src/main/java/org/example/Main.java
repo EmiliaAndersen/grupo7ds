@@ -12,7 +12,7 @@ public class Main {
   public static void main(String[] args) {
     //EJEMPLO MIGRACION
     RegistradorMasivo reg = new RegistradorMasivo();
-    reg.migrar("Entrega_2/src/main/java/org/example/archivo.csv");
+    reg.Migrar("Entrega_2/src/main/java/org/example/archivo.csv");
 
 
     Scanner scanner = new Scanner(System.in);

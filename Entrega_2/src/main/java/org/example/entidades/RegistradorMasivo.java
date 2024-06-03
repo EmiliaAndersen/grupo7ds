@@ -19,7 +19,7 @@ import java.util.Objects;
 public class RegistradorMasivo {
 
 
-    public void migrar(String csvPath){
+    public void Migrar(String csvPath){
         List<String[]> filas = leerArchivoCsv(csvPath);
 
         List<PersonaHumana> personas = new ArrayList<>();
