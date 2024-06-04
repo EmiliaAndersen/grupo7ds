@@ -4,11 +4,17 @@ import org.example.Validador.ControlPasswordDebil;
 import org.example.Validador.Nist800;
 import org.example.Validador.Usuario;
 import org.example.Validador.Validador;
+import org.example.Migrador.Migrador;
 
 import java.util.Scanner;
 
 public class Main {
   public static void main(String[] args) {
+    // --- EJEMPLO MIGRACION ---
+    Migrador reg = new Migrador();
+    reg.Migrar("..\\Entrega_2\\src\\main\\java\\org\\example\\archivo.csv");
+
+    // --- EJEMPLO VALIDADOR ---
     Scanner scanner = new Scanner(System.in);
     Usuario usuario = new Usuario();
     Validador validador = new Validador();
@@ -16,7 +22,6 @@ public class Main {
     ControlPasswordDebil controlPasswordDebil = new ControlPasswordDebil();
     validador.addFiltro(controlPasswordDebil);
     validador.addFiltro(nist800);
-
 
     System.out.println("Bienvenido al Sistema.");
 

@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Entrega_1" />
+        <module name="Entrega_2" />
         <module name="Verficicar_contrasenias" />
       </profile>
     </annotationProcessing>
