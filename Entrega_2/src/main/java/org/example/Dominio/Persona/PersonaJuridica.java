@@ -3,7 +3,7 @@ package org.example.Dominio.Persona;
 import lombok.Getter;
 import lombok.Setter;
 
-public class PersonaJuridica extends Colaborador {
+public class PersonaJuridica extends Persona {
   @Getter
   @Setter
   private String razonSocial;

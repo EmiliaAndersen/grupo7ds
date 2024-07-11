@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-public class PersonaHumana extends Colaborador {
+public class PersonaHumana extends Persona {
 
   // habria q agregar esto al der: {
   @Getter
