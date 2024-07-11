@@ -1,18 +1,27 @@
 package org.example;
 
+import org.example.Dominio.Colaboradores.PersonaHumana;
 import org.example.Validador.ControlPasswordDebil;
 import org.example.Validador.Nist800;
 import org.example.Validador.Usuario;
 import org.example.Validador.Validador;
 import org.example.Migrador.Migrador;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
   public static void main(String[] args) {
     // --- EJEMPLO MIGRACION ---
     Migrador reg = new Migrador();
-    reg.Migrar("C:\\Users\\emian\\archivo.csv\\"); //Cuidado path
+    List<PersonaHumana> personas = new ArrayList<>();
+    reg.Migrar("../Entrega_2/src/main/java/org/example/archivo.csv",personas);
+    //chequeo q haya salido todo bien
+    for (PersonaHumana persona : personas){
+      System.out.println(persona.getNombre());
+      System.out.println(persona.getColaboraciones());
+    }
 
     // --- EJEMPLO VALIDADOR ---
     Scanner scanner = new Scanner(System.in);
