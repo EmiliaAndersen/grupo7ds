@@ -5,7 +5,7 @@ import com.univocity.parsers.csv.CsvParserSettings;
 import org.example.Dominio.Colaboraciones.DistribucionDeViandas;
 import org.example.Dominio.Colaboraciones.DonacionDeDinero;
 import org.example.Dominio.Colaboraciones.DonacionDeVianda;
-import org.example.Dominio.Colaboradores.PersonaHumana;
+import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Colaboraciones.Colaboracion;
 import org.example.Dominio.Documentos.Documento;
 

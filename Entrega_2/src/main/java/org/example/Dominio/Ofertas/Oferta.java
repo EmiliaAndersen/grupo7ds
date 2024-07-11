@@ -1,7 +1,7 @@
 package org.example.Dominio.Ofertas;
 
 import lombok.Getter;
-import org.example.Dominio.Colaboradores.PersonaJuridica;
+import org.example.Dominio.Persona.PersonaJuridica;
 
 public class Oferta {
   @Getter

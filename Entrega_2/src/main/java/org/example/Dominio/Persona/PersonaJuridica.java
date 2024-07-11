@@ -1,4 +1,4 @@
-package org.example.Dominio.Colaboradores;
+package org.example.Dominio.Persona;
 
 import lombok.Getter;
 import lombok.Setter;

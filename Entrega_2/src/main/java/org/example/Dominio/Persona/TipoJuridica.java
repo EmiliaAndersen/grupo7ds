@@ -1,4 +1,4 @@
-package org.example.Dominio.Colaboradores;
+package org.example.Dominio.Persona;
 
 public enum TipoJuridica {
   Gubernamental,

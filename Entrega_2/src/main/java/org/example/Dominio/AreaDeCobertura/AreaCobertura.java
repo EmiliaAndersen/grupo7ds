@@ -1,4 +1,4 @@
-package org.example.Dominio.Tecnicos;
+package org.example.Dominio.AreaDeCobertura;
 
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
 

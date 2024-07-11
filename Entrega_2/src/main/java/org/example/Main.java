@@ -12,7 +12,7 @@ public class Main {
   public static void main(String[] args) {
     // --- EJEMPLO MIGRACION ---
     Migrador reg = new Migrador();
-    reg.Migrar("..\\Entrega_2\\src\\main\\java\\org\\example\\archivo.csv");
+    reg.Migrar("C:\\Users\\emian\\archivo.csv\\"); //Cuidado path
 
     // --- EJEMPLO VALIDADOR ---
     Scanner scanner = new Scanner(System.in);
