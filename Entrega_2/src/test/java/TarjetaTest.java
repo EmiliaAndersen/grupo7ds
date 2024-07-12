@@ -1,5 +1,5 @@
 import org.example.Dominio.Heladeras.Heladera;
-import org.example.Dominio.PersonaVulnerable.PersonaVulnerable;
+import org.example.Dominio.Rol.PersonaVulnerable;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
 import org.example.Dominio.Tarjetas.Tarjeta;
 import org.example.Dominio.Viandas.Vianda;

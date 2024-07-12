@@ -2,7 +2,7 @@ package org.example.Dominio.Tarjetas;
 
 import lombok.Getter;
 import org.example.Dominio.Heladeras.Heladera;
-import org.example.Dominio.PersonaVulnerable.PersonaVulnerable;
+import org.example.Dominio.Rol.PersonaVulnerable;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

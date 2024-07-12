@@ -16,7 +16,6 @@ public class Colaborador extends Rol{
     @Setter
     private double puntos;
 
-
 public Colaborador() {
     colaboraciones = new ArrayList<>();
 }
