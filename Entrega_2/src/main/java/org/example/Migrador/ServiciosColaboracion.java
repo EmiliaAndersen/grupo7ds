@@ -9,18 +9,34 @@ import java.util.List;
 
 public class ServiciosColaboracion {
 
-    public void asignarColaboracion(List<Colaborador> colaboradores, String formaColaboracion, LocalDate fechaColaboracion, double cantidad, PersonaHumana persona, String mail) {
+    public void asignarColaboracion(Colaborador colaborador, String formaColaboracion, LocalDate fechaColaboracion, double cantidad, String mail) {
+        if (colaborador == null) {
+            // Manejar el caso cuando colaborador es null, por ejemplo, lanzar una excepción o registrar un mensaje de error
+            System.err.println("El colaborador es null. No se puede asignar la colaboración.");
+            return;
+        }
         Colaboracion colaboracion = generarColaboracion(formaColaboracion, fechaColaboracion, cantidad);
         if (colaboracion == null) return;
-
-        Colaborador colaborador = new Colaborador();
-        colaborador.setPersona(persona);
         colaborador.agregarColaboracion(colaboracion);
-
-        ServiciosMail.enviarMail(mail);
-
-        colaboradores.add(colaborador);
     }
+
+
+    static void generarColaborador(PersonaHumana persona, Colaborador colaborador) {
+        colaborador.setPersona(persona);
+    }
+
+    Colaborador buscarColaboradorPorPersona(List<Colaborador> colaboradores, PersonaHumana persona) {
+        for (Colaborador colaborador : colaboradores) {
+            if(colaborador.getPersona() == null){
+                return null;
+            }
+            else if (colaborador.getPersona().equals(persona)) {
+                return colaborador;
+            }
+        }
+        return null; // Retorna null si no se encuentra ningún colaborador para la persona
+    }
+
 
     private Colaboracion generarColaboracion(String formaColaboracion, LocalDate fechaColaboracion, double cantidad) {
         Colaboracion colaboracion;

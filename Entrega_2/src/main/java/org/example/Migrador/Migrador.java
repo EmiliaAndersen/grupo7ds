@@ -29,10 +29,16 @@ public class Migrador {
             double cantidad = Double.parseDouble(row[7]);
 
             PersonaHumana persona = personaService.buscarPersona(personas, tipoDoc, numDocumento);
+            Colaborador colaborador = new Colaborador();
             if (persona == null) {
                 persona = personaService.generarPersona(personas, numDocumento, tipoDoc, nombre, apellido, mail);
+                ServiciosColaboracion.generarColaborador(persona, colaborador);
+                colaboracionService.asignarColaboracion(colaborador,formaColaboracion, fechaColaboracion, cantidad, mail);
+                colaboradores.add(colaborador);
+            }else{
+                colaborador = colaboracionService.buscarColaboradorPorPersona(colaboradores, persona);
+                colaboracionService.asignarColaboracion(colaborador,formaColaboracion, fechaColaboracion, cantidad, mail);
             }
-            colaboracionService.asignarColaboracion(colaboradores, formaColaboracion, fechaColaboracion, cantidad, persona, mail);
         }
     }
 }
