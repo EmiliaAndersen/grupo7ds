@@ -3,12 +3,12 @@ package org.example.Dominio.Colaboraciones;
 import java.time.LocalDate;
 import java.time.Period;
 
-public class HacerseCargoDeHeladera implements Colaboracion {
+public class HacerseCargoDeHeladera extends Colaboracion {
 
   private LocalDate fechaInicio;
 
   @Override
-  public void colaborar() {
+  public void procesarColaboracion() {
 
   }
 

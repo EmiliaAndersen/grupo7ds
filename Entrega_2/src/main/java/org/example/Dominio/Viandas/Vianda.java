@@ -1,6 +1,6 @@
 package org.example.Dominio.Viandas;
 
-import org.example.Dominio.Colaboradores.Colaborador;
+import org.example.Dominio.Rol.Colaborador;
 import org.example.Dominio.Heladeras.Heladera;
 
 import java.time.LocalDate;
