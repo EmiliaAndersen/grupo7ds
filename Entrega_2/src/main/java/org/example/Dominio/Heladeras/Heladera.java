@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Heladera {
+    @Getter
     private PuntoEstrategico ubicacion;
     private ArrayList<Vianda> viandas;
     private LocalDate fechaInicioFuncionamiento;

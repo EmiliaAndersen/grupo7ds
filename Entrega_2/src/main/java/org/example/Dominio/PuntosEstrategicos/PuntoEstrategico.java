@@ -1,7 +1,10 @@
 package org.example.Dominio.PuntosEstrategicos;
 
+import lombok.Getter;
+
 public class PuntoEstrategico {
 
+    @Getter
     private String nombre;
     private float longitud;
     private float latitud;

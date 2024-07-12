@@ -1,5 +1,6 @@
 import org.example.Dominio.Heladeras.EstadoHeladera;
 import org.example.Dominio.Heladeras.Heladera;
+import org.example.Dominio.Heladeras.sensores.SensorMovimiento;
 import org.example.Dominio.Heladeras.sensores.SensorTemperatura;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
 import org.junit.jupiter.api.Assertions;
@@ -11,6 +12,7 @@ public class SensoresTest {
 
     Heladera heladera;
     SensorTemperatura sensorTemperatura;
+    SensorMovimiento sensorMovimiento;
     Mockito API;
 
     @BeforeEach
@@ -21,6 +23,8 @@ public class SensoresTest {
         sensorTemperatura = new SensorTemperatura();
         sensorTemperatura.heladera = heladera;
 
+        sensorMovimiento = new SensorMovimiento();
+        sensorMovimiento.heladera = heladera;
         API = Mockito.mock(Mockito.class);
     }
 
@@ -48,5 +52,10 @@ public class SensoresTest {
         Assertions.assertEquals(heladera.estado, EstadoHeladera.ACTIVA);
     }
 
+    @Test
+    public void sensorDeMovimiento_seDetectaUnMovimiento(){
+
+        Assertions.assertThrows(Exception.class, () -> {sensorMovimiento.enviarAlerta();});
+    }
 }
 
