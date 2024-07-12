@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-public class DonacionDeDinero implements Colaboracion{
+public class DonacionDeDinero extends Colaboracion{
   @Getter
   @Setter
   private LocalDate fecha;
@@ -23,7 +23,7 @@ public class DonacionDeDinero implements Colaboracion{
   }
 
   @Override
-  public void colaborar() {
+  public void procesarColaboracion() {
 
   }
   public Double calcularPuntos(){return monto*0.5;}

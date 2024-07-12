@@ -8,7 +8,7 @@ import org.example.Dominio.MediosContacto.MedioDeContacto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Colaborador extends Rol {
+public class Colaborador extends Rol{
     @Getter
     @Setter
     private List<Colaboracion> colaboraciones;
@@ -16,20 +16,17 @@ public class Colaborador extends Rol {
     @Setter
     private double puntos;
 
-    public Colaborador() {
-        colaboraciones = new ArrayList<>();
-    }
 
-    public void agregarColaboracion(Colaboracion colaboracion) {
-        colaboraciones.add(colaboracion);
-        this.realizarColaboracion(colaboracion);
-    }
+public Colaborador() {
+    colaboraciones = new ArrayList<>();
+}
 
-    public void realizarColaboracion(Colaboracion colaboracion) {
-        colaboracion.colaborar();
-    }
+public void agregarColaboracion(Colaboracion colaboracion){
+    colaboraciones.add(colaboracion);
+    colaboracion.procesarColaboracion();
+}
 
-    public Double calcularPuntos() {
-        return colaboraciones.stream().mapToDouble(Colaboracion::calcularPuntos).sum();
-    }
+public Double calcularPuntos(){
+    return colaboraciones.stream().mapToDouble(Colaboracion::calcularPuntos).sum();
+}
 }
