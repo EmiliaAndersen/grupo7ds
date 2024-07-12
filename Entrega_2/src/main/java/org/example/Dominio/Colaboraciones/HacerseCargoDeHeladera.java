@@ -4,14 +4,18 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.Period;
+import org.example.Dominio.Rol.Colaborador;
 
 public class HacerseCargoDeHeladera extends Colaboracion {
   @Setter
   private LocalDate fechaInicio;
 
   @Override
-  public void procesarColaboracion() {
-
+  public void procesarColaboracion(Colaborador colaborador) {
+    boolean puedoProcesar = isTypeOf(colaborador, TipoColaborador.P_JURIDICA);
+    if (puedoProcesar) {
+      //Ver
+    }
   }
 
   @Override

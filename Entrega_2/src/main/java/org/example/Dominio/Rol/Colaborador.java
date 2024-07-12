@@ -22,7 +22,7 @@ public Colaborador() {
 
 public void agregarColaboracion(Colaboracion colaboracion){
     colaboraciones.add(colaboracion);
-    colaboracion.procesarColaboracion();
+    colaboracion.procesarColaboracion(this);
 }
 
 public Double calcularPuntos(){
