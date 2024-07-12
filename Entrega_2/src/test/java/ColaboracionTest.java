@@ -29,9 +29,9 @@ public class ColaboracionTest {
 
     @Test
     public void colaboracion_calcularPuntos_DonacionDeVianda() {
-        Vianda vianda1 = new Vianda();
-        Vianda vianda2 = new Vianda();
-        
+        Vianda vianda1 = new Vianda(null, null, null, null, 0, 0, null);
+        Vianda vianda2 = new Vianda(null, null, null, null, 0, 0, null);
+
         List<Vianda> listaViandas = new ArrayList<Vianda>();
         listaViandas.add(vianda1);
         listaViandas.add(vianda2);
@@ -59,12 +59,7 @@ public class ColaboracionTest {
         Heladera heladeraOrigen = new Heladera(22.0F, 5.0F, ubi1);
         Heladera heladeraDestino = new Heladera(22.0F, 5.0F, ubi2);
 
-        DistribucionDeViandas distribucionDeViandas = new DistribucionDeViandas();
-
-        distribucionDeViandas.setFecha(LocalDate.now());
-        distribucionDeViandas.setHeladeraOrigen(heladeraOrigen);
-        distribucionDeViandas.setHeladeraDestino(heladeraDestino);
-        distribucionDeViandas.setMotivo("Test");
+        DistribucionDeViandas distribucionDeViandas = new DistribucionDeViandas(heladeraOrigen, heladeraDestino, "Test", LocalDate.now());
 
         Assertions.assertEquals(1.0, distribucionDeViandas.calcularPuntos());
     }
@@ -73,7 +68,7 @@ public class ColaboracionTest {
     public void colaboracion_calcularPuntos_RegistrarPersonasEnSituacionVulnerable(){
         Colaborador colaboradorHumano = new Colaborador();
         RegistrarPersonasEnSituacionVulnerable registrarPersonasEnSituacionVulnerable = new RegistrarPersonasEnSituacionVulnerable();
-        registrarPersonasEnSituacionVulnerable.setColaborador(colaboradorHumano);
+        //registrarPersonasEnSituacionVulnerable.setColaborador(colaboradorHumano);
 
         Assertions.assertEquals(2.0, registrarPersonasEnSituacionVulnerable.calcularPuntos());
     }
@@ -85,7 +80,7 @@ public class ColaboracionTest {
         DonacionDeDinero donacionDeDinero1 = new DonacionDeDinero(LocalDate.now(), 500.0, LocalDate.now());
         DonacionDeDinero donacionDeDinero2 = new DonacionDeDinero(LocalDate.now(), 500.0, LocalDate.now());
         RegistrarPersonasEnSituacionVulnerable registrarPersonasEnSituacionVulnerable = new RegistrarPersonasEnSituacionVulnerable();
-        registrarPersonasEnSituacionVulnerable.setColaborador(colaboradorHumano);
+        //registrarPersonasEnSituacionVulnerable.setColaborador(colaboradorHumano);
 
         colaboradorHumano.agregarColaboracion(donacionDeDinero1);
         colaboradorHumano.agregarColaboracion(donacionDeDinero2);

@@ -21,6 +21,7 @@ public class Heladera {
     @Getter
     private float temperaturaMinima;
     public EstadoHeladera estado;
+    private List<ActividadHeladera> mesesActiva;
 
     public Heladera(float temperaturaMaxima, float temperaturaMinima, PuntoEstrategico ubicacion){
         this.temperaturaMaxima = temperaturaMaxima;
@@ -29,6 +30,7 @@ public class Heladera {
         this.viandas = new ArrayList<Vianda>();
         this.fechaInicioFuncionamiento = LocalDate.now();
         this.estado = EstadoHeladera.ACTIVA;
+        this.mesesActiva = new ArrayList<ActividadHeladera>();
     }
 
     public boolean validarTemperaturaFuncional(float unaTemperatura){
