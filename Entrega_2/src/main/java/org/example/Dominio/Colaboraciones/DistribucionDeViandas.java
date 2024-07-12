@@ -6,7 +6,7 @@ import org.example.Dominio.Heladeras.Heladera;
 
 import java.time.LocalDate;
 
-public class DistribucionDeViandas implements Colaboracion{
+public class DistribucionDeViandas extends Colaboracion{
   @Getter
   @Setter
   private Heladera heladeraOrigen;
@@ -20,7 +20,7 @@ public class DistribucionDeViandas implements Colaboracion{
   @Setter
   private LocalDate fecha;
   @Override
-  public void colaborar() {
+  public void procesarColaboracion() {
 
   }
   public Double calcularPuntos(){return 1.0;}

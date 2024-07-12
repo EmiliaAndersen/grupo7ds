@@ -2,9 +2,9 @@ package org.example.Dominio.Colaboraciones;
 
 import org.example.Dominio.Ofertas.Oferta;
 
-public class OfrecerProductos implements Colaboracion{
+public class OfrecerProductos extends Colaboracion{
   @Override
-  public void colaborar() {
+  public void procesarColaboracion() {
     Oferta oferta = new Oferta();
   }
 

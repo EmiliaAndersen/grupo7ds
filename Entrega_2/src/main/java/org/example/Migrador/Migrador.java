@@ -8,7 +8,7 @@ import com.univocity.parsers.csv.CsvParserSettings;
 import org.example.Dominio.Colaboraciones.DistribucionDeViandas;
 import org.example.Dominio.Colaboraciones.DonacionDeDinero;
 import org.example.Dominio.Colaboraciones.DonacionDeVianda;
-import org.example.Dominio.Colaboradores.PersonaHumana;
+import org.example.Dominio.Rol.Colaborador;
 import org.example.Dominio.Colaboraciones.Colaboracion;
 import org.example.Dominio.Documentos.Documento;
 
@@ -28,14 +28,14 @@ import com.sendgrid.*;
 public class Migrador {
 
 
-    public void Migrar(String csvPath,List<PersonaHumana> personas){
+    public void Migrar(String csvPath,List<Colaborador> colaboradores){
         List<String[]> filas = leerArchivoCsv(csvPath);
-        procesarFilas(personas, filas);
+        procesarFilas(colaboradores, filas);
 
 
     }
 
-    private void procesarFilas(List<PersonaHumana> personas, List<String[]> filas) {
+    private void procesarFilas(List<Colaborador> personas, List<String[]> filas) {
         for (String[] row : filas) {
             String tipoDoc = row[0];
             Integer numDocumento = Integer.valueOf(row[1]);
