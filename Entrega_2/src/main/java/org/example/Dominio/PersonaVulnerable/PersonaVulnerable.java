@@ -1,5 +1,7 @@
 package org.example.Dominio.PersonaVulnerable;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.example.Dominio.Documentos.Documento;
 import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.Tarjetas.Tarjeta;
@@ -12,15 +14,9 @@ public class PersonaVulnerable {
     private LocalDate fechaDeNacimiento;
     private LocalDate fechaDeRegristro;
     private String domicilio;
-
-    // Esto podria implementarse asi
-    // private List<PersonaVulnerable> menoresACargo;
-
+    @Getter
+    @Setter
     private int menoresACargo;
     private Documento documento;
-    private Tarjeta tarjeta;
 
-    public void usarTarjeta(Heladera unaHeladera){
-        tarjeta.usar(unaHeladera, menoresACargo);
-    }
 }
