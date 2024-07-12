@@ -1,5 +1,5 @@
 import org.example.Dominio.Colaboraciones.*;
-import org.example.Dominio.Colaboradores.PersonaHumana;
+import org.example.Dominio.Rol.PersonaVulnerable;
 import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.Viandas.Vianda;
 import org.junit.jupiter.api.Assertions;
