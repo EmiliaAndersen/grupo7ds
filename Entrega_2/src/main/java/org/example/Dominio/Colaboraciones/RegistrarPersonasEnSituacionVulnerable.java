@@ -17,18 +17,18 @@ public class RegistrarPersonasEnSituacionVulnerable extends Colaboracion{
 
   @Override
   public void procesarColaboracion(Colaborador colaborador) {
-    boolean puedoProcesar = isTypeOf(colaborador, TipoColaborador.P_HUMANA);
-    if (puedoProcesar) {
-      Persona persona = personaVulnerable.getPersona();
-      String direccion = persona.getDireccion();
-      //Enviar tarjetas a esa direccion y ver de dar de alta
-        //Ver si ya esta generada o la debo generar //PersonaVulnerable personaVulnerableRegistrada = new PersonaVulnerable();
-       // Tarjeta tarjeta = new Tarjeta(personaVulnerableRegistrada);
-       // personaVulnerableRegistrada.setTarjeta(tarjeta);
-       // this.personaVulnerable = personaVulnerableRegistrada;
-        //this.colaborador = colaborador;
-    }
-    }
+      boolean puedoProcesar = isTypeOf(colaborador, TipoColaborador.P_HUMANA);
+      if (puedoProcesar) {
+          Persona persona = personaVulnerable.getPersona();
+          String direccion = persona.getDireccion();
+          //Enviar tarjetas a esa direccion y ver de dar de alta
+          //Ver si ya esta generada o la debo generar //PersonaVulnerable personaVulnerableRegistrada = new PersonaVulnerable();
+          // Tarjeta tarjeta = new Tarjeta(personaVulnerableRegistrada);
+          // personaVulnerableRegistrada.setTarjeta(tarjeta);
+          // this.personaVulnerable = personaVulnerableRegistrada;
+          //this.colaborador = colaborador;
+      }
+  }
 
 
 
