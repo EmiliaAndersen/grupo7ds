@@ -1,7 +1,11 @@
 package org.example.Dominio.Rol;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.example.Dominio.Persona.Persona;
 
 public class Rol {
-    Persona persona;
+    @Getter
+    @Setter
+    public Persona persona;
 }
