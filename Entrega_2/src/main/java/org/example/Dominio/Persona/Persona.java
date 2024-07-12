@@ -5,11 +5,10 @@ import lombok.Setter;
 import org.example.Dominio.MediosContacto.MedioDeContacto;
 import java.util.List;
 
+@Setter
+@Getter
 public abstract class Persona {
-  @Getter
-  @Setter
   private List<MedioDeContacto> mediosDeContacto;
-  @Getter
-  @Setter
   private String direccion;
+
 }

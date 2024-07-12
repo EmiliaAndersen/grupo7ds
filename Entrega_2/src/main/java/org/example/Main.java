@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.Dominio.MediosContacto.MedioDeContacto;
 import org.example.Dominio.Persona.Persona;
 import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Rol.Colaborador;
@@ -23,7 +24,8 @@ public class Main {
     //chequeo q haya salido todo bien
     for (Colaborador colaborador : colaboradores){
       Persona persona = colaborador.getPersona();
-      //System.out.println(persona.getDireccion());
+      MedioDeContacto contacto = persona.getMediosDeContacto().get(0);
+      System.out.println(contacto.getDetalle()) ;
       System.out.println(colaborador.getColaboraciones());
     }
 
