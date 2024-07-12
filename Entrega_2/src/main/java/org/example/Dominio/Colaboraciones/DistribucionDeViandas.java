@@ -20,7 +20,7 @@ public class DistribucionDeViandas extends Colaboracion{
   @Getter
   @Setter
   private LocalDate fecha;
-  @Override
+
 
   public DistribucionDeViandas(Heladera heladeraOrigen, Heladera heladeraDestino,String motivo, LocalDate fecha ){
     this.heladeraOrigen = heladeraOrigen;
@@ -28,7 +28,7 @@ public class DistribucionDeViandas extends Colaboracion{
     this.motivo = motivo;
     this.fecha = fecha;
   }
-
+  @Override
   public void procesarColaboracion(Colaborador colaborador) {
     boolean puedoProcesar = isTypeOf(colaborador, TipoColaborador.P_HUMANA);
     if (puedoProcesar) {
