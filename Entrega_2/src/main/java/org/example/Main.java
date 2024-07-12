@@ -23,7 +23,7 @@ public class Main {
     //chequeo q haya salido todo bien
     for (Colaborador colaborador : colaboradores){
       Persona persona = colaborador.getPersona();
-      System.out.println(persona.getDireccion());
+      //System.out.println(persona.getDireccion());
       System.out.println(colaborador.getColaboraciones());
     }
 

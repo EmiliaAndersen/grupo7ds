@@ -57,7 +57,7 @@ public class Migrador {
             if (colaboracion == null) return;
             Colaborador colaborador = new Colaborador();
             colaborador.setPersona(persona);
-            colaborador.realizarColaboracion(colaboracion);
+            colaborador.agregarColaboracion(colaboracion);
             enviarMail(mail);
             colaboradores.add(colaborador);
         }
@@ -100,7 +100,7 @@ public class Migrador {
 
         List<String[]> allRows = null;
         try {
-            File file = new File("Entrega_2/src/main/java/org/example/archivo.csv");
+            File file = new File(csvPath);
             allRows = parser.parseAll(new FileReader(file.getAbsolutePath()));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
