@@ -1,11 +1,13 @@
 package org.example.Dominio.Colaboraciones;
 
+import lombok.Setter;
+
 import java.time.LocalDate;
 import java.time.Period;
 import org.example.Dominio.Rol.Colaborador;
 
 public class HacerseCargoDeHeladera extends Colaboracion {
-
+  @Setter
   private LocalDate fechaInicio;
 
   @Override

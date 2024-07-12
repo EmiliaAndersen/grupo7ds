@@ -8,7 +8,7 @@ import com.univocity.parsers.csv.CsvParserSettings;
 import org.example.Dominio.Colaboraciones.DistribucionDeViandas;
 import org.example.Dominio.Colaboraciones.DonacionDeDinero;
 import org.example.Dominio.Colaboraciones.DonacionDeVianda;
-import org.example.Dominio.Rol.Colaborador;
+import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Colaboraciones.Colaboracion;
 import org.example.Dominio.Documentos.Documento;
 
@@ -23,19 +23,20 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 import com.sendgrid.*;
+import org.example.Dominio.Rol.Colaborador;
 
 
 public class Migrador {
 
 
-    public void Migrar(String csvPath,List<Colaborador> colaboradores){
+    public void Migrar(String csvPath,List<PersonaHumana> personas, List<Colaborador> colaboradores){
         List<String[]> filas = leerArchivoCsv(csvPath);
-        procesarFilas(colaboradores, filas);
+        procesarFilas(personas, filas, colaboradores);
 
 
     }
 
-    private void procesarFilas(List<Colaborador> personas, List<String[]> filas) {
+    private void procesarFilas(List<PersonaHumana> personas, List<String[]> filas, List<Colaborador> colaboradores) {
         for (String[] row : filas) {
             String tipoDoc = row[0];
             Integer numDocumento = Integer.valueOf(row[1]);
@@ -54,8 +55,11 @@ public class Migrador {
             Colaboracion colaboracion;
             colaboracion = generarColaboracion(formaColaboracion, fechaColaboracion, cantidad);
             if (colaboracion == null) return;
-            persona.agregarColaboracion(colaboracion);
+            Colaborador colaborador = new Colaborador();
+            colaborador.setPersona(persona);
+            colaborador.agregarColaboracion(colaboracion);
             enviarMail(mail);
+            colaboradores.add(colaborador);
         }
     }
 
@@ -96,7 +100,7 @@ public class Migrador {
 
         List<String[]> allRows = null;
         try {
-            File file = new File("Entrega_2/src/main/java/org/example/archivo.csv");
+            File file = new File(csvPath);
             allRows = parser.parseAll(new FileReader(file.getAbsolutePath()));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

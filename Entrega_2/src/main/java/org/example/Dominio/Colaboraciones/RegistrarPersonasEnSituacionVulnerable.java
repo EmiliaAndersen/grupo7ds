@@ -5,6 +5,10 @@ import lombok.Setter;
 import org.example.Dominio.Persona.Persona;
 import org.example.Dominio.Rol.Colaborador;
 import org.example.Dominio.Rol.PersonaVulnerable;
+import org.example.Dominio.Persona.PersonaHumana;
+import org.example.Dominio.Rol.Colaborador;
+import org.example.Dominio.Rol.PersonaVulnerable;
+import org.example.Dominio.Tarjetas.Tarjeta;
 
 public class RegistrarPersonasEnSituacionVulnerable extends Colaboracion{
   @Getter
@@ -18,7 +22,15 @@ public class RegistrarPersonasEnSituacionVulnerable extends Colaboracion{
       Persona persona = personaVulnerable.getPersona();
       String direccion = persona.getDireccion();
       //Enviar tarjetas a esa direccion y ver de dar de alta
+        //Ver si ya esta generada o la debo generar //PersonaVulnerable personaVulnerableRegistrada = new PersonaVulnerable();
+       // Tarjeta tarjeta = new Tarjeta(personaVulnerableRegistrada);
+       // personaVulnerableRegistrada.setTarjeta(tarjeta);
+       // this.personaVulnerable = personaVulnerableRegistrada;
+        //this.colaborador = colaborador;
     }
-  }
+    }
+
+
+
   public Double calcularPuntos(){return 2.0;}
 }

@@ -49,5 +49,6 @@ public class Vianda {
 
     public void retirar(){
         this.estadoVianda = EstadoVianda.RETIRADA;
+        this.heladera = null;
     }
 }

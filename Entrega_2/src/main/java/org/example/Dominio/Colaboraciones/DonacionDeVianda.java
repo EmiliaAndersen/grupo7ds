@@ -3,13 +3,15 @@ package org.example.Dominio.Colaboraciones;
 import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.Rol.Colaborador;
 import org.example.Dominio.Viandas.EstadoVianda;
+import lombok.Setter;
 import org.example.Dominio.Viandas.Vianda;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class DonacionDeVianda extends Colaboracion{
-  private List<Vianda> viandas; //TODO: Agregar las viandas
+  @Setter
+  private List<Vianda> viandas;
 
   @Override
   public void procesarColaboracion(Colaborador colaborador) {

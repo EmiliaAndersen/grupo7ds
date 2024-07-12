@@ -7,5 +7,5 @@ import org.example.Dominio.Persona.Persona;
 public class Rol {
     @Getter
     @Setter
-    Persona persona;
+    public Persona persona;
 }
