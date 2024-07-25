@@ -1,4 +1,4 @@
-package org.example.Migrador;
+package org.example.Dominio.Notificador;
 
 import com.sendgrid.*;
 import com.sendgrid.helpers.mail.Mail;
@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class ServiciosMail {
 
-    public static void enviarMail(String mailTo) {
+    public static void enviarMail(String mailTo, String mensaje) {
         Email from = new Email("grupo7ddstp@gmail.com");
         String subject = "Hello World";
         Email to = new Email(mailTo);

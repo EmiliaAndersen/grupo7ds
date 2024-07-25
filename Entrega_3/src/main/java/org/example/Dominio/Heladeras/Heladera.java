@@ -3,6 +3,8 @@ package org.example.Dominio.Heladeras;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
+import org.example.Dominio.Suscripciones.Suscriptor;
+import org.example.Dominio.Suscripciones.TipoSuscripcion;
 import org.example.Dominio.Viandas.Vianda;
 
 import java.time.LocalDate;
@@ -21,6 +23,8 @@ public class Heladera {
     @Getter
     private float temperaturaMinima;
     public EstadoHeladera estado;
+
+    private List <Suscriptor> suscriptores;
     private List<ActividadHeladera> mesesActiva;
 
     public Heladera(float temperaturaMaxima, float temperaturaMinima, PuntoEstrategico ubicacion){
@@ -47,6 +51,14 @@ public class Heladera {
     
     public void agregarVianda(Vianda unaVianda){
         this.viandas.add(unaVianda);
+        for (Suscriptor suscriptor : suscriptores) {
+            if(suscriptor.getTipo() == (TipoSuscripcion.FALTANTES)){
+                if(suscriptor.getNumeroAviso() >= viandas.size()){
+                    suscriptor.notificarSuscriptor();
+                }
+            }
+        }
+
     }
 
     public boolean retirarVianda(){
@@ -55,6 +67,14 @@ public class Heladera {
         }
         Vianda unaVianda = this.viandas.remove(0);
         unaVianda.retirar();
+
+        for (Suscriptor suscriptor : suscriptores) {
+            if(suscriptor.getTipo() == (TipoSuscripcion.RESTANTES)){
+                if(suscriptor.getNumeroAviso() <= viandas.size()){
+                    suscriptor.notificarSuscriptor();
+                }
+            }
+        }
         return true;
     }
 
