@@ -8,4 +8,8 @@ public class Distribuidor extends Colaborador{
   private List<AperturaHeladera> aperturas;
   private TarjetaDistribuidor tarjetaDistribuidor;
 
+  public void registrarApertura(AperturaHeladera apertura){
+    aperturas.add(apertura);
+  }
+
 }
