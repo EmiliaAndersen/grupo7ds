@@ -17,7 +17,7 @@ public class SensoresTest {
 
     @BeforeEach
     public void setUp() {
-        PuntoEstrategico unaUbicacion = new PuntoEstrategico();
+        PuntoEstrategico unaUbicacion = new PuntoEstrategico("Ubi1",-34.598300,-58.420570,"Medrano 951");
         heladera = new Heladera(22.0F, 5.0F, unaUbicacion);
 
         sensorTemperatura = new SensorTemperatura();

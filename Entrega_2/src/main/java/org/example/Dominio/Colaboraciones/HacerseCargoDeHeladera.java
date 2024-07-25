@@ -1,19 +1,39 @@
 package org.example.Dominio.Colaboraciones;
 
+import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
+
+import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
 import org.example.Dominio.Rol.Colaborador;
+import org.example.Servicio.LocalizacionEstrategicaAPI;
 
 public class HacerseCargoDeHeladera extends Colaboracion {
   @Setter
   private LocalDate fechaInicio;
 
+  @Getter
+  private PuntoEstrategico puntoEstrategico;
+  @Getter
+  private Double radio;
+
+
+  private final LocalizacionEstrategicaAPI localizacionEstrategicaAPI;
+
+  public HacerseCargoDeHeladera(LocalizacionEstrategicaAPI localizacionEstrategicaAPI, PuntoEstrategico puntoEstrategico, Double radio) {
+    this.localizacionEstrategicaAPI = localizacionEstrategicaAPI;
+    this.puntoEstrategico = puntoEstrategico;
+    this.radio = radio;
+  }
+
+
   @Override
   public void procesarColaboracion(Colaborador colaborador) {
-    boolean puedoProcesar = isTypeOf(colaborador, TipoColaborador.P_JURIDICA);
-    if (puedoProcesar) {
+
+    if (isTypeOf(colaborador, TipoColaborador.P_JURIDICA)) {
       //Ver
     }
   }
@@ -25,7 +45,8 @@ public class HacerseCargoDeHeladera extends Colaboracion {
     return (double) ((periodo.getYears()*12 + periodo.getMonths())*5);
   }
 
-  public String getLocalizacionEstrategica(float latitud, float longitud, float radio){
-    return "Conectarse a la api";
+  public List<PuntoEstrategico> getLocalizacionEstrategica(){
+
+    return localizacionEstrategicaAPI.getPuntoEstrategico(puntoEstrategico, radio);
   }
 }
