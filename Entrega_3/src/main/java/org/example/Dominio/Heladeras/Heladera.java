@@ -2,10 +2,14 @@ package org.example.Dominio.Heladeras;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.Dominio.Incidentes.Alerta;
+import org.example.Dominio.Incidentes.TipoAlerta;
+import org.example.Dominio.Incidentes.Visita;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
 import org.example.Dominio.Viandas.Vianda;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +24,7 @@ public class Heladera {
     @Setter
     @Getter
     private float temperaturaMinima;
+    @Setter
     public EstadoHeladera estado;
     private List<ActividadHeladera> mesesActiva;
 
@@ -36,10 +41,12 @@ public class Heladera {
     public boolean validarTemperaturaFuncional(float unaTemperatura){
         if(unaTemperatura > temperaturaMaxima){
             estado = EstadoHeladera.TEMPERATURA_ALTA;
+            this.agregarAlerta(TipoAlerta.TEMPERATURA);
             return false;
         }
         if(unaTemperatura < temperaturaMinima){
             estado = EstadoHeladera.TEMPERATURA_BAJA;
+            this.agregarAlerta(TipoAlerta.TEMPERATURA);
             return false;
         }
         return true;
@@ -58,4 +65,8 @@ public class Heladera {
         return true;
     }
 
+    public void agregarAlerta(TipoAlerta tipoAlerta){
+        Alerta alerta = new Alerta(tipoAlerta,this, LocalDateTime.now());
+        this.setEstado(EstadoHeladera.INACTIVA);
+    }
 }
