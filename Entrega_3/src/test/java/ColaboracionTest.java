@@ -41,7 +41,7 @@ public class ColaboracionTest {
         listaViandas.add(vianda1);
         listaViandas.add(vianda2);
         
-        DonacionDeVianda donacionDeVianda = new DonacionDeVianda();
+        DonacionDeVianda donacionDeVianda = new DonacionDeVianda(listaViandas);
         donacionDeVianda.setViandas(listaViandas);
 
         Assertions.assertEquals(2.0 * 1.5, donacionDeVianda.calcularPuntos());

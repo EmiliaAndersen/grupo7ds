@@ -6,6 +6,8 @@ import org.example.Dominio.Incidentes.Alerta;
 import org.example.Dominio.Incidentes.TipoAlerta;
 import org.example.Dominio.Incidentes.Visita;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
+import org.example.Dominio.Reportes.GeneradorDeReportes;
+import org.example.Dominio.Reportes.GeneradorReporteViandasRetiradas;
 import org.example.Dominio.Viandas.Vianda;
 
 import java.time.LocalDate;
@@ -62,6 +64,8 @@ public class Heladera {
         }
         Vianda unaVianda = this.viandas.remove(0);
         unaVianda.retirar();
+        GeneradorReporteViandasRetiradas reportes = GeneradorReporteViandasRetiradas.getInstance();
+        reportes.update();
         return true;
     }
 
