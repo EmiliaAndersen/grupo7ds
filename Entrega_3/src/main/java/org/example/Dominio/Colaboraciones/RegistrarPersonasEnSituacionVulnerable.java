@@ -5,10 +5,6 @@ import lombok.Setter;
 import org.example.Dominio.Persona.Persona;
 import org.example.Dominio.Rol.Colaborador;
 import org.example.Dominio.Rol.PersonaVulnerable;
-import org.example.Dominio.Persona.PersonaHumana;
-import org.example.Dominio.Rol.Colaborador;
-import org.example.Dominio.Rol.PersonaVulnerable;
-import org.example.Dominio.Tarjetas.Tarjeta;
 
 public class RegistrarPersonasEnSituacionVulnerable extends Colaboracion{
   @Getter

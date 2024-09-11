@@ -25,8 +25,8 @@ public class DonacionDeDinero extends Colaboracion{
 
   @Override
   public void procesarColaboracion(Colaborador colaborador) {
-    boolean puedoProcesar = isTypeOf(colaborador, TipoColaborador.P_HUMANA) || isTypeOf(colaborador, TipoColaborador.P_JURIDICA);
-    if (puedoProcesar) {
+    //boolean puedoProcesar = isTypeOf(colaborador, TipoColaborador.P_HUMANA) || isTypeOf(colaborador, TipoColaborador.P_JURIDICA);
+    //if (puedoProcesar) {
 
       //Leer SCANNER
       //LocalDate fecha;
@@ -35,7 +35,7 @@ public class DonacionDeDinero extends Colaboracion{
 
       //DonacionDeDinero donacion = new DonacionDeDinero(fecha, monto, frecuencia);
       //Ver que hace con donacion
-    }
+    //}
   }
   public Double calcularPuntos(){return monto*0.5;}
 }

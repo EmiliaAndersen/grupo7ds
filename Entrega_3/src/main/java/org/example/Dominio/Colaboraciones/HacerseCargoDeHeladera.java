@@ -32,10 +32,10 @@ public class HacerseCargoDeHeladera extends Colaboracion {
 
   @Override
   public void procesarColaboracion(Colaborador colaborador) {
-
-    if (isTypeOf(colaborador, TipoColaborador.P_JURIDICA)) {
-      //Ver
-    }
+//
+//    if (isTypeOf(colaborador, TipoColaborador.P_JURIDICA)) {
+//      //Ver
+//    }
   }
 
   @Override

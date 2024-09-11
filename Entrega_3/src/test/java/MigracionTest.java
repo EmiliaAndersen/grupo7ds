@@ -24,7 +24,7 @@ public class MigracionTest {
         Migrador reg = new Migrador();
         List<PersonaHumana> personas = new ArrayList<>();
         List<Colaborador> colaboradores = new ArrayList<>();
-        reg.Migrar("../Entrega_2/src/main/java/org/example/archivo.csv", personas, colaboradores);
+        reg.Migrar("../Entrega_3/src/main/java/org/example/archivo.csv", personas, colaboradores);
         // Chequeo que haya salido todo bien
 
         List<String> mailsPrueba = Arrays.asList("juan@example.com", "maria@example.com", "pedro@example.com");
