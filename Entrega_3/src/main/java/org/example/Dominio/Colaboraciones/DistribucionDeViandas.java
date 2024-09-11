@@ -29,22 +29,8 @@ public class DistribucionDeViandas extends Colaboracion{
     this.fecha = fecha;
   }
   @Override
-  public void procesarColaboracion(Colaborador colaborador) {
-    boolean puedoProcesar = isTypeOf(colaborador, TipoColaborador.P_HUMANA);
-    if (puedoProcesar) {
+  public void procesarColaboracion(Colaborador colaborador) {  }
 
-      //Scanner
-
-      //Heladera heladeraOrigen;
-      //Heladera heladeraDestino;
-      // String motivo;
-      //LocalDate fecha
-
-      //DistribucionDeViandas distribucion = new DistribucionDeViandas(heladeraOrigen, heladeraDestino, motivo, fecha);
-
-      //Ver que hace despues
-    }
-  }
   public Double calcularPuntos(){return 1.0;}
 }
 

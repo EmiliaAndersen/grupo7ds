@@ -29,6 +29,7 @@ public class TarjetaDistribuidor extends Tarjeta {
       solicitudesPasadas.add(solicitud);
       AdministradorPermisos.getInstance().darAcceso(this);
   }
+
   public void abrirHeladera(Heladera heladera) {
     if (validarPermiso()) {
       AperturaHeladera aperturaHeladera = new AperturaHeladera();
