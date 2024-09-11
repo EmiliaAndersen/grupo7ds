@@ -13,8 +13,6 @@ public class Alerta extends Incidente{
         this.tipo = tipo;
         this.setHeladera(heladera);
         this.setFechaYHora(fechaYHora);
-
-        this.notificarReporte();
     }
 
 

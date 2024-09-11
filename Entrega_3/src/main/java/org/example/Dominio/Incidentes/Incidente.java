@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.example.Dominio.Heladeras.EstadoHeladera;
 import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
+import org.example.Dominio.Reportes.GeneradorDeReportes;
 import org.example.Dominio.Reportes.GeneradorReporteFallas;
 import org.example.Servicio.LocalizadorTecnicos;
 import org.example.Dominio.Rol.Tecnico;
@@ -20,6 +21,8 @@ public class Incidente {
     @Getter
     private List<Visita> visitas;
 
+    private List<GeneradorDeReportes> suscriptores;
+
     public void registrarVisita(Visita visita){
         visitas.add(visita);
         if(visita.getPudoResolver())
@@ -33,8 +36,4 @@ public class Incidente {
         // TODO: Notifica al tecnico
     }
 
-    void notificarReporte(){
-        GeneradorReporteFallas reporte = GeneradorReporteFallas.getInstance();
-        reporte.update();
-    }
 }

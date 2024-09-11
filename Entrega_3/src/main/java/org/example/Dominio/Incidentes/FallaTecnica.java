@@ -14,7 +14,5 @@ public class FallaTecnica extends Incidente {
         this.reportero = colaborador;
         this.setHeladera(heladera);
         this.setFechaYHora(fechaYHora);
-
-        this.notificarReporte();
     }
 }
