@@ -1,9 +1,8 @@
 package org.example.Dominio.Persona;
 
 public enum TipoJuridica {
-  Gubernamental,
+  GUBERNAMENTAL,
   ONG,
-  Empresa,
-  Institucion
-
+  EMPRESA,
+  INSTITUCION
 }
