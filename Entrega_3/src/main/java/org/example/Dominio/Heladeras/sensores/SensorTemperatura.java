@@ -3,24 +3,44 @@ package org.example.Dominio.Heladeras.sensores;
 import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.Incidentes.Alerta;
 import org.example.Dominio.Incidentes.FallaTecnica;
+import org.example.Dominio.Incidentes.IncidenteFactory;
 import org.example.Dominio.Incidentes.TipoAlerta;
 
 import java.time.LocalDateTime;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SensorTemperatura extends Sensor {
     private float ultimaTemperaturaRegistrada;
 
-    // Este metodo es llamado por la API del sensor cuando registra una temperatura
+    public void monitorear(int intervalo) {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                float temperatura = pedirTemperatura();
+                setUltimaTemperaturaRegistrada(temperatura);
+            }
+        }, 0, intervalo);
+    }
+
+    public float pedirTemperatura(){
+        return this.obtenerTemperaturaDeLaAPI();
+    }
+
+    private float obtenerTemperaturaDeLaAPI(){
+        return (float) (Math.random() * 100);
+    }
+
     public void setUltimaTemperaturaRegistrada(float ultimaTemperaturaRegistrada) {
         this.ultimaTemperaturaRegistrada = ultimaTemperaturaRegistrada;
 
-        // Actualizo la hora de registro
         fechaHoraUltimoRegistro = LocalDateTime.now();
 
         this.notificarActualizacion();
     }
 
-    public void notificarActualizacion(){
+    private void notificarActualizacion(){
         boolean valida = heladera.validarTemperaturaFuncional(ultimaTemperaturaRegistrada);
         if(!valida){
             this.enviarAlerta(heladera);
@@ -28,7 +48,8 @@ public class SensorTemperatura extends Sensor {
     }
 
     private void enviarAlerta(Heladera heladera){
-        Alerta alerta = new Alerta(TipoAlerta.TEMPERATURA, heladera, LocalDateTime.now());
+        IncidenteFactory incidenteFactory = new IncidenteFactory();
+        Alerta alerta = incidenteFactory.crearAlerta(TipoAlerta.TEMPERATURA, this.heladera);
         alerta.notificar();
     }
 }
