@@ -7,29 +7,11 @@ import java.time.LocalDate;
 
 public class PersonaHumana extends Persona {
 
-  // habria q agregar esto al der: {
-  @Getter
-  @Setter
-  private org.example.Dominio.Documentos.Documento Documento;
-// }
-  @Getter
-  @Setter
-  private String nombre;
 
-  @Getter
-  @Setter
-  private String apellido;
-
-  @Getter
-  @Setter
-  private LocalDate fechaDeNacimiento;
-
-
-
-
-
-  public void realizarColaboracion(){
-
-  }
+  public org.example.Dominio.Documentos.Documento Documento;
+  public String nombre;
+  public String apellido;
+  public LocalDate fechaDeNacimiento;
+  public String cuil;
 
 }
