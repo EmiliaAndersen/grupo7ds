@@ -6,8 +6,11 @@ import org.example.Dominio.Incidentes.Alerta;
 import org.example.Dominio.Incidentes.TipoAlerta;
 import org.example.Dominio.Incidentes.Visita;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
+import org.example.Dominio.Suscripciones.Suscriptor;
+import org.example.Dominio.Suscripciones.TipoSuscripcion;
 import org.example.Dominio.Reportes.GeneradorDeReportes;
 import org.example.Dominio.Reportes.GeneradorReporteViandasRetiradas;
+
 import org.example.Dominio.Viandas.Vianda;
 
 import java.time.LocalDate;
@@ -28,6 +31,8 @@ public class Heladera {
     private float temperaturaMinima;
     @Setter
     public EstadoHeladera estado;
+
+    private List <Suscriptor> suscriptores;
     private List<ActividadHeladera> mesesActiva;
 
     public Heladera(float temperaturaMaxima, float temperaturaMinima, PuntoEstrategico ubicacion){
@@ -56,6 +61,14 @@ public class Heladera {
     
     public void agregarVianda(Vianda unaVianda){
         this.viandas.add(unaVianda);
+        for (Suscriptor suscriptor : suscriptores) {
+            if(suscriptor.getTipo() == (TipoSuscripcion.FALTANTES)){
+                if(suscriptor.getNumeroAviso() >= viandas.size()){
+                    suscriptor.notificarSuscriptor();
+                }
+            }
+        }
+
     }
 
     public boolean retirarVianda(){
@@ -64,6 +77,15 @@ public class Heladera {
         }
         Vianda unaVianda = this.viandas.remove(0);
         unaVianda.retirar();
+
+        for (Suscriptor suscriptor : suscriptores) {
+            if(suscriptor.getTipo() == (TipoSuscripcion.RESTANTES)){
+                if(suscriptor.getNumeroAviso() <= viandas.size()){
+                    suscriptor.notificarSuscriptor();
+                }
+            }
+        }
+      
         GeneradorReporteViandasRetiradas reportes = GeneradorReporteViandasRetiradas.getInstance();
         reportes.update();
         return true;

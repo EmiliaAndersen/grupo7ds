@@ -20,7 +20,7 @@ public class Main {
     Migrador reg = new Migrador();
     List<PersonaHumana> personas = new ArrayList<>();
     List<Colaborador> colaboradores = new ArrayList<>();
-    reg.Migrar("../Entrega_2/src/main/java/org/example/archivo.csv",personas, colaboradores);
+    reg.Migrar("Entrega_2/src/main/java/org/example/archivo.csv",personas, colaboradores);
     //chequeo q haya salido todo bien
     for (Colaborador colaborador : colaboradores){
       Persona persona = colaborador.getPersona();
