@@ -4,15 +4,12 @@ import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
 import org.example.Dominio.Rol.Colaborador;
 import org.example.Dominio.Rol.Distribuidor;
 
-import org.example.Dominio.Viandas.Vianda;
 
 import org.example.Dominio.Heladeras.Heladera;
-import org.example.Dominio.Distr;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.example.Dominio.Heladeras.EstadoHeladera.ACTIVA;
-import static org.example.Dominio.Suscripciones.TipoSuscripcion.RESTANTES;
 
 public class HeladeraTest {
 

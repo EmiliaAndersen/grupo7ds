@@ -13,7 +13,7 @@ import static org.example.Dominio.Notificador.ServiciosMail.enviarMail;
 
 @Getter
 @Setter
-public abstract class Suscriptor {
+public class Suscriptor {
     private Colaborador colaborador;
     private TipoSuscripcion tipo;
     private List<Notificacion> mensajesEnviados;

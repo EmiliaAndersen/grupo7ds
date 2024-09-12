@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
+@Setter
+@Getter
 public class PersonaHumana extends Persona {
 
 
