@@ -11,6 +11,7 @@ import org.example.Servicio.LocalizadorTecnicos;
 import org.example.Dominio.Rol.Tecnico;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Incidente {
@@ -19,9 +20,9 @@ public class Incidente {
     @Setter
     private LocalDateTime fechaYHora;
     @Getter
-    private List<Visita> visitas;
+    private List<Visita> visitas = new ArrayList<Visita>();
 
-    private List<GeneradorDeReportes> suscriptores;
+    private List<GeneradorDeReportes> suscriptores = new ArrayList<GeneradorDeReportes>();
 
     public void registrarVisita(Visita visita){
         visitas.add(visita);

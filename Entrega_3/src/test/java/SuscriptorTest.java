@@ -16,6 +16,7 @@ class SuscriptorTest {
         PuntoEstrategico punto = new PuntoEstrategico("zona1", 10.0, 120.0, "Av Diaz 12");
         Heladera heladera = new Heladera(10, 0, punto);
         Suscriptor suscriptor = new Suscriptor();
+        suscriptor.setColaborador(colaborador);
         heladera.agregarSuscriptor(suscriptor);
 
         Vianda vianda1 = new Vianda(null, null, null, null, 0, 0, null);

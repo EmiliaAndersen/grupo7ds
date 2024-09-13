@@ -5,10 +5,11 @@ import org.example.Dominio.Reportes.GeneradorDeReportes;
 import org.example.Dominio.Rol.Colaborador;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class IncidenteFactory {
-    private List<GeneradorDeReportes> suscriptores;
+    private List<GeneradorDeReportes> suscriptores = new ArrayList<GeneradorDeReportes>();
 
     public Alerta crearAlerta(TipoAlerta tipo, Heladera heladera){
         this.notificarReporte();

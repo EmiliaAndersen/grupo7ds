@@ -6,6 +6,7 @@ import org.example.Dominio.Rol.Distribuidor;
 
 
 import org.example.Dominio.Heladeras.Heladera;
+import org.example.Dominio.Tarjetas.TarjetaDistribuidor;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
