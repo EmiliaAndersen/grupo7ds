@@ -7,16 +7,17 @@ import org.example.Dominio.MediosContacto.TipoMedioContacto;
 import org.example.Dominio.Rol.Colaborador;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.example.Dominio.Notificador.ServiciosMail.enviarMail;
 
 @Getter
 @Setter
-public abstract class Suscriptor {
+public class Suscriptor {
     private Colaborador colaborador;
     private TipoSuscripcion tipo;
-    private List<Notificacion> mensajesEnviados;
+    private List<Notificacion> mensajesEnviados = new ArrayList<Notificacion>();
     private int numeroAviso = 0;
 
     private String armarNotificacion(){

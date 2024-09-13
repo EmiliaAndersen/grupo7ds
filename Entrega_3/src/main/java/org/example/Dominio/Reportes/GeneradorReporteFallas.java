@@ -2,7 +2,7 @@ package org.example.Dominio.Reportes;
 
 public class GeneradorReporteFallas implements GeneradorDeReportes{
 
-    private int cantidadDeFallas;
+    public int cantidadDeFallas;
     private int cantidadDeHeladeras;
     private static GeneradorReporteFallas instance;
 

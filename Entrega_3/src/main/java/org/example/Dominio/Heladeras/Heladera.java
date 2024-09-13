@@ -32,7 +32,7 @@ public class Heladera {
     @Setter
     public EstadoHeladera estado;
 
-    private List <Suscriptor> suscriptores;
+    public List <Suscriptor>suscriptores;
     private List<ActividadHeladera> mesesActiva;
 
     public Heladera(float temperaturaMaxima, float temperaturaMinima, PuntoEstrategico ubicacion){
@@ -43,6 +43,7 @@ public class Heladera {
         this.fechaInicioFuncionamiento = LocalDate.now();
         this.estado = EstadoHeladera.ACTIVA;
         this.mesesActiva = new ArrayList<ActividadHeladera>();
+        this.suscriptores = new ArrayList<Suscriptor>();
     }
 
     public boolean validarTemperaturaFuncional(float unaTemperatura){
@@ -94,5 +95,9 @@ public class Heladera {
     public void agregarAlerta(TipoAlerta tipoAlerta){
         Alerta alerta = new Alerta(tipoAlerta,this, LocalDateTime.now());
         this.setEstado(EstadoHeladera.INACTIVA);
+    }
+
+    public void agregarSuscriptor(Suscriptor suscriptor){
+        suscriptores.add(suscriptor);
     }
 }
