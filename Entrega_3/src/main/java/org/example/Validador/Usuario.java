@@ -5,6 +5,11 @@ import lombok.Setter;
 
 public class Usuario {
 
+  public Usuario(String usuario, String contrasenia) {
+    this.usuario = usuario;
+    this.contrasenia = contrasenia;
+  }
+
   @Getter
   @Setter
   private String usuario;

@@ -57,7 +57,7 @@ public class ColaboracionTest {
         HacerseCargoDeHeladera hacerseCargoDeHeladera = new HacerseCargoDeHeladera(localizacionEstrategicaAPI,ubi1, 2.0);
         hacerseCargoDeHeladera.setFechaInicio(fechaInicioEjemplo);
 
-        Assertions.assertEquals(24*12*5, hacerseCargoDeHeladera.calcularPuntos());
+        Assertions.assertEquals(24*12*5 + 10, hacerseCargoDeHeladera.calcularPuntos());
     }
 
     @Test

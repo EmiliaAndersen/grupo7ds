@@ -32,7 +32,7 @@ public class Main {
 
     // --- EJEMPLO VALIDADOR ---
     Scanner scanner = new Scanner(System.in);
-    Usuario usuario = new Usuario();
+    Usuario usuario = new Usuario("dam","123");
     Validador validador = new Validador();
     Nist800 nist800 = new Nist800();
     ControlPasswordDebil controlPasswordDebil = new ControlPasswordDebil();
