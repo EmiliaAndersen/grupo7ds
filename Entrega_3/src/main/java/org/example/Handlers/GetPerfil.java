@@ -10,11 +10,13 @@ public class GetPerfil implements Handler {
 
   public void handle(@NotNull Context context){
     var model = new HashMap<String, Object>();
+    Boolean succesLogin = context.sessionAttribute("succesLogin");
 
-    if (context.sessionAttribute("succesLogin")) {
+    if ( succesLogin != null && succesLogin) {
       model.put( "successMessage", "Session iniciada correctamente " + context.sessionAttribute("username"));
-      context.sessionAttribute("successLogin", null);
+      context.render("/templates/perfil.mustache", model);
+    }else{
+      context.redirect("/login");  // Redirige a la página de login
     }
-    context.render("/templates/perfil.mustache", model);
   }
 }

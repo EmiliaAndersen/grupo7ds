@@ -24,7 +24,7 @@ public class App {
     app.post("/signin", new PostSignIn());
 
 
-    app.get("/perfil", new GetPerfil());
+    app.before("/perfil", new GetPerfil());
 
 
 
