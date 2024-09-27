@@ -17,4 +17,5 @@ public class Usuario {
   @Getter
   @Setter
   private String contrasenia;
+
 }

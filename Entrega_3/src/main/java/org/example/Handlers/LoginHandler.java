@@ -1,4 +1,4 @@
-package org.example.handlers;
+package org.example.Handlers;
 
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
@@ -12,4 +12,5 @@ public class LoginHandler implements Handler {
     var model = new HashMap<String, Object>();
     context.render("/templates/login.mustache", model);
   }
+
 }

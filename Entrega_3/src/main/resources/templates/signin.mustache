@@ -1,0 +1,190 @@
+
+<html>
+   <head>
+        <title>Registro usuarios</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"><!-- Tipografia -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+        <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+        <link href='/static/css.css?l=10' rel='stylesheet'>
+   </head>
+    <body style="background-color: #e6eaf2;">
+        <nav class="navbar navbar-expand-lg bg-primary" style="background-color: #3055b5!important;" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Heladeras Solidarias</a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="/entrega/personaVulnerable.html">Colaborar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/entrega/personaVulnerable.html">Persona Vulnerable</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/entrega/personaVulnerable.html">Iniciar sesion</a></li>
+                    </ul>
+                    <form class="d-flex" role="search" style="margin: unset;">
+                        <!--<a class="btn btn-primary" href="/entrega/perfil.html">Mi perfil</a>-->
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <div class="container mt-5 mb-2 border border-round shadow-1" style="background-color: #eff5ff;min-height: 600px;">
+            <div class="row">
+                <div class="col-md-12 p-4">
+                    <h2 class="my-4">Registrarse</h2>
+                    <hr>
+                    <form method='POST' class="form-row mt-2" id="form-usuario" style="">
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <label for="username">Usuario*</label>
+                                <input type="text" name="username" class="form-control" id="username">
+                            </div>
+                            <div class="col-md-12">
+                                <!-- No tengo enie -->
+                                <label for="password1">Contrase;a*</label>
+                                <input type="password" name="password1" class="form-control" id="password1">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-12">
+                                <label for="usuario">Seleccione tipo de colaborador</label>
+                                <select class="form-select" name="tipo_colaborador" id="tipo_colaborador" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="pf">Persona fisica</option>
+                                    <option value="pj">Persona juridica</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <hr>
+
+                        <div  class="form-row mt-2" id="form-persona-fisica" style="display: none">
+                            <div class="col-md-12">
+                                <label for="nombre">Nombre*</label>
+                                <input type="text" name="nombre" class="form-control" id="nombre">
+                            </div>
+                            <div class="col-md-12 mt-1">
+                                <label for="apellido">Apellido*</label>
+                                <input type="text" name="apellido" class="form-control" id="apellido">
+                            </div>
+                            <div class="col-md-12 mt-1">
+                                <label for="Password">Medio de contacto</label>
+                                <div class="input-group">
+                                    <select class="form-select" name="tipo_medio_contacto" id="pf-medio_contacto" required>
+                                        <option value="">Seleccione...</option>
+                                        <option value="telefono">Telefono</option>
+                                        <option value="whatsapp">Whatsapp</option>
+                                        <option value="email">Correo</option>
+                                    </select>
+                                    <input type="text" name="contacto" aria-label="Last name" class="form-control" placeholder="Complete su contacto">
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-1">
+                                <label for="CUIL">Cuil*</label>
+                                <input type="text" name="CUIL" class="form-control" id="CUIL">
+                            </div>
+                            <div class="col-md-12 mt-1">
+                                <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                                <input type="date" name="fecha_nacimiento" class="form-control" id="fecha_nacimiento">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="direccion">Direccion*</label>
+                                <input type="text" name="direccion" class="form-control" id="direccion">
+                            </div>
+                            <hr>
+                        </div>
+                        <div  class="form-row mt-2" id="form-persona-juridica" style="display: none">
+                            <div class="col-md-12">
+                                <label for="Nombre">Nombre*</label>
+                                <input type="text" name="Nombre" class="form-control" id="pj-Nombre" required>
+                            </div>
+                            <div class="col-md-12 mt-1">
+                                <label for="razon-social">Razon social*</label>
+                                <input type="text" name="razon-social" class="form-control" id="pj-razon-social" required>
+                            </div>
+                            <div class="col-md-12 mt-1">
+                                <label for="tipoJuridico">Tipo de persona juridica*</label>
+                                <div class="input-group">
+                                    <select class="form-select" name="tipo-juridica" id="pj-tipoJuridico" required>
+                                        <option value="">Seleccione...</option>
+                                        <option value="GUBERNAMENTAL">Gubernamental</option>
+                                        <option value="ONG">ONG</option>
+                                        <option value="EMPRESA">Empresa</option>
+                                        <option value="INSTITUCION">Institucion</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-1">
+                                <label for="tipo_medio_contacto">Medio de contacto*</label>
+                                <div class="input-group">
+                                    <select class="form-select" name="tipo_medio_contacto" id="pj-tipo_medio_contacto" required>
+                                        <option value="">Seleccione...</option>
+                                        <option value="telefono">Telefono</option>
+                                        <option value="whatsapp">Whatsapp</option>
+                                        <option value="email">Correo</option>
+                                    </select>
+                                    <input type="text" name="contacto" aria-label="Last name" class="form-control" placeholder="Complete su contacto">
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-1">
+                                <label for="rubro">Rubro*</label>
+                                <input type="text" name="rubro" class="form-control" id="rubro">
+                            </div>
+                            <div class="col-md-12 mt-1">
+                                <label for="direccion">Direccion</label>
+                                <input type="text" name="direccion" class="form-control" id="direccion">
+                            </div>
+                            <hr>
+                         </div>
+                        <div class="form-row">
+                            <button type="submit" id="btn-login-submit" name="signin" value="pj" class="btn btn-primary mt-2 mb-2 col-md-4">Registrarse</button><br>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+   </body>
+    <footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </footer>
+</html>
+<script>
+    window.onload = function() {
+        var today = new Date();
+        var year = today.getFullYear() - 18;
+        var month = today.getMonth() + 1;
+        var day = today.getDate();
+        if (month < 10) month = '0' + month;
+        if (day < 10) day = '0' + day;
+
+        var maxDate = year + '-' + month + '-' + day;
+        document.getElementById('fecha_nacimiento').setAttribute('max', maxDate);
+    };
+
+    if(document.getElementById("tipo_colaborador")){
+        document.getElementById("tipo_colaborador").addEventListener("change", function() {
+            const elementsWithRequired = document.querySelectorAll("[required]");
+            elementsWithRequired.forEach(element => {
+                element.removeAttribute("required");
+            });
+            document.getElementById('btn-login-submit').value=document.getElementById('tipo_colaborador').value;
+            if(document.getElementById('tipo_colaborador').value=='pj'){
+                document.getElementById('form-persona-juridica').style.display='';
+                document.getElementById('form-persona-fisica').style.display='none';
+                const elements = document.querySelectorAll("[id^='pj-']");
+                elements.forEach(element => {
+                    element.removeAttribute("required");
+                });
+            }else if(document.getElementById('tipo_colaborador').value=='pf'){
+                document.getElementById('form-persona-juridica').style.display='none';
+                document.getElementById('form-persona-fisica').style.display='';
+                const elements = document.querySelectorAll("[id^='pf-']");
+                elements.forEach(element => {
+                    element.removeAttribute("required");
+                });
+
+            }else{
+                document.getElementById('form-persona-juridica').style.display='none';
+                document.getElementById('form-persona-fisica').style.display='none';
+            }
+        });
+    }
+</script>
