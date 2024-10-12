@@ -72,6 +72,7 @@ public class PostColaboHumanaHandler implements Handler {
                 DonacionDeDineroFactory factoryDD = new DonacionDeDineroFactory();
                 // TODO: Agregar un atributo session para obtener el colaborador asociado al usuario que realiza la colaboracion
                 factoryDD.crearColaboracion(null, fecha, monto, frecuencia);
+                break;
             }
             case "ddv": {
 
@@ -91,6 +92,7 @@ public class PostColaboHumanaHandler implements Handler {
 
                 DistribucionDeViandasFactory factoryDDV = new DistribucionDeViandasFactory();
                 factoryDDV.crearColaboracion(null, heladera_origen, heladera_destino, motivo, LocalDate.now());
+                break;
             }
         }
 

@@ -1,9 +1,19 @@
 package org.example.Dominio.Colaboraciones;
 
-import org.example.Dominio.Ofertas.Oferta;
 import org.example.Dominio.Rol.Colaborador;
 
 public class OfrecerProductos extends Colaboracion{
+
+  public String tipoProducto;
+  public String marca;
+  public float monto;
+
+  public OfrecerProductos(String tipoProducto, String marca, float monto) {
+    this.tipoProducto = tipoProducto;
+    this.marca = marca;
+    this.monto = monto;
+  }
+
   @Override
   public void procesarColaboracion(Colaborador colaborador) {
 //    boolean puedoProcesar = isTypeOf(colaborador, TipoColaborador.P_JURIDICA);

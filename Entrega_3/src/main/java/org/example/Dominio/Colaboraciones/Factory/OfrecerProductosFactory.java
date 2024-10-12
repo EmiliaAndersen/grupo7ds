@@ -7,13 +7,15 @@ import org.example.Dominio.Reportes.GeneradorDeReportes;
 import org.example.Dominio.Reportes.GeneradorReporteViandasColocadas;
 import org.example.Dominio.Rol.Colaborador;
 
+import java.time.LocalDate;
+
 public class OfrecerProductosFactory extends ColaboracionFactory {
 
-    public Colaboracion crearColaboracion(Colaborador colaborador) {
+    public Colaboracion crearColaboracion(Colaborador colaborador, String tipo_producto, String marca, float monto) {
         if(!this.validarTipoColaborador(colaborador, TipoColaborador.P_JURIDICA)){
             return null;
         }
 
-        return new OfrecerProductos();
+        return new OfrecerProductos(tipo_producto, marca, monto);
     }
 }

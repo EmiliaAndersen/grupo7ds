@@ -28,5 +28,8 @@ public class App {
 
     app.get("/colaboracionHumana", new ColaboHumanaHandler());
     app.post("/colaboracionHumana", new PostColaboHumanaHandler());
+
+    app.get("/colaboracionJuridica", new ColaboJuridicaHandler());
+    app.post("/colaboracionJuridica", new PostColaboJuridicaHandler());
   }
 }
