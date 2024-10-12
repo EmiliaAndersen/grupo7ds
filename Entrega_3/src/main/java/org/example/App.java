@@ -26,7 +26,7 @@ public class App {
 
     app.before("/perfil", new GetPerfil());
 
-
-
+    app.get("/colaboracionHumana", new ColaboHumanaHandler());
+    app.post("/colaboracionHumana", new PostColaboHumanaHandler());
   }
 }
