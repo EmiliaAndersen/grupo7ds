@@ -31,5 +31,11 @@ public class App {
 
     app.get("/colaboracionJuridica", new ColaboJuridicaHandler());
     app.post("/colaboracionJuridica", new PostColaboJuridicaHandler());
+
+    app.get("/cargaColaboracion", new CargaColaboHandler());
+    app.post("/cargaColaboracion", new PostCargaColaboHandler());
+
+    app.get("/ofrecer", new OfProdHandler());
+    app.post("/ofrecer", new PostOfProdHandler());
   }
 }

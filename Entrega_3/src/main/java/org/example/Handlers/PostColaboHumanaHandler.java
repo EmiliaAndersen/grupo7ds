@@ -34,9 +34,9 @@ public class PostColaboHumanaHandler implements Handler {
 
         switch (Objects.requireNonNull(tipoColabo)) {
             case "dv": {
-                String comida = ctx.formParam("comida");
+                String comida = ctx.formParam("Comida");
                 LocalDate fecha_caducidad = LocalDate.parse(ctx.formParam("fecha-caducidad"));
-                LocalDate fecha_donacion_vianda = LocalDate.parse(ctx.formParam("fecha_donacion_vianda"));
+                LocalDate fecha_donacion_vianda = LocalDate.parse(ctx.formParam("fechaDonacionVianda"));
                 String colaborador = ctx.formParam("colaborador");
                 String heladera_id = ctx.formParam("heladera");
                 float peso = Float.parseFloat(ctx.formParam("peso"));

@@ -41,7 +41,7 @@ public class PostColaboJuridicaHandler implements Handler {
             case "op":{
                 String tipo_producto = ctx.formParam("tipo-producto");
                 String marca = ctx.formParam("marca");
-                Float monto = Float.parseFloat(ctx.formParam("monto"));
+                int monto = Integer.parseInt(ctx.formParam("monto"));
 
                 OfrecerProductosFactory factoryOP = new OfrecerProductosFactory();
                 factoryOP.crearColaboracion(null, tipo_producto, marca, monto);

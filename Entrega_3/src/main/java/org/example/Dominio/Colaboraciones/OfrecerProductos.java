@@ -6,9 +6,9 @@ public class OfrecerProductos extends Colaboracion{
 
   public String tipoProducto;
   public String marca;
-  public float monto;
+  public int monto;
 
-  public OfrecerProductos(String tipoProducto, String marca, float monto) {
+  public OfrecerProductos(String tipoProducto, String marca, int monto) {
     this.tipoProducto = tipoProducto;
     this.marca = marca;
     this.monto = monto;
