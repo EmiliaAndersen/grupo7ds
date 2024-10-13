@@ -37,5 +37,20 @@ public class App {
 
     app.get("/ofrecer", new OfProdHandler());
     app.post("/ofrecer", new PostOfProdHandler());
+
+    app.get("/reportes", new GetReportes());
+    app.post("/reportes", new PostReportes());
+
+    app.get("/reportar", new GetReportar());
+    app.post("/reportar", new PostReportar());
+
+    app.get("/prodserv", new GetProdServ());
+    app.post("/prodserv", new PostProdServ());
+
+    app.get("/suscripcion", new GetSuscripcion());
+    app.post("/suscripcion", new PostSuscripcion());
+
+    app.get("/heladeras", new GetHeladera());
+    app.post("/heladeras", new PostHeladera());
   }
 }
