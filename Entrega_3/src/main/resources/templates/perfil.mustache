@@ -13,9 +13,14 @@
                 <a class="navbar-brand" href="#">Heladeras Solidarias</a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="/entrega/personaVulnerable.html">Colaborar</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/entrega/personaVulnerable.html">Persona Vulnerable</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="/entrega/personaVulnerable.html">Mi perfil</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/{{tipoColaboracion}}">Colaborar</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/reportar">Persona Vulnerable</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/reportes">Reportes</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/suscripcion">Sucripcion heladeras</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/heladeras">Mis heladeras</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/ofrecer">Ofrecer productos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/prodserv">Productos</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/perfil">Mi perfil</a></li>
                     </ul>
                     <form class="d-flex" role="search" style="margin: unset;">
                         <!--<a class="btn btn-primary" href="/entrega/perfil.html">Mi perfil</a>-->
@@ -32,7 +37,7 @@
                     <h2 class="col-md-4">Mi perfil</h2>
                     <div class="col-md-4"></div>
                     <h5 class="col-md-4" id="btn-edit">Editar <i class="bi bi-pencil-fill" onclick="editar()" style="cursor: pointer;"></i></h5>
-                    <button type="submit" class="col-md-4 btn btn-danger btn-sm" id="btn-cancel" style="display: none;width: 120px">Cancelar edicion</button>
+                    <a href="/perfil" type="submit" class="col-md-4 btn btn-danger btn-sm" id="btn-cancel" style="display: none;width: 120px">Cancelar edicion</a>
                 </div>
                 <hr>
                 <div class="col-md-7">
@@ -82,8 +87,8 @@
                 </div>
                 <hr class="my-3">
                 <div class="form-row">
-                    <button type="submit" id="btn-cerrar-sesion" name="form-donacion-dinero" class="btn btn-warning col-md-4 mx-auto">Cerrar sesion</button>
-                    <button type="submit" id="btn-guardar" name="form-donacion-dinero" class="btn btn-success col-md-4 mx-auto" style="display: none" onclick="guardar()">Guardar datos</button>
+                    <button type="submit" id="btn-cerrar-sesion" name="btn-accion" value="logout" class="btn btn-warning col-md-4 mx-auto">Cerrar sesion</button>
+                    <button type="submit" id="btn-guardar" name="btn-accion" value="save" class="btn btn-success col-md-4 mx-auto" style="display: none">Guardar datos</button>
                 </div>
             </form>
         </div>
@@ -93,7 +98,7 @@
     function editar() {
         document.getElementById("nombre").disabled = false;
         document.getElementById("apellido").disabled = false;
-        document.getElementById("colaborar").disabled = false;
+        //document.getElementById("colaborar").disabled = false;
         document.getElementById("direccion").disabled = false;
         document.getElementById("fecha-nacimiento").disabled = false;
         document.getElementById("medios-contacto").disabled = false;

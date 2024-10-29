@@ -5,8 +5,9 @@ import lombok.Setter;
 
 public class Usuario {
 
-  public Usuario(String usuario, String contrasenia) {
+  public Usuario(String id, String usuario, String contrasenia) {
     this.usuario = usuario;
+    this.id = id;
     this.contrasenia = contrasenia;
   }
 
@@ -18,4 +19,7 @@ public class Usuario {
   @Setter
   private String contrasenia;
 
+  @Getter
+  @Setter
+  private String id;
 }

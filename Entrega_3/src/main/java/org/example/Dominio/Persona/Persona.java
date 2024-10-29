@@ -13,4 +13,5 @@ public abstract class Persona {
   private List<MedioDeContacto> mediosDeContacto;
   private String direccion;
   private Usuario usuario;
+  private Usuario id;
 }

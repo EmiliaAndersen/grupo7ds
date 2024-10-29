@@ -8,6 +8,7 @@ import org.example.Dominio.Persona.TipoJuridica;
 import org.example.Validador.Usuario;
 import org.example.repositorios.RepositorioUsuarios;
 import org.jetbrains.annotations.NotNull;
+import java.util.Random;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,7 +25,7 @@ public class PostSignIn implements Handler {
      //Verifico si en el repositorio existe ese usuario, si no existe lo creo y redirigo al login
     // si existe lo redirigo a la misma pagina. TODO: AGREGAR ERROR PARA QUE SEPA QUE EXISTE USUARIO
     if (repoUsuarios.verificarUsuarios(usuarioNombre)){
-      Usuario usuario = new Usuario(usuarioNombre, usuarioContraseña);
+      Usuario usuario = new Usuario(generarCodigoAleatorio(), usuarioNombre, usuarioContraseña);
       repoUsuarios.addUsuario(usuario);
       instanciarPersonas(context, usuario);
       context.redirect("/login");
@@ -40,7 +41,7 @@ public class PostSignIn implements Handler {
       PersonaHumana ph = new PersonaHumana();
         ph.setUsuario(usuario);
         ph.setDireccion(context.formParam(("direccion")));
-        ph.nombre = context.formParam("Nombre");;
+        ph.nombre = context.formParam("Nombre");
         ph.apellido = context.formParam("Apellido");
         ph.fechaDeNacimiento = localDateConverter(context.formParam("fecha_nacimiento"));
         ph.cuil = context.formParam("CUIL");
@@ -56,5 +57,15 @@ public class PostSignIn implements Handler {
   public LocalDate localDateConverter(String fecha){
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     return LocalDate.parse(fecha, formatter);
+  }
+
+  public String generarCodigoAleatorio() {
+    Random random = new Random();
+    StringBuilder codigo = new StringBuilder(12);
+    for (int i = 0; i < 12; i++) {
+      int digito = random.nextInt(10); // Genera un dígito entre 0 y 9
+      codigo.append(digito);
+    }
+    return codigo.toString();
   }
 }
