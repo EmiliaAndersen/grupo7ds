@@ -10,14 +10,26 @@ import org.example.Dominio.Incidentes.FallaTecnica;
 import org.example.Dominio.Incidentes.TipoAlerta;
 import org.example.Dominio.MediosContacto.MedioDeContacto;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table
 public class Colaborador extends Rol{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Transient
+    //TODO: Corregir cuando persistamos las colaboraciones
     @Getter
     @Setter
     private List<Colaboracion> colaboraciones;
+
+    @Column
     @Getter
     @Setter
     private double puntos;

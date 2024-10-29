@@ -5,8 +5,13 @@ import io.javalin.http.Context;
 import org.example.Handlers.*;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 public class App {
   public static void main(String[] args) {
+
+    EntityManager em = BDUtils.getEntityManager();
+    BDUtils.comenzarTransaccion(em);
 
     Javalin app = Javalin.create(javalinConfig -> {
               javalinConfig.staticFiles.add("/");
