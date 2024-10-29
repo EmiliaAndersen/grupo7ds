@@ -3,8 +3,13 @@ package org.example;
 import io.javalin.Javalin;
 import org.example.Handlers.*;
 
+import javax.persistence.EntityManager;
+
 public class App {
   public static void main(String[] args) {
+
+    EntityManager em = BDUtils.getEntityManager();
+    BDUtils.comenzarTransaccion(em);
 
     Javalin app = Javalin.create(javalinConfig -> {
           javalinConfig.staticFiles.add("/");
