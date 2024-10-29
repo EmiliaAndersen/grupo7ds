@@ -1,0 +1,99 @@
+<html>
+<head>
+    <title>Mi perfil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"><!-- Tipografia -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+    <link href='/static/css.css?1=14' rel='stylesheet'>
+</head>
+<body style="background-color: #e6eaf2;">
+<nav class="navbar navbar-expand-lg bg-primary" style="background-color: #3055b5!important;" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Heladeras Solidarias</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="/{{tipoColaboracion}}">Colaborar</a></li>
+                <li class="nav-item"><a class="nav-link" href="/reportar">Persona Vulnerable</a></li>
+                <li class="nav-item"><a class="nav-link" href="/reportes">Reportes</a></li>
+                <li class="nav-item"><a class="nav-link" href="/suscripcion">Sucripcion heladeras</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Heladeras">Mis heladeras</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Ofrecer">Ofrecer productos</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Heladeras">Productos</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/entrega/personaVulnerable.html">Mi perfil</a></li>
+            </ul>
+            <form class="d-flex" role="search" style="margin: unset;">
+                <!--<a class="btn btn-primary" href="/entrega/perfil.html">Mi perfil</a>-->
+            </form>
+        </div>
+    </div>
+</nav>
+        <div class="container mt-5 mb-2 border border-round shadow-1" style="background-color: #eff5ff;min-height: 600px;">
+            <form method='POST' class="row p-4" id="subscriptionForm">
+                <div class="row">
+                    <h2>Suscripcion a heladeras</h2>
+                    <hr>
+                    <p>Cuando deseas que te notifiquemos?</p>
+                    <p>1. Cuando queden un mínimo de viandas (seteado por usted)</p>
+                    <p>2. Cuando falten un mínimo de viandas para llenar la heladera (seteado por usted)</p>
+                    <p>3. Cuando la heladera sufrió un desperfecto y las viandas deben ser llevadas a otras heladeras.</p>
+                    <hr>
+                    <div class="form-row">
+                        <div class="col-md-8">
+                            <label for="usuario">Heladera</label>
+                            <input type="text" name="heladera" class="form-control" id="heladera" aria-describedby="emailHelp" required>
+                        </div>
+                    </div>
+                    <div class="form-row mt-2">
+                        <div class="col-md-8">
+                            <label for="Password">Motivo</label>
+                            <textarea name="motivo" class="form-control" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row mt-2">
+                        <div class="col-md-8">
+                            <label for="Password">Medio de contacto</label>
+                            <div class="input-group">
+                                <select class="form-select" name="tipo_medio_contacto" id="medio_contacto" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="telefono">Telefono</option>
+                                    <option value="whatsapp">Whatsapp</option>
+                                    <option value="email">Correo</option>
+                                </select>
+                                <input type="text" name="contacto" aria-label="Last name" class="form-control" placeholder="Complete su contacto" required>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-3">
+                    <div class="form-row">
+                        <button type="button" id="btn-login-submit" class="btn btn-primary mt-2 mb-2 col-md-4" disabled>Continuar</button><br>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <script>
+            const form = document.getElementById('subscriptionForm');
+            const btnSubmit = document.getElementById('btn-login-submit');
+
+            // Función para verificar campos
+            function checkFields() {
+                const isFormValid = form.checkValidity();
+                btnSubmit.disabled = !isFormValid; // Habilita o deshabilita el botón
+            }
+
+            // Agregar un evento de entrada para verificar los campos
+            form.addEventListener('input', checkFields);
+
+            // Evento para el botón de continuar
+            btnSubmit.addEventListener('click', function() {
+                if (form.checkValidity()) {
+                    // Redirige a /perfil si el formulario es válido
+                    window.location.href = '/perfil';
+                } else {
+                    alert('Por favor complete todos los campos requeridos.'); // Mensaje de advertencia
+                }
+            });
+        </script>
+    </body>
+</html>

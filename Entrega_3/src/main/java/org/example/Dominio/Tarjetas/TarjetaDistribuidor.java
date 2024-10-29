@@ -6,16 +6,25 @@ import org.example.Dominio.Rol.AperturaHeladera;
 import org.example.Dominio.Rol.Distribuidor;
 import org.example.Servicio.AdministradorPermisos;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
+@Table(name = "tarjeta_distribuidor")
 public class TarjetaDistribuidor extends Tarjeta {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @OneToOne(mappedBy = "tarjetaDistribuidor")
     private Distribuidor distribuidor;
 
+    @Column
     @Setter
     private LocalDateTime permisoHasta;
 
+    @OneToMany(mappedBy = "tarjetaDistribuidor",cascade = CascadeType.ALL)
     private List<SolicitudPermisos> solicitudesPasadas;
 
 

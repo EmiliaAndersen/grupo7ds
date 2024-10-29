@@ -14,9 +14,7 @@
                 <a class="navbar-brand" href="#">Heladeras Solidarias</a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="/entrega/personaVulnerable.html">Colaborar</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/entrega/personaVulnerable.html">Persona Vulnerable</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/entrega/personaVulnerable.html">Iniciar sesion</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/login">Iniciar sesion</a></li>
                     </ul>
                     <form class="d-flex" role="search" style="margin: unset;">
                         <!--<a class="btn btn-primary" href="/entrega/perfil.html">Mi perfil</a>-->
@@ -58,11 +56,11 @@
                         <div  class="form-row mt-2" id="form-persona-fisica" style="display: none">
                             <div class="col-md-12">
                                 <label for="nombre">Nombre*</label>
-                                <input type="text" name="nombre" class="form-control" id="nombre">
+                                <input type="text" name="nombre" class="form-control" id="nombre" required>
                             </div>
                             <div class="col-md-12 mt-1">
                                 <label for="apellido">Apellido*</label>
-                                <input type="text" name="apellido" class="form-control" id="apellido">
+                                <input type="text" name="apellido" class="form-control" id="apellido" required>
                             </div>
                             <div class="col-md-12 mt-1">
                                 <label for="Password">Medio de contacto</label>
@@ -81,8 +79,8 @@
                                 <input type="text" name="CUIL" class="form-control" id="CUIL">
                             </div>
                             <div class="col-md-12 mt-1">
-                                <label for="fecha_nacimiento">Fecha de Nacimiento</label>
-                                <input type="date" name="fecha_nacimiento" class="form-control" id="fecha_nacimiento">
+                                <label for="fecha_nacimiento">Fecha de Nacimiento*</label>
+                                <input type="date" name="fecha_nacimiento" class="form-control" id="fecha_nacimiento" required>
                             </div>
                             <div class="col-md-12">
                                 <label for="direccion">Direccion*</label>

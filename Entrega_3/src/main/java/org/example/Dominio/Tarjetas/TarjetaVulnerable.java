@@ -4,22 +4,36 @@ import lombok.Getter;
 import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.Rol.PersonaVulnerable;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+@Entity
+@Table(name = "tarjeta_vulnerable")
 public class TarjetaVulnerable extends Tarjeta{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @OneToMany(mappedBy = "tarjetaVulnerable",cascade = CascadeType.ALL)
     @Getter
     private List<UsoTarjeta> usos;
+
+    @OneToOne
+    @JoinColumn(name = "persona_vulnerable_id", referencedColumnName = "id")
     private PersonaVulnerable personaVulnerable;
 
     public TarjetaVulnerable(PersonaVulnerable unaPersonaVulnerable){
         this.setCodigo(this.generarCodigo());
         this.usos = new ArrayList<UsoTarjeta>();
         this.personaVulnerable = unaPersonaVulnerable;
+    }
+
+    public TarjetaVulnerable() {
+
     }
 
 

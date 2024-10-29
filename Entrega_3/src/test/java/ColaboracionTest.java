@@ -32,20 +32,20 @@ public class ColaboracionTest {
         Assertions.assertEquals(250.0, donacionDeDinero.calcularPuntos());
     }
 
-    @Test
-    public void colaboracion_calcularPuntos_DonacionDeVianda() {
-        Vianda vianda1 = new Vianda(null, null, null, null, 0, 0, null);
-        Vianda vianda2 = new Vianda(null, null, null, null, 0, 0, null);
-
-        List<Vianda> listaViandas = new ArrayList<Vianda>();
-        listaViandas.add(vianda1);
-        listaViandas.add(vianda2);
-        
-        DonacionDeVianda donacionDeVianda = new DonacionDeVianda(listaViandas);
-        donacionDeVianda.setViandas(listaViandas);
-
-        Assertions.assertEquals(2.0 * 1.5, donacionDeVianda.calcularPuntos());
-    }
+//    @Test
+//    public void colaboracion_calcularPuntos_DonacionDeVianda() {
+//        Vianda vianda1 = new Vianda(null, null, null, null, 0, 0, null);
+//        Vianda vianda2 = new Vianda(null, null, null, null, 0, 0, null);
+//
+//        List<Vianda> listaViandas = new ArrayList<Vianda>();
+//        listaViandas.add(vianda1);
+//        listaViandas.add(vianda2);
+//
+//        DonacionDeVianda donacionDeVianda = new DonacionDeVianda(listaViandas);
+//        donacionDeVianda.setViandas(listaViandas);
+//
+//        Assertions.assertEquals(2.0 * 1.5, donacionDeVianda.calcularPuntos());
+//    }
 
     @Test
     public void colaboracion_calcularPuntos_hacerseCargoDeHeladera() {

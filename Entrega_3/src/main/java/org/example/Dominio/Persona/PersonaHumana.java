@@ -2,18 +2,27 @@ package org.example.Dominio.Persona;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.Dominio.Documentos.Documento;
 
+import javax.persistence.*;
 import java.time.LocalDate;
-
+@Entity
+@DiscriminatorValue("persona_humana")
 @Setter
 @Getter
 public class PersonaHumana extends Persona {
 
+  @OneToOne
+  @JoinColumn(name = "documento_id", referencedColumnName = "id", unique = true, nullable = false)
+  public Documento Documento;
 
-  public org.example.Dominio.Documentos.Documento Documento;
+  @Column
   public String nombre;
+  @Column
   public String apellido;
+  @Column
   public LocalDate fechaDeNacimiento;
+  @Column
   public String cuil;
 
 }

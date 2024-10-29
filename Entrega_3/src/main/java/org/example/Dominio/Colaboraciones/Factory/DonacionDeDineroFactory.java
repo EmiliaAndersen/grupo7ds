@@ -9,12 +9,25 @@ import java.time.LocalDate;
 
 public class DonacionDeDineroFactory extends ColaboracionFactory {
     
-    public Colaboracion crearColaboracion(Colaborador colaborador, LocalDate fecha, Double monto, LocalDate frecuencia){
+    public Colaboracion crearColaboracion(Colaborador colaborador, LocalDate fecha, Double monto, String frecuencia){
         if(!this.validarTipoColaborador(colaborador, TipoColaborador.P_HUMANA) && !this.validarTipoColaborador(colaborador, TipoColaborador.P_JURIDICA) )
         {
             return null;
         }
 
-        return new DonacionDeDinero(fecha, monto, frecuencia);
+        LocalDate frecuencia_fecha;
+        switch (frecuencia){
+            case "Mensual":
+                frecuencia_fecha = LocalDate.now().plusMonths(1);
+            case "Semanal":
+                frecuencia_fecha = LocalDate.now().plusWeeks(1);
+            case "SinFrecuencia":
+                frecuencia_fecha = null;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + frecuencia);
+        }
+
+        return new DonacionDeDinero(fecha, monto, frecuencia_fecha);
     }
 }

@@ -1,0 +1,156 @@
+<html>
+<head>
+    <title>Mi perfil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"><!-- Tipografia -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+    <link href='/static/css.css?1=14' rel='stylesheet'>
+</head>
+<body style="background-color: #e6eaf2;">
+<nav class="navbar navbar-expand-lg bg-primary" style="background-color: #3055b5!important;" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Heladeras Solidarias</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="/{{tipoColaboracion}}">Colaborar</a></li>
+                <li class="nav-item"><a class="nav-link" href="/reportar">Persona Vulnerable</a></li>
+                <li class="nav-item"><a class="nav-link" href="/reportes">Reportes</a></li>
+                <li class="nav-item"><a class="nav-link" href="/suscripcion">Sucripcion heladeras</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Heladeras">Mis heladeras</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Ofrecer">Ofrecer productos</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Heladeras">Productos</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/entrega/personaVulnerable.html">Mi perfil</a></li>
+            </ul>
+            <form class="d-flex" role="search" style="margin: unset;">
+                <!--<a class="btn btn-primary" href="/entrega/perfil.html">Mi perfil</a>-->
+            </form>
+        </div>
+    </div>
+</nav>
+    <div class="container mt-5 mb-2 border border-round shadow-1" style="background-color: #eff5ff;min-height: 600px;">
+        <h2 class="m-2">Reportes</h2>
+        <hr>
+
+        <!-- Tabla de Reportes Recientes -->
+        <h4 class="mt-4">Reportes Recientes</h4>
+        <div class="border border-round shadow-1 px-2 mb-2" style="background-color: #e6eaf2;">
+            <table class="table table-striped" id="recent-reports">
+                <thead>
+                    <tr>
+                        <th>Reportes</th>
+                        <th>Temperatura</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Reporte 2671</td>
+                        <td>
+                            <span style="width:70px" class="badge text-bg-info">3°C</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-link text-decoration-none" onclick="viewDetails(this)">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <button class="btn btn-link text-decoration-none" onclick="deleteRow(this)">
+                                <i class="bi bi-trash3-fill"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Reporte 2672</td>
+                        <td>
+                            <span style="width:70px" class="badge text-bg-info">4°C</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-link text-decoration-none" onclick="viewDetails(this)">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <button class="btn btn-link text-decoration-none" onclick="deleteRow(this)">
+                                <i class="bi bi-trash3-fill"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Reporte 2673</td>
+                        <td>
+                            <span style="width:70px" class="badge text-bg-info">5°C</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-link text-decoration-none" onclick="viewDetails(this)">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <button class="btn btn-link text-decoration-none" onclick="deleteRow(this)">
+                                <i class="bi bi-trash3-fill"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tabla de Reportes Antiguos -->
+        <h4 class="mt-4">Reportes Antiguos</h4>
+        <div class="border border-round shadow-1 px-2 mb-2" style="background-color: #e6eaf2;">
+            <table class="table table-striped" id="old-reports">
+                <thead>
+                    <tr>
+                        <th>Reportes</th>
+                        <th>Temperatura</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Reporte 2674</td>
+                        <td>
+                            <span style="width:70px" class="badge text-bg-info">6°C</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-link text-decoration-none" onclick="viewDetails(this)">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <button class="btn btn-link text-decoration-none" onclick="deleteRow(this)">
+                                <i class="bi bi-trash3-fill"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Reporte 2675</td>
+                        <td>
+                            <span style="width:70px" class="badge text-bg-info">7°C</span>
+                        </td>
+                        <td>
+                            <button class="btn btn-link text-decoration-none" onclick="viewDetails(this)">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <button class="btn btn-link text-decoration-none" onclick="deleteRow(this)">
+                                <i class="bi bi-trash3-fill"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function viewDetails(button) {
+            var row = button.closest("tr");
+            var reportNumber = row.cells[0].innerText;
+            alert("Detalles del " + reportNumber);
+            // Aquí puedes agregar lógica para mostrar detalles adicionales del reporte
+        }
+
+        function deleteRow(button) {
+            // Mostrar un cuadro de confirmación
+            if (confirm("¿Estás seguro de que deseas borrar este reporte?")) {
+                // Si el usuario confirma, eliminar la fila
+                var row = button.closest("tr");
+                row.parentNode.removeChild(row);
+            }
+        }
+    </script>
+</body>
+</html>

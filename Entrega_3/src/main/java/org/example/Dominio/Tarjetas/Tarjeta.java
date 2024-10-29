@@ -3,8 +3,10 @@ package org.example.Dominio.Tarjetas;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.MappedSuperclass;
 import java.util.Random;
 
+@MappedSuperclass
 public class Tarjeta {
 
   @Getter

@@ -26,6 +26,7 @@ public class PostLoginHandler implements Handler {
       context.render("/templates/login.mustache", model);
     } else {
       if (repositorioUsuarios.verificarUsuarioYcontrasena(usuarioNombre,usuarioContraseña)){
+
         System.out.println("Sesion iniciada");
         context.sessionAttribute("username", usuarioNombre);
         context.sessionAttribute("succesLogin", true);

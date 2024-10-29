@@ -11,10 +11,10 @@ import java.util.List;
 
 public class DonacionDeVianda extends Colaboracion{
   @Setter
-  private List<Vianda> viandas;
+  private Vianda vianda;
 
-    public DonacionDeVianda(List<Vianda> viandas) {
-        this.viandas = viandas;
+    public DonacionDeVianda(Vianda viandas) {
+        this.vianda = viandas;
     }
 
     @Override
@@ -35,5 +35,5 @@ public class DonacionDeVianda extends Colaboracion{
 //       // viandas.add(vianda);
 //      }
   }
-  public Double calcularPuntos(){return viandas.size() *1.5;}
+  public Double calcularPuntos(){return 1.5;}
 }

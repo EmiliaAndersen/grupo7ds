@@ -13,10 +13,9 @@ public class GetPerfil implements Handler {
     Boolean succesLogin = context.sessionAttribute("succesLogin");
 
     if ( succesLogin != null && succesLogin) {
-      model.put( "successMessage", "Session iniciada correctamente " + context.sessionAttribute("username"));
-      context.render("/templates/perfil.mustache", model);
-    }else{
-      context.redirect("/login");  // Redirige a la página de login
+      model.put("successMessage", "Session iniciada correctamente " + context.sessionAttribute("username"));
+      context.sessionAttribute("succesLogin", null);
     }
+    context.render("/templates/perfil.mustache", model);
   }
 }
