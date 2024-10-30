@@ -5,17 +5,23 @@ import org.example.Dominio.AreaDeCobertura.AreaCobertura;
 import org.example.Dominio.Incidentes.Incidente;
 import org.example.Dominio.Incidentes.Visita;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 public class Tecnico extends Rol{
+
+    //TODO: Revisar porque lista
     @Getter
     @Transient
-    //TODO: Revisar porque lista
     private List<AreaCobertura> areaCobertura;
+
+    @OneToMany(mappedBy = "tecnico", cascade = CascadeType.ALL)
+    public List<Visita> visitas;
 
 
     public void registrarVisita(Incidente incidente){

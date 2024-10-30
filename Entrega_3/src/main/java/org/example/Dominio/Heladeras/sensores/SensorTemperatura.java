@@ -6,11 +6,18 @@ import org.example.Dominio.Incidentes.FallaTecnica;
 import org.example.Dominio.Incidentes.IncidenteFactory;
 import org.example.Dominio.Incidentes.TipoAlerta;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import java.time.LocalDateTime;
 import java.util.Timer;
 import java.util.TimerTask;
 
+@Entity
+@DiscriminatorValue("sensor_temperatura")
 public class SensorTemperatura extends Sensor {
+
+    @Column
     private float ultimaTemperaturaRegistrada;
 
     public void monitorear(int intervalo) {

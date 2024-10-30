@@ -11,22 +11,37 @@ import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
 import org.example.Dominio.Rol.Colaborador;
 import org.example.Servicio.LocalizacionEstrategicaAPI;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "hacerse_cargo_heladera")
 public class HacerseCargoDeHeladera extends Colaboracion {
+  @Column
   @Setter
   private LocalDate fechaInicio;
 
+
+  @OneToOne
+  @JoinColumn(name = "punto_estrategico_id",referencedColumnName = "id")
   @Getter
   private PuntoEstrategico puntoEstrategico;
+  @Column
   @Getter
   private Double radio;
 
 
+  @Transient
   private final LocalizacionEstrategicaAPI localizacionEstrategicaAPI;
 
   public HacerseCargoDeHeladera(LocalizacionEstrategicaAPI localizacionEstrategicaAPI, PuntoEstrategico puntoEstrategico, Double radio) {
     this.localizacionEstrategicaAPI = localizacionEstrategicaAPI;
     this.puntoEstrategico = puntoEstrategico;
     this.radio = radio;
+  }
+
+  //TODO: revisar esto porque si saco el null tira error por todos lados
+  public HacerseCargoDeHeladera() {
+    this.localizacionEstrategicaAPI = null;
   }
 
 

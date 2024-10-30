@@ -6,7 +6,16 @@ import org.example.Dominio.Persona.Persona;
 import org.example.Dominio.Rol.Colaborador;
 import org.example.Dominio.Rol.PersonaVulnerable;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "registrar_persona_vulnerable")
 public class RegistrarPersonasEnSituacionVulnerable extends Colaboracion{
+
+
+
+  @OneToOne
+  @JoinColumn(name = "persona_vulnearble_id", referencedColumnName = "id")
   @Getter
   @Setter
   private PersonaVulnerable personaVulnerable;

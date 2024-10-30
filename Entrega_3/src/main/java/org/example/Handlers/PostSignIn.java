@@ -25,7 +25,7 @@ public class PostSignIn implements Handler {
      //Verifico si en el repositorio existe ese usuario, si no existe lo creo y redirigo al login
     // si existe lo redirigo a la misma pagina. TODO: AGREGAR ERROR PARA QUE SEPA QUE EXISTE USUARIO
     if (repoUsuarios.verificarUsuarios(usuarioNombre)){
-      Usuario usuario = new Usuario(generarCodigoAleatorio(), usuarioNombre, usuarioContraseña);
+      Usuario usuario = new Usuario( usuarioNombre, usuarioContraseña);
       repoUsuarios.addUsuario(usuario);
       instanciarPersonas(context, usuario);
       context.redirect("/login");

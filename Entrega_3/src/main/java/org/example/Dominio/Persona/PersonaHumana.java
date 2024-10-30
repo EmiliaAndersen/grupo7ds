@@ -17,12 +17,16 @@ public class PersonaHumana extends Persona {
   public Documento Documento;
 
   @Column
+  @Setter
   public String nombre;
   @Column
+  @Setter
   public String apellido;
   @Column
+  @Setter
   public LocalDate fechaDeNacimiento;
   @Column
+  @Setter
   public String cuil;
 
 }

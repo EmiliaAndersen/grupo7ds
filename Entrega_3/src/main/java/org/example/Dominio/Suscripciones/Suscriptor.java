@@ -2,11 +2,14 @@ package org.example.Dominio.Suscripciones;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.Dominio.Heladeras.Heladera;
+import org.example.Dominio.Incidentes.Visita;
 import org.example.Dominio.MediosContacto.MedioDeContacto;
 import org.example.Dominio.MediosContacto.TipoMedioContacto;
 import org.example.Dominio.Rol.Colaborador;
 
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +17,29 @@ import static org.example.Dominio.Notificador.ServiciosMail.enviarMail;
 
 @Getter
 @Setter
+@Entity
+@Table
 public class Suscriptor {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @OneToOne
+    @JoinColumn(name = "colaborador_id", referencedColumnName = "id", unique = true, nullable = false)
     private Colaborador colaborador;
+
+    @Enumerated(EnumType.STRING)
     private TipoSuscripcion tipo;
+
+    @OneToMany(mappedBy = "suscriptor", cascade = CascadeType.ALL)
+    @Getter
     private List<Notificacion> mensajesEnviados = new ArrayList<Notificacion>();
+
+    @ManyToOne
+    @JoinColumn(name = "heladera_id")
+    public Heladera heladera;
+
+    @Column
     private int numeroAviso = 0;
 
     private String armarNotificacion(){

@@ -5,8 +5,12 @@ import org.example.Dominio.Incidentes.FallaTecnica;
 import org.example.Dominio.Incidentes.IncidenteFactory;
 import org.example.Dominio.Incidentes.TipoAlerta;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import java.time.LocalDateTime;
 
+@Entity
+@DiscriminatorValue("sensor_movimiento")
 public class SensorMovimiento extends Sensor {
 
     public void enviarAlerta() throws Exception {

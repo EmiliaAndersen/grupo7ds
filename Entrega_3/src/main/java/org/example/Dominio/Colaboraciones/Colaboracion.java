@@ -6,8 +6,19 @@ import org.example.Dominio.Persona.Persona;
 import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Persona.PersonaJuridica;
 
+import javax.persistence.*;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Colaboracion {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
+
+  @ManyToOne()
+  @JoinColumn(name = "colaborador_id")
+  private Colaborador colaborador;
   public abstract void procesarColaboracion(Colaborador colaborador);
 
   public Double calcularPuntos() {

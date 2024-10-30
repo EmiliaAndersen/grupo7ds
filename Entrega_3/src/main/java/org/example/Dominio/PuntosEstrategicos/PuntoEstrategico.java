@@ -2,21 +2,39 @@ package org.example.Dominio.PuntosEstrategicos;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.Dominio.Documentos.Documento;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "punto_estrategico")
 public class PuntoEstrategico {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column
     @Getter
     @Setter
     private String nombre;
+
+    @Column
     @Setter
     @Getter
     private Double longitud;
+
+    @Column
     @Setter
     @Getter
     private Double latitud;
+
+    @Column
     @Setter
     @Getter
     private String direccion;
+
+
 
     // Constructor
     public PuntoEstrategico(String nombre, Double longitud, Double latitud, String direccion) {

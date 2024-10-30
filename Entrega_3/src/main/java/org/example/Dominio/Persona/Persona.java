@@ -23,7 +23,9 @@ public abstract class Persona {
   private List<MedioDeContacto> mediosDeContacto;
   @Column
   private String direccion;
-  @Transient
+
+  @OneToOne
+  @JoinColumn(name = "usuario_id",referencedColumnName = "id",nullable = false)
   private Usuario usuario;
-  private Usuario id;
+//  private Usuario id;
 }
