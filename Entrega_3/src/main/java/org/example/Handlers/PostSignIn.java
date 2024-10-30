@@ -24,6 +24,8 @@ public class PostSignIn implements Handler {
 
      //Verifico si en el repositorio existe ese usuario, si no existe lo creo y redirigo al login
     // si existe lo redirigo a la misma pagina. TODO: AGREGAR ERROR PARA QUE SEPA QUE EXISTE USUARIO
+
+
     if (repoUsuarios.verificarUsuarios(usuarioNombre)){
       Usuario usuario = new Usuario( usuarioNombre, usuarioContraseña);
       repoUsuarios.addUsuario(usuario);
@@ -51,7 +53,7 @@ public class PostSignIn implements Handler {
         pj.razonSocial = context.formParam("razon-social");
         pj.tipo = TipoJuridica.valueOf(context.formParam("tipo-juridica"));
     }
-    repoUsuarios.addUsuario(usuario);
+    //repoUsuarios.addUsuario(usuario);
   }
 
   public LocalDate localDateConverter(String fecha){
