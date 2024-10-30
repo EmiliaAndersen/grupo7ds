@@ -42,16 +42,16 @@ public class RepositorioUsuarios {
     //TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.usuario = :usu",Usuario.class);ARA TRAER TODO
     TypedQuery<String> query = em.createQuery("SELECT u.usuario FROM Usuario u WHERE u.usuario = :usu", String.class);
     query.setParameter("usu", nombre);
-    String name = query.getSingleResult();
+    List result = query.getResultList();
 
-    return !name.isEmpty(); // Si no está vacío, el usuario existe
-
+    return result.isEmpty();
     //System.out.println("Verificando usuario...");
     //return  !usuarios.stream().anyMatch(usuario -> usuario.getUsuario().equals(nombre));
   }
 
   public boolean verificarUsuarioYcontrasena(String nombre, String contrasena){
-    return  usuarios.stream().anyMatch(usuario -> usuario.getUsuario().equals(nombre)) && usuarios.stream().anyMatch(usuario -> usuario.getContrasenia().equals(contrasena));
+    EntityManager em = BDUtils.getEntityManager();
+    return !em.createQuery("SELECT u from Usuario u WHERE u.usuario = :usu and u.contrasenia = :con").setParameter("usu",nombre).setParameter("con",contrasena).getResultList().isEmpty();
   }
 
 }
