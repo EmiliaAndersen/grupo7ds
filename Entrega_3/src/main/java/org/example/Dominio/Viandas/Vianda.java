@@ -63,6 +63,10 @@ public class Vianda {
         this.estadoVianda = estadoVianda;
     }
 
+    public Vianda() {
+
+    }
+
 
     public void agregarAHeladera(Heladera heladera){
         this.heladera = heladera;

@@ -19,8 +19,9 @@ public class UsoTarjeta {
     private LocalDate fecha;
     @Column
     private LocalTime hora;
-    @Transient
-    //TODO: Cambiar cuando persistamos las heladeras
+
+    @OneToOne
+    @JoinColumn(name = "heladera_id",referencedColumnName = "id")
     private Heladera heladera;
 
     @ManyToOne

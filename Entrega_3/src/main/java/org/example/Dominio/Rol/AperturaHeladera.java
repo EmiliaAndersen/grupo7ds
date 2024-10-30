@@ -18,10 +18,11 @@ public class AperturaHeladera {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @Transient
+
+  @OneToOne
+  @JoinColumn(name = "heladera_id",referencedColumnName = "id")
   @Getter
   @Setter
-  //TODO: persistir cuando persistamos las heladeras
   private Heladera heladera;
 
   @Column

@@ -23,8 +23,7 @@ public class Colaborador extends Rol{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Transient
-    //TODO: Corregir cuando persistamos las colaboraciones
+    @OneToMany(mappedBy = "colaborador",cascade = CascadeType.ALL)
     @Getter
     @Setter
     private List<Colaboracion> colaboraciones;

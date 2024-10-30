@@ -6,10 +6,15 @@ import org.example.Dominio.Viandas.EstadoVianda;
 import lombok.Setter;
 import org.example.Dominio.Viandas.Vianda;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
-
+@Entity
+@Table(name = "donacion_de_vianda")
 public class DonacionDeVianda extends Colaboracion{
+
+  @OneToOne
+  @JoinColumn(name = "vianda_id",referencedColumnName = "id")
   @Setter
   private Vianda vianda;
 
@@ -17,7 +22,11 @@ public class DonacionDeVianda extends Colaboracion{
         this.vianda = viandas;
     }
 
-    @Override
+  public DonacionDeVianda() {
+
+  }
+
+  @Override
   public void procesarColaboracion(Colaborador colaborador) {
 //      boolean puedoProcesar = isTypeOf(colaborador, TipoColaborador.P_HUMANA);
 //      if (puedoProcesar) {
