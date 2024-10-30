@@ -25,5 +25,5 @@ public abstract class Persona {
   private String direccion;
   @Transient
   private Usuario usuario;
-  private Usuario id;
+//  private Usuario id;
 }

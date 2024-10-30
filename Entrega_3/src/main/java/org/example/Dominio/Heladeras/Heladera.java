@@ -2,7 +2,9 @@ package org.example.Dominio.Heladeras;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.Dominio.Heladeras.sensores.Sensor;
 import org.example.Dominio.Incidentes.Alerta;
+import org.example.Dominio.Incidentes.Incidente;
 import org.example.Dominio.Incidentes.TipoAlerta;
 import org.example.Dominio.Incidentes.Visita;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
@@ -13,27 +15,61 @@ import org.example.Dominio.Reportes.GeneradorReporteViandasRetiradas;
 
 import org.example.Dominio.Viandas.Vianda;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table
 public class Heladera {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+
+    @OneToOne
+    @JoinColumn(name = "punto_estrategico_id", referencedColumnName = "id", unique = true, nullable = false)
     @Getter
     private PuntoEstrategico ubicacion;
-    private ArrayList<Vianda> viandas;
+
+
+
+    @Column
     private LocalDate fechaInicioFuncionamiento;
+
+    @Column
     @Setter
     @Getter
     private float temperaturaMaxima;
+
+    @Column
     @Setter
     @Getter
     private float temperaturaMinima;
+
+    @Enumerated(EnumType.STRING)
     @Setter
     public EstadoHeladera estado;
 
+    @OneToMany(mappedBy = "heladera", cascade = CascadeType.ALL)
+    private List<Vianda> viandas;
+
+    @OneToMany(mappedBy = "heladera", cascade = CascadeType.ALL)
     public List <Suscriptor>suscriptores;
+
+    @OneToMany(mappedBy = "heladera", cascade = CascadeType.ALL)
     private List<ActividadHeladera> mesesActiva;
+
+    @OneToMany(mappedBy = "heladera", cascade = CascadeType.ALL)
+    public List<Sensor> sensores;
+
+    @OneToMany(mappedBy = "heladera", cascade = CascadeType.ALL)
+    public List<Incidente> incidentes;
+
+
 
     public Heladera(float temperaturaMaxima, float temperaturaMinima, PuntoEstrategico ubicacion){
         this.temperaturaMaxima = temperaturaMaxima;
