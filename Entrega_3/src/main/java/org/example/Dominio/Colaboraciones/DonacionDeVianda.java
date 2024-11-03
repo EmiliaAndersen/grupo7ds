@@ -28,6 +28,7 @@ public class DonacionDeVianda extends Colaboracion{
 
   @Override
   public void procesarColaboracion(Colaborador colaborador) {
+        
 //      boolean puedoProcesar = isTypeOf(colaborador, TipoColaborador.P_HUMANA);
 //      if (puedoProcesar) {
 //        //SCANNER PEDIR Y GUARDAR

@@ -3,6 +3,7 @@ package org.example.Dominio.Persona;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.Dominio.MediosContacto.MedioDeContacto;
+import org.example.Dominio.Rol.Rol;
 import org.example.Validador.Usuario;
 
 import javax.persistence.*;
@@ -28,4 +29,9 @@ public abstract class Persona {
   @JoinColumn(name = "usuario_id",referencedColumnName = "id",nullable = false)
   private Usuario usuario;
 //  private Usuario id;
+
+
+    public void asignarRol(Persona persona, Rol rol){
+    rol.persona= persona;
+    }
 }

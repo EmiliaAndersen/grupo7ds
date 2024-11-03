@@ -20,6 +20,12 @@ public class RegistrarPersonasEnSituacionVulnerable extends Colaboracion{
   @Setter
   private PersonaVulnerable personaVulnerable;
 
+
+  public RegistrarPersonasEnSituacionVulnerable(PersonaVulnerable per){
+    this.personaVulnerable=per;
+  }
+  public RegistrarPersonasEnSituacionVulnerable(){
+  }
   @Override
   public void procesarColaboracion(Colaborador colaborador) {
       boolean puedoProcesar = isTypeOf(colaborador, TipoColaborador.P_HUMANA);

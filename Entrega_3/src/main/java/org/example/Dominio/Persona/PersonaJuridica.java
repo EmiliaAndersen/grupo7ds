@@ -9,11 +9,15 @@ import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("persona_juridica")
+@Setter
+@Getter
 public class PersonaJuridica extends Persona {
 
   @Column
+  @Setter
   public String razonSocial;
   @Column
+  @Setter
   public TipoJuridica tipo;
 
 }

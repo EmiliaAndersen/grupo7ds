@@ -17,4 +17,7 @@ public class Rol {
     @Getter
     @Setter
     public Persona persona;
+
+
 }
+

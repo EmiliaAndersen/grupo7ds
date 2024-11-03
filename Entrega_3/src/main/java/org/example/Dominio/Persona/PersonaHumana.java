@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class PersonaHumana extends Persona {
 
   @OneToOne
-  @JoinColumn(name = "documento_id", referencedColumnName = "id", unique = true, nullable = false)
+  @JoinColumn(name = "documento_id", referencedColumnName = "id", unique = true, nullable = true)
   public Documento Documento;
 
   @Column

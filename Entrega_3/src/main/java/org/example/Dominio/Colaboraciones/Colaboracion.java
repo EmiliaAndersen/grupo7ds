@@ -37,4 +37,8 @@ public abstract class Colaboracion {
     }
   }
 
+  public void setColaborador(Colaborador colab){
+    this.colaborador = colab;
+  }
+
 }
