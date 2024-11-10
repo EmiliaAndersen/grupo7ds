@@ -45,7 +45,8 @@ public class PostPerfil implements Handler {
     BDUtils.comenzarTransaccion(em);
     TypedQuery<PersonaHumana> query = em.createQuery(
         "SELECT p FROM PersonaHumana p JOIN p.usuario u WHERE u.usuario = :usu", PersonaHumana.class);
-    query.setParameter("usu", "dan");
+    String usuarioNombre = context.sessionAttribute("username");
+    query.setParameter("usu", usuarioNombre);
 
     PersonaHumana ph = query.getSingleResult();
 
