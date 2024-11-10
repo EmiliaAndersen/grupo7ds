@@ -64,6 +64,7 @@ public class PostSignIn implements Handler {
         pj.setUsuario(usuario);
         pj.razonSocial = context.formParam("razon-social");
         pj.tipo = TipoJuridica.valueOf(context.formParam("tipo-juridica"));
+        pj.setDireccion(context.formParam(("direccionPJ")));
         em.persist(pj);
     }
     BDUtils.commit(em);

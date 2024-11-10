@@ -12,6 +12,11 @@ import org.jetbrains.annotations.NotNull;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import org.example.BDUtils;
+
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 public class PostPerfil implements Handler {
 
@@ -24,9 +29,8 @@ public class PostPerfil implements Handler {
 
     String accion = context.formParam("btn-accion");
     if(accion.equals("save")){
-      //Usuario usuario = repoUsuarios.obtenerUsuarioPorNombre(usuarioNombre);
-      model.put( "successMessage", "Datos guardados correctamente " + context.sessionAttribute("username"));
-      context.render("/templates/perfil.mustache", model);
+      actualizarUsuario(context);
+      context.redirect("/perfil");
     }else if(accion.equals("logout")){
       context.sessionAttribute("username", null);
       context.redirect("/login");
@@ -34,6 +38,22 @@ public class PostPerfil implements Handler {
       context.redirect("/perfil");
     }
 
+  }
+
+  private void actualizarUsuario(Context context) {
+    EntityManager em = BDUtils.getEntityManager();
+    BDUtils.comenzarTransaccion(em);
+    TypedQuery<PersonaHumana> query = em.createQuery(
+        "SELECT p FROM PersonaHumana p JOIN p.usuario u WHERE u.usuario = :usu", PersonaHumana.class);
+    query.setParameter("usu", "dan");
+
+    PersonaHumana ph = query.getSingleResult();
+
+    ph.nombre = context.formParam("nombre");
+    ph.apellido = context.formParam("apellido");
+    ph.setDireccion("direccion");
+    em.getTransaction().commit(); // Confirma la transacción para aplicar los cambios
+    System.out.println(ph.nombre);
   }
 
 }

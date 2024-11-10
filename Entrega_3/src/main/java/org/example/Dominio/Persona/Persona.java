@@ -23,6 +23,7 @@ public abstract class Persona {
   @Transient
   private List<MedioDeContacto> mediosDeContacto;
   @Column
+  @Setter
   private String direccion;
 
   @OneToOne
