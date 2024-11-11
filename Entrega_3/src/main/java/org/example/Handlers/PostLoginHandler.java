@@ -2,10 +2,12 @@ package org.example.Handlers;
 
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
-import org.example.Validador.Usuario;
+import org.example.BDUtils;
 import org.example.repositorios.RepositorioUsuarios;
 import org.jetbrains.annotations.NotNull;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,10 +29,21 @@ public class PostLoginHandler implements Handler {
     } else {
       if (repositorioUsuarios.verificarUsuarioYcontrasena(usuarioNombre,usuarioContraseña)){
 
+        EntityManager em = BDUtils.getEntityManager();
+        String sql = "SELECT p.tipo_persona FROM persona p INNER JOIN usuario u ON u.id=p.usuario_id WHERE u.usuario = :usu";
+        Query nativeQuery = em.createNativeQuery(sql);
+        nativeQuery.setParameter("usu", usuarioNombre);
+
+        String tipo_persona = (String) nativeQuery.getSingleResult();
+
+
+        context.render("/templates/perfil_persona_juridica.mustache", model);
+        context.sessionAttribute("tipo_persona", tipo_persona);
+
         System.out.println("Sesion iniciada");
         context.sessionAttribute("username", usuarioNombre);
         context.sessionAttribute("succesLogin", true);
-        context.redirect("/perfil");
+        context.redirect("/perfil_"+tipo_persona);
       } else {
         System.out.println("ERROR");
         model.put("errorMessage", "El nombre de usuario o la contraseña no coincide.");

@@ -37,18 +37,22 @@ public class App {
     app.get("/signin", new GetSignIn());
     app.post("/signin", new PostSignIn());
 
-    app.before("/perfil",AuthMiddleware::verificarAutenticacion);
-    app.get("/perfil", new GetPerfil());
-    app.post("/perfil", new PostPerfil());
 
+    app.before("/perfil_persona_humana",AuthMiddleware::verificarAutenticacion);
+    app.get("/perfil_persona_humana", new GetPerfil());
+    app.post("/perfil_persona_humana", new PostPerfil());
 
-    app.before("/colaboracionHumana",AuthMiddleware::verificarAutenticacion);
-    app.get("/colaboracionHumana", new ColaboHumanaHandler());
-    app.post("/colaboracionHumana", new PostColaboHumanaHandler());
+    app.before("/perfil_persona_juridica",AuthMiddleware::verificarAutenticacion);
+    app.get("/perfil_persona_juridica", new GetPerfil());
+    app.post("/perfil_persona_juridica", new PostPerfil());
 
-    app.before("/colaboracionJuridica",AuthMiddleware::verificarAutenticacion);
-    app.get("/colaboracionJuridica", new ColaboJuridicaHandler());
-    app.post("/colaboracionJuridica", new PostColaboJuridicaHandler());
+    app.before("/colaboracion_persona_humana",AuthMiddleware::verificarAutenticacion);
+    app.get("/colaboracion_persona_humana", new ColaboHumanaHandler());
+    app.post("/colaboracion_persona_humana", new PostColaboHumanaHandler());
+
+    app.before("/colaboracion_persona_juridica",AuthMiddleware::verificarAutenticacion);
+    app.get("/colaboracion_persona_juridica", new ColaboJuridicaHandler());
+    app.post("/colaboracion_persona_juridica", new PostColaboJuridicaHandler());
 
     app.before("/cargaColaboracion",AuthMiddleware::verificarAutenticacion);
     app.get("/cargaColaboracion", new CargaColaboHandler());
@@ -59,8 +63,8 @@ public class App {
     app.post("/ofrecer", new PostOfProdHandler());
 
     app.before("/personaVulnerable",AuthMiddleware::verificarAutenticacion);
-    //app.get("/personaVulnerable", new GetPersVulnHandler());
-    //app.post("/personaVulnerable", new PostPersVulnHandler());
+    app.get("/personaVulnerable", new GetPersVulnHandler());
+    app.post("/personaVulnerable", new PostPersVulnHandler());
 
     app.before("/reportes",AuthMiddleware::verificarAutenticacion);
     app.get("/reportes", new GetReportes());

@@ -30,12 +30,12 @@ public class PostPerfil implements Handler {
     String accion = context.formParam("btn-accion");
     if(accion.equals("save")){
       actualizarUsuario(context);
-      context.redirect("/perfil");
+      context.redirect("/perfil_"+context.sessionAttribute("tipo_persona"));
     }else if(accion.equals("logout")){
       context.sessionAttribute("username", null);
       context.redirect("/login");
     }else{
-      context.redirect("/perfil");
+        context.redirect("/perfil_"+context.sessionAttribute("tipo_persona"));
     }
 
   }
@@ -43,18 +43,22 @@ public class PostPerfil implements Handler {
   private void actualizarUsuario(Context context) {
     EntityManager em = BDUtils.getEntityManager();
     BDUtils.comenzarTransaccion(em);
-    TypedQuery<PersonaHumana> query = em.createQuery(
-        "SELECT p FROM PersonaHumana p JOIN p.usuario u WHERE u.usuario = :usu", PersonaHumana.class);
-    String usuarioNombre = context.sessionAttribute("username");
-    query.setParameter("usu", usuarioNombre);
+    if(context.sessionAttribute("tipo_persona").equals("persona_humana")) {
+      TypedQuery<PersonaHumana> query = em.createQuery(
+              "SELECT p FROM PersonaHumana p JOIN p.usuario u WHERE u.usuario = :usu", PersonaHumana.class);
+      String usuarioNombre = context.sessionAttribute("username");
+      query.setParameter("usu", usuarioNombre);
 
-    PersonaHumana ph = query.getSingleResult();
+      PersonaHumana ph = query.getSingleResult();
 
-    ph.nombre = context.formParam("nombre");
-    ph.apellido = context.formParam("apellido");
-    ph.setDireccion("direccion");
-    em.getTransaction().commit(); // Confirma la transacción para aplicar los cambios
-    System.out.println(ph.nombre);
+      ph.nombre = context.formParam("nombre");
+      ph.apellido = context.formParam("apellido");
+      ph.setDireccion("direccion");
+      em.getTransaction().commit(); // Confirma la transacción para aplicar los cambios
+      System.out.println(ph.nombre);
+    }else{
+
+    }
   }
 
 }
