@@ -11,10 +11,10 @@ import java.time.LocalDate;
 
 public class OfrecerProductosFactory extends ColaboracionFactory {
 
-    public Colaboracion crearColaboracion(Colaborador colaborador, String tipo_producto, String marca, int monto) {
-        if(!this.validarTipoColaborador(colaborador, TipoColaborador.P_JURIDICA)){
-            return null;
-        }
+    public Colaboracion crearColaboracion(String tipo_producto, String marca, int monto) {
+//        if(!this.validarTipoColaborador(colaborador, TipoColaborador.P_JURIDICA)){
+//            return null;
+//        }
 
         return new OfrecerProductos(tipo_producto, marca, monto);
     }

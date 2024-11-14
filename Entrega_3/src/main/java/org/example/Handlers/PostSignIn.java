@@ -4,9 +4,11 @@ import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import org.example.BDUtils;
 import org.example.Dominio.Documentos.Documento;
+import org.example.Dominio.Persona.Persona;
 import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Persona.PersonaJuridica;
 import org.example.Dominio.Persona.TipoJuridica;
+import org.example.Dominio.Rol.Colaborador;
 import org.example.Validador.Usuario;
 import org.example.repositorios.RepositorioUsuarios;
 import org.jetbrains.annotations.NotNull;
@@ -39,6 +41,7 @@ public class PostSignIn implements Handler {
       System.out.println("Usuario existe");
       context.redirect("/signin");
     }
+
   }
 
   public void instanciarPersonas(Context context,Usuario usuario){
@@ -59,6 +62,8 @@ public class PostSignIn implements Handler {
         ph.setDocumento(documento);
         em.persist(documento);
         em.persist(ph);
+        BDUtils.commit(em);
+        instanciarColaborador(context, ph);
     } else if(context.formParam("tipo_colaborador").equals("pj")){
       PersonaJuridica pj = new PersonaJuridica();
         pj.setUsuario(usuario);
@@ -66,8 +71,10 @@ public class PostSignIn implements Handler {
         pj.tipo = TipoJuridica.valueOf(context.formParam("tipo-juridica"));
         pj.setDireccion(context.formParam(("direccionPJ")));
         em.persist(pj);
+        BDUtils.commit(em);
+        instanciarColaborador(context, pj);
     }
-    BDUtils.commit(em);
+
   }
 
   public LocalDate localDateConverter(String fecha){
@@ -84,4 +91,17 @@ public class PostSignIn implements Handler {
     }
     return codigo.toString();
   }
+
+  public void instanciarColaborador(Context context, Persona persona){
+    EntityManager em = BDUtils.getEntityManager();
+    BDUtils.comenzarTransaccion(em);
+
+    Colaborador col = new Colaborador();
+    col.setPersona(persona);
+    em.persist(col);
+    BDUtils.commit(em);
+  }
 }
+
+
+

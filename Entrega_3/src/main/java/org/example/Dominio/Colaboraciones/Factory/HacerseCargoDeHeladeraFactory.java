@@ -8,10 +8,10 @@ import org.example.Dominio.Rol.Colaborador;
 import org.example.Servicio.LocalizacionEstrategicaAPI;
 
 public class HacerseCargoDeHeladeraFactory extends ColaboracionFactory {
-    public Colaboracion crearColaboracion(Colaborador colaborador, LocalizacionEstrategicaAPI api, PuntoEstrategico punto, Double radio) {
-        if(!this.validarTipoColaborador(colaborador, TipoColaborador.P_JURIDICA)){
-            return null;
-        }
+    public Colaboracion crearColaboracion(LocalizacionEstrategicaAPI api, PuntoEstrategico punto, Double radio) {
+//        if(!this.validarTipoColaborador(colaborador, TipoColaborador.P_JURIDICA)){
+//            return null;
+//        }
 
         // Podria notificarse a los reportes sobre la nueva heladera.
         return new HacerseCargoDeHeladera(api, punto, radio);

@@ -12,11 +12,11 @@ import java.time.LocalDate;
 
 public class DistribucionDeViandasFactory extends ColaboracionFactory {
 
-    public Colaboracion crearColaboracion(Colaborador colaborador, Heladera heladeraOrigen, Heladera heladeraDestino, String motivo, LocalDate fecha){
-        if(!this.validarTipoColaborador(colaborador, TipoColaborador.P_HUMANA))
-        {
-            return null;
-        }
+    public Colaboracion crearColaboracion(Heladera heladeraOrigen, Heladera heladeraDestino, String motivo, LocalDate fecha){
+//        if(!this.validarTipoColaborador(TipoColaborador.P_HUMANA))
+//        {
+//            return null;
+//        }
 
         return new DistribucionDeViandas(heladeraOrigen, heladeraDestino, motivo, fecha);
     }

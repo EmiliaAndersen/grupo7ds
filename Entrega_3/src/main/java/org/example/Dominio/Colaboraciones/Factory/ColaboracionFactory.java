@@ -13,16 +13,16 @@ import java.time.LocalDate;
 
 public abstract class ColaboracionFactory {
 
-    public boolean validarTipoColaborador(Colaborador colaborador, TipoColaborador tipo){
-         Persona persona = colaborador.getPersona();
-         switch(tipo){
-             case P_JURIDICA:
-                 return persona instanceof PersonaJuridica;
-             case P_HUMANA:
-                 return persona instanceof PersonaHumana;
-             default:
-                 return false;
-         }
-    }
+//    public boolean validarTipoColaborador(Colaborador colaborador, TipoColaborador tipo){
+//         Persona persona = colaborador.getPersona();
+//         switch(tipo){
+//             case P_JURIDICA:
+//                 return persona instanceof PersonaJuridica;
+//             case P_HUMANA:
+//                 return persona instanceof PersonaHumana;
+//             default:
+//                 return false;
+//         }
+//    }
 
 }

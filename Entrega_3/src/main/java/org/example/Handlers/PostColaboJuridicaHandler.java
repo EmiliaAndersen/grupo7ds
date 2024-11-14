@@ -35,7 +35,7 @@ public class PostColaboJuridicaHandler implements Handler {
                 HacerseCargoDeHeladeraFactory factoryHC = new HacerseCargoDeHeladeraFactory();
                 // TODO: Repensar las cosas que necesita este tipo de colaboración para ser creado. No tiene mucho sentido lo actual
                 // Me parece que tiene mas sentido que solamente reciba una ubicacion.
-                factoryHC.crearColaboracion(null, null, ubicacion, null);
+                factoryHC.crearColaboracion( null, ubicacion, null);
                 break;
             }
             case "op":{
@@ -44,7 +44,7 @@ public class PostColaboJuridicaHandler implements Handler {
                 int monto = Integer.parseInt(ctx.formParam("monto"));
 
                 OfrecerProductosFactory factoryOP = new OfrecerProductosFactory();
-                factoryOP.crearColaboracion(null, tipo_producto, marca, monto);
+                factoryOP.crearColaboracion( tipo_producto, marca, monto);
                 break;
             }
             case "dd":{
@@ -54,7 +54,7 @@ public class PostColaboJuridicaHandler implements Handler {
 
                 DonacionDeDineroFactory factoryDD = new DonacionDeDineroFactory();
                 // TODO: Agregar un atributo session para obtener el colaborador asociado al usuario que realiza la colaboracion
-                factoryDD.crearColaboracion(null, fecha, monto, frecuencia);
+                factoryDD.crearColaboracion( fecha, monto, frecuencia);
                 break;
             }
         }

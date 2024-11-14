@@ -25,6 +25,7 @@ import java.util.List;
 @Table
 public class Heladera {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -80,6 +81,9 @@ public class Heladera {
         this.estado = EstadoHeladera.ACTIVA;
         this.mesesActiva = new ArrayList<ActividadHeladera>();
         this.suscriptores = new ArrayList<Suscriptor>();
+    }
+    public Heladera() {
+        // Constructor vacío para JPA
     }
 
     public boolean validarTemperaturaFuncional(float unaTemperatura){
