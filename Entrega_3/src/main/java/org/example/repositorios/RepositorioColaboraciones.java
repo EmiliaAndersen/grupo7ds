@@ -5,6 +5,8 @@ import lombok.Setter;
 import org.example.BDUtils;
 import org.example.Dominio.Colaboraciones.Colaboracion;
 import org.example.Dominio.Colaboraciones.DonacionDeVianda;
+import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
+import org.example.Dominio.Viandas.Vianda;
 import org.example.Validador.Usuario;
 
 import javax.persistence.EntityManager;
@@ -29,10 +31,40 @@ public class RepositorioColaboraciones {
 
 
 
-    public void addDonacionVianda(Colaboracion donacionDeVianda){
+    public void addDonacionVianda(Colaboracion donacionDeVianda, Vianda vianda){
         EntityManager em = BDUtils.getEntityManager();
         BDUtils.comenzarTransaccion(em);
+        em.persist(vianda);
         em.persist(donacionDeVianda);
+        BDUtils.commit(em);
+    }
+
+    public void addDonacionDinero(Colaboracion donacionDeDinero){
+        EntityManager em = BDUtils.getEntityManager();
+        BDUtils.comenzarTransaccion(em);
+        em.persist(donacionDeDinero);
+        BDUtils.commit(em);
+    }
+
+    public void addDistribucionVianda(Colaboracion distribucionVianda){
+        EntityManager em = BDUtils.getEntityManager();
+        BDUtils.comenzarTransaccion(em);
+        em.persist(distribucionVianda);
+        BDUtils.commit(em);
+    }
+
+    public void addHacerseCargoHeladera(Colaboracion hacerseCargoHeladera, PuntoEstrategico pto){
+        EntityManager em = BDUtils.getEntityManager();
+        BDUtils.comenzarTransaccion(em);
+        em.persist(pto);
+        em.persist(hacerseCargoHeladera);
+        BDUtils.commit(em);
+    }
+
+    public void addOfrecerProducto(Colaboracion ofrecerProducto){
+        EntityManager em = BDUtils.getEntityManager();
+        BDUtils.comenzarTransaccion(em);
+        em.persist(ofrecerProducto);
         BDUtils.commit(em);
     }
 }

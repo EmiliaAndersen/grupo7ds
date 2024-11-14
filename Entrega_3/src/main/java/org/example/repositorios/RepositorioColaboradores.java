@@ -40,6 +40,22 @@ public class RepositorioColaboradores {
         }
     }
 
+    public Colaborador obtenerColaboradorxID(Long id) {
+        EntityManager em = BDUtils.getEntityManager();
+        try {
+            TypedQuery<Colaborador> query = em.createQuery(
+                    "SELECT c FROM Colaborador c " +
+                            "WHERE c.id = :idColaborador", Colaborador.class);
+            query.setParameter("idColaborador", id);
+
+            // Usa getSingleResult() para obtener el único resultado esperado
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            // Si no se encuentra ningún colaborador, retorna null
+            return null;
+        }
+    }
+
 
 
     public void addColaborador(Colaborador colaborador){

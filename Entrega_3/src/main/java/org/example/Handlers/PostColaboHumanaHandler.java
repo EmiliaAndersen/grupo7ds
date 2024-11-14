@@ -33,7 +33,7 @@ public class PostColaboHumanaHandler implements Handler {
         RepositorioHeladeras repoHeladeras = RepositorioHeladeras.getInstance();
         RepositorioColaboraciones repoColaboraciones = RepositorioColaboraciones.getInstance();
 
-        String tipoColabo = "dv"; //ctx.formParam("tipo_colaborador");
+        String tipoColabo = ctx.formParam("btn-colab");
 
         Map<String, Object> model = new HashMap<>();
 
@@ -65,7 +65,7 @@ public class PostColaboHumanaHandler implements Handler {
                 Colaboracion donacionDeVianda = factoryDV.crearColaboracion(vianda);
                 donacionDeVianda.setColaborador(colaborador);
 
-                repoColaboraciones.addDonacionVianda(donacionDeVianda);
+                repoColaboraciones.addDonacionVianda(donacionDeVianda, vianda);
                 break;
             }
             case "dd": {
@@ -74,9 +74,11 @@ public class PostColaboHumanaHandler implements Handler {
                 double monto = Double.parseDouble(ctx.formParam("password"));
                 String frecuencia = ctx.formParam("frecuencia");
 
+
+                // TODO: Agregar un atributo session para obtener el colaborador asociado al usuario que realiza la colaboracion para linkearlo al repo
                 DonacionDeDineroFactory factoryDD = new DonacionDeDineroFactory();
-                // TODO: Agregar un atributo session para obtener el colaborador asociado al usuario que realiza la colaboracion
-                factoryDD.crearColaboracion(fecha, monto, frecuencia);
+                Colaboracion donacionDinero = factoryDD.crearColaboracion(fecha, monto, frecuencia);
+                repoColaboraciones.addDonacionDinero(donacionDinero);
                 break;
             }
             case "ddv": {
@@ -97,14 +99,14 @@ public class PostColaboHumanaHandler implements Handler {
                 }
 
                 DistribucionDeViandasFactory factoryDDV = new DistribucionDeViandasFactory();
-                //todo obtener las heladeras a partir de los ids y generar asi la colaboracion para q no esten en null
-                factoryDDV.crearColaboracion( heladera_origen, heladera_destino, motivo, LocalDate.now());
+                Colaboracion distribucionVianda = factoryDDV.crearColaboracion( heladera_origen, heladera_destino, motivo, LocalDate.now());
+                repoColaboraciones.addDistribucionVianda(distribucionVianda);
                 break;
             }
         }
 
         System.out.println("Colaboracion creada");
-        ctx.redirect("/perfil");
+        ctx.redirect("/perfil_persona_humana");
 
     }
 }
