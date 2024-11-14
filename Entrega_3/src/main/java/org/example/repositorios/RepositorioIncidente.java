@@ -1,6 +1,7 @@
 package org.example.repositorios;
 
 import org.example.BDUtils;
+import org.example.Dominio.Incidentes.FallaTecnica;
 import org.example.Dominio.Incidentes.Incidente;
 
 import javax.persistence.EntityManager;

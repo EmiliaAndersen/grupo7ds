@@ -33,9 +33,18 @@ public class PostColaboHumanaHandler implements Handler {
         RepositorioHeladeras repoHeladeras = RepositorioHeladeras.getInstance();
         RepositorioColaboraciones repoColaboraciones = RepositorioColaboraciones.getInstance();
 
+
         String tipoColabo = ctx.formParam("btn-colab");
 
         Map<String, Object> model = new HashMap<>();
+
+        String userName = ctx.sessionAttribute("username");
+        Colaborador colaborador = repoColaboradores.obtenerColaborador(userName);
+        if (colaborador == null) {
+            model.put("errorMessage", "El colaborador no existe");
+            ctx.render("/templates/colaboracionHumana.mustache", model);
+            return;
+        }
 
         switch (Objects.requireNonNull(tipoColabo)) {
             case "dv": {
@@ -47,12 +56,6 @@ public class PostColaboHumanaHandler implements Handler {
                 float peso = Float.parseFloat(ctx.formParam("peso"));
                 float calorias = Float.parseFloat(ctx.formParam("calorias"));
 
-                Colaborador colaborador = repoColaboradores.obtenerColaborador(nombreColaborador);
-                if (colaborador == null) {
-                    model.put("errorMessage", "El colaborador no existe");
-                    ctx.render("/templates/colaboracionHumana.mustache", model);
-                    return;
-                }
                 Heladera heladera = repoHeladeras.obtenerHeladera(heladera_id);
                 if (heladera == null) {
                     model.put("errorMessage", "La heladera no existe");
@@ -78,6 +81,7 @@ public class PostColaboHumanaHandler implements Handler {
                 // TODO: Agregar un atributo session para obtener el colaborador asociado al usuario que realiza la colaboracion para linkearlo al repo
                 DonacionDeDineroFactory factoryDD = new DonacionDeDineroFactory();
                 Colaboracion donacionDinero = factoryDD.crearColaboracion(fecha, monto, frecuencia);
+                donacionDinero.setColaborador(colaborador);
                 repoColaboraciones.addDonacionDinero(donacionDinero);
                 break;
             }
@@ -100,6 +104,7 @@ public class PostColaboHumanaHandler implements Handler {
 
                 DistribucionDeViandasFactory factoryDDV = new DistribucionDeViandasFactory();
                 Colaboracion distribucionVianda = factoryDDV.crearColaboracion( heladera_origen, heladera_destino, motivo, LocalDate.now());
+                distribucionVianda.setColaborador(colaborador);
                 repoColaboraciones.addDistribucionVianda(distribucionVianda);
                 break;
             }

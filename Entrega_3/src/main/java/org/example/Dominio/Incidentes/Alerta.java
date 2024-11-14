@@ -8,7 +8,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@DiscriminatorValue("alerta")
+//@DiscriminatorValue("alerta")
+@Table(name = "alerta")
 public class Alerta extends Incidente{
     @Enumerated(EnumType.STRING)
     private TipoAlerta tipo;

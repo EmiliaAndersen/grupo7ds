@@ -7,7 +7,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@DiscriminatorValue("falla_tecnica")
+//@DiscriminatorValue("falla_tecnica")
+@Table(name="falla_tecnica")
 public class FallaTecnica extends Incidente {
     @OneToOne
     @JoinColumn(name = "colaborador_id", referencedColumnName = "id", unique = true, nullable = false)
@@ -17,8 +18,9 @@ public class FallaTecnica extends Incidente {
     @Column
     private String foto;
 
-    public FallaTecnica(Colaborador colaborador, Heladera heladera, LocalDateTime fechaYHora) {
+    public FallaTecnica(Colaborador colaborador, Heladera heladera, LocalDateTime fechaYHora, String description) {
         this.reportero = colaborador;
+        this.description = description;
         this.setHeladera(heladera);
         this.setFechaYHora(fechaYHora);
     }

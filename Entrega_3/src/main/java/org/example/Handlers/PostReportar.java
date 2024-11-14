@@ -1,6 +1,7 @@
 package org.example.Handlers;
 
 import org.example.Dominio.Heladeras.Heladera;
+import org.example.Dominio.Incidentes.FallaTecnica;
 import org.example.Dominio.Incidentes.Incidente;
 import org.example.Dominio.Incidentes.IncidenteFactory;
 import org.example.Dominio.Rol.Colaborador;
@@ -25,6 +26,14 @@ public class PostReportar implements @NotNull Handler {
                 RepositorioIncidente repoIncidentes = RepositorioIncidente.getInstance();
                 RepositorioColaboradores repoColaboradores = RepositorioColaboradores.getInstance();
                 Map<String, Object> model = new HashMap<>();
+
+                 String userName = context.sessionAttribute("username");
+                 Colaborador colaborador = repoColaboradores.obtenerColaborador(userName);
+                 if (colaborador == null) {
+                     model.put("errorMessage", "El colaborador no existe");
+                     context.render("/templates/colaboracionHumana.mustache", model);
+                     return;
+                 }
         
                 // Validar que los campos no estén vacíos
                 if (heladera_id == null || heladera_id.isEmpty() || descripcion == null || descripcion.isEmpty()) {
@@ -37,8 +46,7 @@ public class PostReportar implements @NotNull Handler {
                         return;
                     }
                     IncidenteFactory incidenteFactory = new IncidenteFactory();
-                    Colaborador col = repoColaboradores.obtenerColaboradorxID(2L);
-                    Incidente falla = incidenteFactory.crearFalla(col, heladera);
+                    Incidente falla = incidenteFactory.crearFalla(colaborador, heladera, descripcion);
                     // Redirigir al perfil
                     repoIncidentes.addIncidente(falla);
                     context.redirect("/reportar");//agregar tipo persona al path

@@ -7,6 +7,7 @@ import org.example.Dominio.Colaboraciones.Factory.DonacionDeDineroFactory;
 import org.example.Dominio.Colaboraciones.Factory.HacerseCargoDeHeladeraFactory;
 import org.example.Dominio.Colaboraciones.Factory.OfrecerProductosFactory;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
+import org.example.Dominio.Rol.Colaborador;
 import org.example.repositorios.RepositorioColaboraciones;
 import org.example.repositorios.RepositorioColaboradores;
 import org.example.repositorios.RepositorioHeladeras;
@@ -28,6 +29,14 @@ public class PostColaboJuridicaHandler implements Handler {
         String tipoColabo = ctx.formParam("btn-colab");
         Map<String, Object> model = new HashMap<>();
 
+        String userName = ctx.sessionAttribute("username");
+        Colaborador colaborador = repoColaboradores.obtenerColaborador(userName);
+        if (colaborador == null) {
+            model.put("errorMessage", "El colaborador no existe");
+            ctx.render("/templates/colaboracionHumana.mustache", model);
+            return;
+        }
+
         switch (tipoColabo){
             case "hc":{
                 String heladera_id = ctx.formParam("heladera");
@@ -39,6 +48,7 @@ public class PostColaboJuridicaHandler implements Handler {
                 // TODO: Repensar las cosas que necesita este tipo de colaboración para ser creado. No tiene mucho sentido lo actual
                 // Me parece que tiene mas sentido que solamente reciba una ubicacion.
                 Colaboracion hacerseCargoHeladera = factoryHC.crearColaboracion( null, ubicacion, null);
+                hacerseCargoHeladera.setColaborador(colaborador);
                 repoColaboraciones.addHacerseCargoHeladera(hacerseCargoHeladera, ubicacion);
                 break;
             }
@@ -49,6 +59,7 @@ public class PostColaboJuridicaHandler implements Handler {
 
                 OfrecerProductosFactory factoryOP = new OfrecerProductosFactory();
                 Colaboracion ofrecerProductos = factoryOP.crearColaboracion( tipo_producto, marca, monto);
+                ofrecerProductos.setColaborador(colaborador);
                 repoColaboraciones.addOfrecerProducto(ofrecerProductos);
 
                 break;
@@ -62,6 +73,7 @@ public class PostColaboJuridicaHandler implements Handler {
                 // TODO: Agregar un atributo session para obtener el colaborador asociado al usuario que realiza la colaboracion para linkearlo al repo
                 DonacionDeDineroFactory factoryDD = new DonacionDeDineroFactory();
                 Colaboracion donacionDinero = factoryDD.crearColaboracion(fecha, monto, frecuencia);
+                donacionDinero.setColaborador(colaborador);
                 repoColaboraciones.addDonacionDinero(donacionDinero);
                 break;
             }
