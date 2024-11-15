@@ -17,9 +17,9 @@ import java.util.List;
 
 
 @Entity
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)  // Usa una sola tabla para la herencia
-@Inheritance(strategy = InheritanceType.JOINED)
-//@DiscriminatorColumn(name = "tipo_incidente", discriminatorType = DiscriminatorType.STRING)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)  // Usa una sola tabla para la herencia
+//@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "tipo_incidente", discriminatorType = DiscriminatorType.STRING)
 public class Incidente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

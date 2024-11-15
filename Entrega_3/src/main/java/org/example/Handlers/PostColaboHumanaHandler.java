@@ -72,13 +72,11 @@ public class PostColaboHumanaHandler implements Handler {
                 break;
             }
             case "dd": {
-
                 LocalDate fecha = LocalDate.parse(ctx.formParam("fecha_nacimiento"));
                 double monto = Double.parseDouble(ctx.formParam("password"));
                 String frecuencia = ctx.formParam("frecuencia");
 
 
-                // TODO: Agregar un atributo session para obtener el colaborador asociado al usuario que realiza la colaboracion para linkearlo al repo
                 DonacionDeDineroFactory factoryDD = new DonacionDeDineroFactory();
                 Colaboracion donacionDinero = factoryDD.crearColaboracion(fecha, monto, frecuencia);
                 donacionDinero.setColaborador(colaborador);

@@ -7,11 +7,13 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-//@DiscriminatorValue("falla_tecnica")
-@Table(name="falla_tecnica")
+@DiscriminatorValue("falla_tecnica")
+//@Table(name="falla_tecnica")
 public class FallaTecnica extends Incidente {
+    public FallaTecnica() {}
+
     @OneToOne
-    @JoinColumn(name = "colaborador_id", referencedColumnName = "id", unique = true, nullable = false)
+    @JoinColumn(name = "colaborador_id", referencedColumnName = "id", nullable = false)
     private Colaborador reportero;
     @Column
     private String description;
