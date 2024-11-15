@@ -1,5 +1,6 @@
 package org.example.Dominio.Colaboraciones;
 
+import lombok.Getter;
 import org.example.Dominio.Rol.Colaborador;
 import org.example.Dominio.Colaboraciones.TipoColaborador;
 import org.example.Dominio.Persona.Persona;
@@ -14,6 +15,7 @@ public abstract class Colaboracion {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @Getter
   private Long id;
 
   @ManyToOne()

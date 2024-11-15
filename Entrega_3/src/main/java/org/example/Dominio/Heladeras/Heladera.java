@@ -27,6 +27,7 @@ public class Heladera {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private long id;
 
 
@@ -80,6 +81,10 @@ public class Heladera {
         this.estado = EstadoHeladera.ACTIVA;
         this.mesesActiva = new ArrayList<ActividadHeladera>();
         this.suscriptores = new ArrayList<Suscriptor>();
+    }
+
+    public Heladera() {
+
     }
 
     public boolean validarTemperaturaFuncional(float unaTemperatura){

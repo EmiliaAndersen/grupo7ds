@@ -42,42 +42,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td width="50%" class="editable" data-original="Dia de SPA">Dia de SPA</td>
-                        <td width="25%"><span style="width:70px" class="badge text-bg-info">860</span></td>
-                        <td width="25%">
-                            <button class="btn btn-link text-decoration-none" onclick="editRow(this)">
-                                <i class="bi bi-pencil-fill"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="50%" class="editable" data-original="Auriculares inalambricos">Auriculares inalambricos</td>
-                        <td width="25%"><span style="width:70px" class="badge text-bg-info">1500</span></td>
-                        <td width="25%">
-                            <button class="btn btn-link text-decoration-none" onclick="editRow(this)">
-                                <i class="bi bi-pencil-fill"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="50%" class="editable" data-original="Fifa 2023">Fifa 2023</td>
-                        <td width="25%"><span style="width:70px" class="badge text-bg-info">100</span></td>
-                        <td width="25%">
-                            <button class="btn btn-link text-decoration-none" onclick="editRow(this)">
-                                <i class="bi bi-pencil-fill"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="50%" class="editable" data-original="Calculadora Casio">Calculadora Casio</td>
-                        <td width="25%"><span style="width:70px" class="badge text-bg-info">243</span></td>
-                        <td width="25%">
-                            <button class="btn btn-link text-decoration-none" onclick="editRow(this)">
-                                <i class="bi bi-pencil-fill"></i>
-                            </button>
-                        </td>
-                    </tr>
+
+                    {{#productos}}
+                        <tr>
+                            <td width="50%" class="editable" data-original="Dia de SPA">{{tipoProducto}}</td>
+                            <td width="25%"><span style="width:70px" class="badge text-bg-info">{{monto}}</span></td>
+                            <td><button class="btn btn-primary" onclick="canjearProducto('{{id}}')">Canjear</button></td>
+
+                        </tr>
+                    {{/productos}}
+
                 </tbody>
             </table>
             <small>
@@ -126,6 +100,25 @@
             detailCell.appendChild(saveButton);
             detailCell.appendChild(cancelButton);
         }
+        function canjearProducto(id) {
+            console.log("Producto canjeado con ID:", id);
+
+            // Por ejemplo, hacer una solicitud para procesar la compra:
+            fetch(`/canjear-producto/${id}`, {
+                method: 'POST'
+            })
+                    .then(response => {
+                        if (response.ok) {
+                            alert("Producto canjeado exitosamente.");
+                        } else {
+                            alert("Puntos Insuficientes");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error al canjear el producto:", error);
+                    });
+        }
+
     </script>
 </body>
 </html>

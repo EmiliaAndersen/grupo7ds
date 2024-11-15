@@ -22,6 +22,7 @@ import java.util.List;
 public class Incidente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
     @Setter
@@ -31,6 +32,7 @@ public class Incidente {
 
     @Column
     @Setter
+    @Getter
     private LocalDateTime fechaYHora;
 
     @OneToMany(mappedBy = "incidente", cascade = CascadeType.ALL)
