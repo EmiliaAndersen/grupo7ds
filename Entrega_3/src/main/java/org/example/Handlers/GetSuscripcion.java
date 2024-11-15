@@ -8,7 +8,7 @@ import io.javalin.http.Context;
 import io.javalin.http.Handler;
 
 public class GetSuscripcion implements @NotNull Handler {
-             public void handle(@NotNull Context context){
+      public void handle(@NotNull Context context){
        var model = new HashMap<String, Object>();
         context.render("/templates/suscripcion.mustache", model);
      }

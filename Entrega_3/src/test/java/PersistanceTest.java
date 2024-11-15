@@ -7,12 +7,15 @@ import org.example.Dominio.Colaboraciones.OfrecerProductos;
 import org.example.Dominio.Colaboraciones.RegistrarPersonasEnSituacionVulnerable;
 import org.example.Dominio.Documentos.Documento;
 import org.example.Dominio.Heladeras.Heladera;
+import org.example.Dominio.Incidentes.Alerta;
+import org.example.Dominio.Incidentes.FallaTecnica;
 import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Persona.PersonaJuridica;
 import org.example.Dominio.Persona.TipoJuridica;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
 import org.example.Dominio.Rol.Colaborador;
 import org.example.Dominio.Rol.PersonaVulnerable;
+import org.example.Dominio.Suscripciones.Suscriptor;
 import org.example.Dominio.Tarjetas.TarjetaVulnerable;
 import org.example.Dominio.Viandas.EstadoVianda;
 import org.example.Dominio.Viandas.Vianda;
@@ -22,6 +25,9 @@ import org.junit.jupiter.api.Test;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import static org.example.Dominio.Incidentes.TipoAlerta.TEMPERATURA;
 
 public class PersistanceTest {
 
@@ -309,5 +315,61 @@ public class PersistanceTest {
     Assertions.assertEquals(1,1);
   }
 
+
+  @Test
+  public void persistirSuscriptor(){
+
+    PuntoEstrategico punto = new PuntoEstrategico("p1", 10.0,12.0, "Av Santa Fe 1200");
+    Heladera heladera = new Heladera(10,1,punto);
+
+    EntityManager em = BDUtils.getEntityManager();
+    BDUtils.comenzarTransaccion(em);
+    em.persist(punto);
+    em.persist(heladera);
+
+    Usuario usuario1 = new Usuario("ianSus","iannn");
+    Documento documento1 = new Documento(33332,"3","m","m");
+
+
+    em.persist(usuario1);
+    em.persist(documento1);
+
+    PersonaHumana personaHumana1 = new PersonaHumana();
+    personaHumana1.setUsuario(usuario1);
+    personaHumana1.setDireccion("Av Pedro Goyena 1111");
+    personaHumana1.setCuil("632113");
+    personaHumana1.setApellido("Feldman");
+    personaHumana1.setNombre("IA");
+    personaHumana1.setFechaDeNacimiento(LocalDate.of(2003, 06 , 10));
+    personaHumana1.setDocumento(documento1);
+
+    em.persist(personaHumana1);
+
+    Colaborador colab = new Colaborador();
+    em.persist(colab);
+    personaHumana1.asignarRol(personaHumana1, colab);
+
+    Suscriptor suscriptor = new Suscriptor();
+
+    suscriptor.setColaborador(colab);
+
+    suscriptor.setHeladera(heladera);
+    heladera.suscriptores.add(suscriptor);
+
+    em.persist(suscriptor);
+
+
+    Alerta alerta = new Alerta(TEMPERATURA,heladera, LocalDateTime.of(2024, 11, 14, 15, 30));
+
+    em.persist(alerta);
+
+    FallaTecnica fallaTecnica = new FallaTecnica(colab,heladera,LocalDateTime.of(2024, 11, 14, 15, 30));
+    fallaTecnica.setDescription("Prueba de fallas tecncicas");
+
+    em.persist(fallaTecnica);
+    BDUtils.commit(em);
+
+    Assertions.assertEquals(1,1);
+  }
 
 }

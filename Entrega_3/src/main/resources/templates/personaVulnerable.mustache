@@ -37,53 +37,53 @@
                 <div class="col-md-7">
                     <h2 class="my-4" style="font-weight: 350">Registrar persona vulnerable</h2>
                     <hr>
-                    <form method='POST' class="form-row mt-2" id="form-donacion-dinero" >
+                    <form method="POST" action="/personaVulnerable" class="form-row mt-2" id="form-donacion-dinero">
                         <div class="form-row mt-2">
                             <div class="col-md-12">
                                 <label for="nombre">Nombre*</label>
-                                <input type="text" name="nombre" class="form-control" id="nombre" style="width: 70%;">
+                                <input type="text" name="nombre" class="form-control" id="nombre" style="width: 70%;" required>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <label for="fecha_nacimiento">Fecha de nacimiento*</label>
-                            <input type="date" name="fecha_nacimiento" class="form-control" id="fecha_nacimiento" style="width: 70%;">
+                            <input type="date" name="fecha_nacimiento" class="form-control" id="fecha_nacimiento" style="width: 70%;" required>
                         </div>
                         <div class="col-md-12 mt-1">
-                            <label for="Frecuencia">Situacion*</label>
+                            <label for="frecuencia">Situación*</label>
                             <div class="input-group" style="width: 70%;">
                                 <select class="form-select" name="frecuencia" id="frecuencia" required>
                                     <option value="">Seleccione...</option>
                                     <option value="sin-vivienda">Sin vivienda</option>
-                                    <option value="domicilo">Domicilio</option>
+                                    <option value="domicilio">Domicilio</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-12 mt-1">
-                            <label for="situacion">Tipo de documento*</label>
-                            <input type="text" name="situacion" class="form-control" id="situacion" style="width: 70%;">
+                            <label for="tipo_documento">Tipo de documento*</label>
+                            <input type="text" name="tipo_documento" class="form-control" id="tipo_documento" style="width: 70%;" required>
                         </div>
                         <div class="col-md-12 mt-1">
-                            <label for="situacion">Numero de documento*</label>
-                            <input type="text" name="situacion" class="form-control" id="situacion" style="width: 70%;">
+                            <label for="numero_documento">Número de documento*</label>
+                            <input type="text" name="numero_documento" class="form-control" id="numero_documento" style="width: 70%;" required>
                         </div>
                         <div class="col-md-12 mt-1">
-                            <label for="Frecuencia">Menores a cargo*</label>
+                            <label for="menores_cargo">Menores a cargo*</label>
                             <div class="input-group" style="width: 70%;">
-                                <select class="form-select" name="frecuencia" id="frecuencia" required>
+                                <select class="form-select" name="menores_cargo" id="menores_cargo" required>
                                     <option value="">Seleccione...</option>
-                                    <option value="Mensual">0</option>
-                                    <option value="Semanal">1</option>
-                                    <option value="SinFrecuencia">2</option>
-                                    <option value="SinFrecuencia">3</option>
-                                    <option value="SinFrecuencia">4+</option>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4+">4+</option>
                                 </select>
                             </div>
+                        </div>
+                        <hr>
+                        <div class="form-row">
+                            <button type="submit" id="btn-login-submit" name="signin-pj" class="btn btn-primary mt-2 mb-2 col-md-4">Registrarse</button><br>
                         </div>
                     </form>
-                    <hr>
-                    <div class="form-row">
-                        <button type="submit" id="btn-login-submit" name="signin-pj" class="btn btn-primary mt-2 mb-2 col-md-4">Registrarse</button><br>
-                    </div>
                 </div>
             </div>
         </div>

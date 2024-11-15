@@ -85,6 +85,9 @@ public class App {
     app.before("/heladeras",AuthMiddleware::verificarAutenticacion);
     app.get("/heladeras", new GetHeladera());
     app.post("/heladeras", new PostHeladera());
+
+    app.before("/canjear-producto/{id}",AuthMiddleware::verificarAutenticacion);
+    app.post("/canjear-producto/{id}", new CanjearProductoHandler());
   }
 }
 

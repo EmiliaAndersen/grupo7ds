@@ -28,6 +28,7 @@ public class Heladera {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private long id;
 
 
@@ -85,6 +86,7 @@ public class Heladera {
     public Heladera() {
         // Constructor vacío para JPA
     }
+
 
     public boolean validarTemperaturaFuncional(float unaTemperatura){
         if(unaTemperatura > temperaturaMaxima){
