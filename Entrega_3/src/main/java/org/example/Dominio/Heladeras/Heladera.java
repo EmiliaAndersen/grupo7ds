@@ -25,6 +25,7 @@ import java.util.List;
 @Table
 public class Heladera {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -82,10 +83,10 @@ public class Heladera {
         this.mesesActiva = new ArrayList<ActividadHeladera>();
         this.suscriptores = new ArrayList<Suscriptor>();
     }
-
     public Heladera() {
-
+        // Constructor vacío para JPA
     }
+
 
     public boolean validarTemperaturaFuncional(float unaTemperatura){
         if(unaTemperatura > temperaturaMaxima){

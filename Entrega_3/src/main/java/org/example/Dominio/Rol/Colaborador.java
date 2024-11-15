@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name="colaborador")
 public class Colaborador extends Rol{
 
     @Id
@@ -48,7 +48,7 @@ public class Colaborador extends Rol{
 
 
     public void agregarFalla(Heladera healdera){
-        FallaTecnica falla = new FallaTecnica(this,healdera, LocalDateTime.now());
+        FallaTecnica falla = new FallaTecnica(this,healdera, LocalDateTime.now(),"");
         healdera.setEstado(EstadoHeladera.INACTIVA);
     }
 }

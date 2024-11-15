@@ -11,14 +11,14 @@ import java.util.List;
 public class IncidenteFactory {
     private List<GeneradorDeReportes> suscriptores = new ArrayList<GeneradorDeReportes>();
 
-    public Alerta crearAlerta(TipoAlerta tipo, Heladera heladera){
+    public Incidente crearAlerta(TipoAlerta tipo, Heladera heladera){
         this.notificarReporte();
         return new Alerta(tipo, heladera, LocalDateTime.now());
     }
 
-    public FallaTecnica crearFalla(Colaborador colaborador, Heladera heladera){
+    public Incidente crearFalla(Colaborador colaborador, Heladera heladera, String descripcion){
         this.notificarReporte();
-        return new FallaTecnica(colaborador, heladera, LocalDateTime.now());
+        return new FallaTecnica(colaborador, heladera, LocalDateTime.now(), descripcion);
     }
 
     private void notificarReporte(){

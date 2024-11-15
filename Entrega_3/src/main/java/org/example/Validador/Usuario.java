@@ -6,7 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name="usuario")
 public class Usuario {
 
   public Usuario( String usuario, String contrasenia) {

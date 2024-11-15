@@ -24,14 +24,14 @@ public class IncidentesTest {
 
     @Test
     public void instanciarAlerta() {
-        Alerta alerta = factory.crearAlerta(TipoAlerta.TEMPERATURA, heladera);
+        Incidente alerta = factory.crearAlerta(TipoAlerta.TEMPERATURA, heladera);
 
         Assertions.assertInstanceOf(Alerta.class, alerta);
     }
 
     @Test
     public void instanciarFallaTecnica() {
-        FallaTecnica fallaTecnica = factory.crearFalla(new Colaborador(), heladera);
+        Incidente fallaTecnica = factory.crearFalla(new Colaborador(), heladera);
 
         Assertions.assertInstanceOf(FallaTecnica.class, fallaTecnica);
     }
@@ -46,7 +46,7 @@ public class IncidentesTest {
 
     @Test
     public void visitaIncidente(){
-        Alerta alerta = factory.crearAlerta(TipoAlerta.TEMPERATURA, heladera);
+        Incidente alerta = factory.crearAlerta(TipoAlerta.TEMPERATURA, heladera);
 
         Visita visita = new Visita(new Tecnico(), null);
         visita.setPudoResolver(true);

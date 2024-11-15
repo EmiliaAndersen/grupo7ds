@@ -12,11 +12,7 @@ import java.util.List;
 
 public class DonacionDeViandaFactory extends ColaboracionFactory{
 
-    public Colaboracion crearColaboracion(Colaborador colaborador, Vianda viandas){
-        if(!this.validarTipoColaborador(colaborador, TipoColaborador.P_HUMANA))
-        {
-            return null;
-        }
+    public Colaboracion crearColaboracion(Vianda viandas){
 
         this.notificarReportes();
         return new DonacionDeVianda(viandas);

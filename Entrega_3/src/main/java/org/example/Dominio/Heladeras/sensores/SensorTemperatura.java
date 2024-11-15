@@ -1,10 +1,7 @@
 package org.example.Dominio.Heladeras.sensores;
 
 import org.example.Dominio.Heladeras.Heladera;
-import org.example.Dominio.Incidentes.Alerta;
-import org.example.Dominio.Incidentes.FallaTecnica;
-import org.example.Dominio.Incidentes.IncidenteFactory;
-import org.example.Dominio.Incidentes.TipoAlerta;
+import org.example.Dominio.Incidentes.*;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -56,7 +53,7 @@ public class SensorTemperatura extends Sensor {
 
     private void enviarAlerta(Heladera heladera){
         IncidenteFactory incidenteFactory = new IncidenteFactory();
-        Alerta alerta = incidenteFactory.crearAlerta(TipoAlerta.TEMPERATURA, this.heladera);
+        Incidente alerta = incidenteFactory.crearAlerta(TipoAlerta.TEMPERATURA, this.heladera);
         alerta.notificar();
     }
 }

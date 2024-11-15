@@ -9,11 +9,11 @@ import java.time.LocalDate;
 
 public class DonacionDeDineroFactory extends ColaboracionFactory {
     
-    public Colaboracion crearColaboracion(Colaborador colaborador, LocalDate fecha, Double monto, String frecuencia){
-        if(!this.validarTipoColaborador(colaborador, TipoColaborador.P_HUMANA) && !this.validarTipoColaborador(colaborador, TipoColaborador.P_JURIDICA) )
-        {
-            return null;
-        }
+    public Colaboracion crearColaboracion(LocalDate fecha, Double monto, String frecuencia){
+//        if(!this.validarTipoColaborador(colaborador, TipoColaborador.P_HUMANA) && !this.validarTipoColaborador(colaborador, TipoColaborador.P_JURIDICA) )
+//        {
+//            return null;
+//        }
 
         LocalDate frecuencia_fecha;
         switch (frecuencia){

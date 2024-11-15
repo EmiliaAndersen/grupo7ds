@@ -7,10 +7,10 @@ import org.example.Dominio.Colaboraciones.TipoColaborador;
 import org.example.Dominio.Rol.Colaborador;
 
 public class RegistrarPersonasFactory extends ColaboracionFactory {
-    public Colaboracion crearColaboracion(Colaborador colaborador) {
-        if(!this.validarTipoColaborador(colaborador, TipoColaborador.P_HUMANA)){
-            return null;
-        }
+    public Colaboracion crearColaboracion() {
+//        if(!this.validarTipoColaborador(colaborador, TipoColaborador.P_HUMANA)){
+//            return null;
+//        }
 
         return new RegistrarPersonasEnSituacionVulnerable();
     }
