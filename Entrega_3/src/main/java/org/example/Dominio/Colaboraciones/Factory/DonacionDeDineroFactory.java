@@ -19,8 +19,10 @@ public class DonacionDeDineroFactory extends ColaboracionFactory {
         switch (frecuencia){
             case "Mensual":
                 frecuencia_fecha = LocalDate.now().plusMonths(1);
+                break;
             case "Semanal":
                 frecuencia_fecha = LocalDate.now().plusWeeks(1);
+                break;
             case "SinFrecuencia":
                 frecuencia_fecha = null;
                 break;

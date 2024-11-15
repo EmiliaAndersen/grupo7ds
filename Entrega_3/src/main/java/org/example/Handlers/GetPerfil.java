@@ -31,6 +31,7 @@ public class GetPerfil implements Handler {
       query.setParameter("usu", usuarioNombre);
 
       PersonaHumana ph = query.getSingleResult();
+      model.put("tipoPersona", context.sessionAttribute("tipo_persona"));
       model.put("nombre", ph.nombre);
       model.put("apellido", ph.apellido);
       model.put("direccion", ph.getDireccion());

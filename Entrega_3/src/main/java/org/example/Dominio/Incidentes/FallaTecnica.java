@@ -34,4 +34,8 @@ public class FallaTecnica extends Incidente {
         this.setHeladera(heladera);
         this.setFechaYHora(fechaYHora);
     }
+
+    public FallaTecnica() {
+
+    }
 }

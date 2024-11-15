@@ -11,6 +11,7 @@ public class GetReportes implements @NotNull Handler {
      
       public void handle(@NotNull Context context){
         var model = new HashMap<String, Object>();
+        model.put("tipoPersona", context.sessionAttribute("tipo_persona"));
         context.render("/templates/reportes.mustache", model);
   }
 }

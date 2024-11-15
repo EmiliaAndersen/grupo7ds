@@ -95,7 +95,7 @@ public class GetHeladera implements @NotNull Handler {
 
 
     model.put("incidentes",incidentes);
-
+    model.put("tipoPersona", context.sessionAttribute("tipo_persona"));
     context.render("/templates/heladeras.mustache", model);
 
   }
