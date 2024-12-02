@@ -88,6 +88,9 @@ public class App {
 
     app.before("/canjear-producto/{id}",AuthMiddleware::verificarAutenticacion);
     app.post("/canjear-producto/{id}", new CanjearProductoHandler());
+
+    app.before("/colaboraciones_realizadas",AuthMiddleware::verificarAutenticacion);
+    app.get("/colaboraciones_realizadas", new GetColaboracionesRealizadas());
   }
 }
 
