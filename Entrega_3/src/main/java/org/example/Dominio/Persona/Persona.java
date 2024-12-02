@@ -20,14 +20,15 @@ public abstract class Persona {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @Transient
+
+  @OneToMany(mappedBy = "persona", cascade = CascadeType.PERSIST)
   private List<MedioDeContacto> mediosDeContacto;
   @Column
   @Setter
   private String direccion;
 
   @OneToOne
-  @JoinColumn(name = "usuario_id",referencedColumnName = "id",nullable = false)
+  @JoinColumn(name = "usuario_id",referencedColumnName = "id",nullable = true)
   private Usuario usuario;
 //  private Usuario id;
 

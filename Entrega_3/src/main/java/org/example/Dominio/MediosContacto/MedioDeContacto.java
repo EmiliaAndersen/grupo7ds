@@ -2,6 +2,7 @@ package org.example.Dominio.MediosContacto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.Dominio.Persona.Persona;
 
 import javax.persistence.*;
 
@@ -18,4 +19,8 @@ public class MedioDeContacto {
   private TipoMedioContacto tipo;
   @Column
   private String detalle;
+
+  @ManyToOne
+  @JoinColumn(name = "persona_id", nullable = false)
+  private Persona persona;
 }

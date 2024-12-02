@@ -6,6 +6,8 @@ import org.example.Dominio.Documentos.Documento;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+
 @Entity
 @DiscriminatorValue("persona_humana")
 @Setter
@@ -28,5 +30,9 @@ public class PersonaHumana extends Persona {
   @Column
   @Setter
   public String cuil;
+
+  public PersonaHumana() {
+    this.setMediosDeContacto(new ArrayList<>());
+  }
 
 }

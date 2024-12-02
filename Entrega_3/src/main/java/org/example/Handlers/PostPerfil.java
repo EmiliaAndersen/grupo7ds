@@ -27,6 +27,8 @@ public class PostPerfil implements Handler {
 
     var model = new HashMap<String, Object>();
 
+
+
     String accion = context.formParam("btn-accion");
     if(accion.equals("save")){
       actualizarUsuario(context);

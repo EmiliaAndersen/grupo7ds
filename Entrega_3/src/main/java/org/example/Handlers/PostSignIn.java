@@ -4,6 +4,8 @@ import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import org.example.BDUtils;
 import org.example.Dominio.Documentos.Documento;
+import org.example.Dominio.MediosContacto.MedioDeContacto;
+import org.example.Dominio.MediosContacto.TipoMedioContacto;
 import org.example.Dominio.Persona.Persona;
 import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Persona.PersonaJuridica;
@@ -47,11 +49,12 @@ public class PostSignIn implements Handler {
   public void instanciarPersonas(Context context,Usuario usuario){
     EntityManager em = BDUtils.getEntityManager();
     BDUtils.comenzarTransaccion(em);
-
+    MedioDeContacto medioDeContacto = new MedioDeContacto();
 
     if (context.formParam("tipo_colaborador").equals("pf")){
       //TODO: Desharcodear el documento
       Documento documento = new Documento(123123,"asd","asdas","asd");
+
       PersonaHumana ph = new PersonaHumana();
         ph.setUsuario(usuario);
         ph.setDireccion(context.formParam(("direccion")));
@@ -60,23 +63,71 @@ public class PostSignIn implements Handler {
         ph.fechaDeNacimiento = localDateConverter(context.formParam("fecha_nacimiento"));
         ph.cuil = context.formParam("CUIL");
         ph.setDocumento(documento);
-        em.persist(documento);
-        em.persist(ph);
-        BDUtils.commit(em);
-        instanciarColaborador(context, ph);
+
+      medioDeContacto = instanciarMDC(context);
+      medioDeContacto.setPersona(ph);
+
+
+      ph.getMediosDeContacto().add(medioDeContacto);
+
+
+      em.persist(documento);
+      em.persist(ph);
+      BDUtils.commit(em);
+
+      instanciarColaborador(context, ph);
+
     } else if(context.formParam("tipo_colaborador").equals("pj")){
       PersonaJuridica pj = new PersonaJuridica();
         pj.setUsuario(usuario);
         pj.razonSocial = context.formParam("razon-social");
         pj.tipo = TipoJuridica.valueOf(context.formParam("tipo-juridica"));
         pj.setDireccion(context.formParam(("direccionPJ")));
-        em.persist(pj);
-        BDUtils.commit(em);
-        instanciarColaborador(context, pj);
+
+      medioDeContacto = instanciarMDCJ(context);
+      medioDeContacto.setPersona(pj);
+
+      pj.getMediosDeContacto().add(medioDeContacto);
+      em.persist(pj);
+      BDUtils.commit(em);
+
+      instanciarColaborador(context, pj);
     }
 
   }
 
+  private MedioDeContacto instanciarMDC(Context context) {
+    MedioDeContacto mdc = new MedioDeContacto();
+
+    try {
+      System.out.println("sdfsfdsfsdfsdfsd");
+      String medioContacto = context.formParam("tipo_medio_contacto").toUpperCase();
+      mdc.setTipo(TipoMedioContacto.valueOf(medioContacto));
+      mdc.setDetalle(context.formParam("contacto"));
+    } catch (IllegalArgumentException | NullPointerException e) {
+      System.out.println("Error: Medio de contacto inválido.");
+    }
+
+
+
+    return mdc;
+  }
+  private MedioDeContacto instanciarMDCJ(Context context) {
+    MedioDeContacto mdc = new MedioDeContacto();
+
+    try {
+      System.out.println("sdfsfdsfsdfsdfsd");
+      String medioContacto = context.formParam("tipo_medio_contacto_pj").toUpperCase();
+      mdc.setTipo(TipoMedioContacto.valueOf(medioContacto));
+      mdc.setDetalle(context.formParam("contacto_pj"));
+    } catch (IllegalArgumentException | NullPointerException e) {
+      System.out.println("Error: Medio de contacto inválido.");
+    }
+
+
+
+    return mdc;
+  }
   public LocalDate localDateConverter(String fecha){
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     return LocalDate.parse(fecha, formatter);

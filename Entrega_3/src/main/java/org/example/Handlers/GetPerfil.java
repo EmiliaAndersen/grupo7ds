@@ -4,6 +4,7 @@ import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import org.example.BDUtils;
 import org.example.Dominio.Persona.PersonaHumana;
+import org.example.Dominio.Persona.PersonaJuridica;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.EntityManager;
@@ -36,7 +37,16 @@ public class GetPerfil implements Handler {
       model.put("apellido", ph.apellido);
       model.put("direccion", ph.getDireccion());
       model.put("fechaNacimiento", ph.getFechaDeNacimiento());
-    }else{
+    }else if (context.sessionAttribute("tipo_persona").equals("persona_juridica")){
+      TypedQuery<PersonaJuridica> query = em.createQuery(
+          "SELECT j FROM PersonaJuridica j JOIN j.usuario u WHERE u.usuario=:usu",PersonaJuridica.class);
+      query.setParameter("usu", usuarioNombre);
+
+      PersonaJuridica pj = query.getSingleResult();
+      model.put("tipoPersona", context.sessionAttribute("tipo_persona"));
+      model.put("nombre", pj.razonSocial);
+      model.put("tipo", pj.tipo);
+      model.put("direccion",pj.getDireccion());
 
     }
 
