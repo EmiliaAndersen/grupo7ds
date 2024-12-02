@@ -22,8 +22,8 @@ public class PostSuscripcion implements @NotNull Handler {
       
       Suscriptor sr = new Suscriptor();
 
-        RepositorioColaboradores repositorioColaboradores = RepositorioColaboradores.getInstance();
-        String nombre = context.sessionAttribute("username");
+      RepositorioColaboradores repositorioColaboradores = RepositorioColaboradores.getInstance();
+      String nombre = context.sessionAttribute("username");
       Colaborador colab = repositorioColaboradores.obtenerColaborador(nombre);
 
 
@@ -31,12 +31,12 @@ public class PostSuscripcion implements @NotNull Handler {
 
       String heladeraId = context.formParam("heladera");
       //Heladera heladera = em.find(Heladera.class, heladeraId);
-        TypedQuery<Heladera> query = em.createQuery("SELECT h from Heladera h where h.id = :id ",Heladera.class);
-        Long helidlong = Long.parseLong(heladeraId);
-        query.setParameter("id",helidlong);
-        Heladera heladera = query.getSingleResult();
+      TypedQuery<Heladera> query = em.createQuery("SELECT h from Heladera h where h.id = :id ",Heladera.class);
+      Long helidlong = Long.parseLong(heladeraId);
+      query.setParameter("id",helidlong);
+      Heladera heladera = query.getSingleResult();
 
-        sr.setHeladera(heladera);
+      sr.setHeladera(heladera);
 
       String num = context.formParam("motivo");
       sr.setNumeroAviso(stringToInt(context.formParam("motivo")));
