@@ -16,6 +16,7 @@ import org.example.repositorios.RepositorioUsuarios;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.EntityManager;
+import java.util.HashMap;
 import java.util.Random;
 
 import java.time.LocalDate;
@@ -29,7 +30,7 @@ public class PostSignIn implements Handler {
   public void handle(@NotNull Context context){
     String usuarioNombre = context.formParam("username");
     String usuarioContraseña = context.formParam("password1");
-
+    var model = new HashMap<String, Object>();
      //Verifico si en el repositorio existe ese usuario, si no existe lo creo y redirigo al login
     // si existe lo redirigo a la misma pagina. TODO: AGREGAR ERROR PARA QUE SEPA QUE EXISTE USUARIO
 
@@ -38,9 +39,11 @@ public class PostSignIn implements Handler {
       Usuario usuario = new Usuario( usuarioNombre, usuarioContraseña);
       repoUsuarios.addUsuario(usuario);
       instanciarPersonas(context, usuario);
+      context.sessionAttribute("successSignIn", true);
       context.redirect("/login");
     }else{
       System.out.println("Usuario existe");
+      context.sessionAttribute("ErrorSignIn", true);
       context.redirect("/signin");
     }
 
@@ -116,7 +119,6 @@ public class PostSignIn implements Handler {
     MedioDeContacto mdc = new MedioDeContacto();
 
     try {
-      System.out.println("sdfsfdsfsdfsdfsd");
       String medioContacto = context.formParam("tipo_medio_contacto_pj").toUpperCase();
       mdc.setTipo(TipoMedioContacto.valueOf(medioContacto));
       mdc.setDetalle(context.formParam("contacto_pj"));

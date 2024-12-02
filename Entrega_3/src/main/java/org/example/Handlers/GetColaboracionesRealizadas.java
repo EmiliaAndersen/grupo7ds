@@ -63,8 +63,10 @@ public class GetColaboracionesRealizadas implements Handler {
       model.put("ofertasProductos",ofertasProductos);
     }
 
-
-
+    String tipoPersona = context.sessionAttribute("tipo_persona");
+    if (tipoPersona != null) {
+      model.put("tipoPersona", tipoPersona);
+    }
     context.render("/templates/colaboracionesRealizadas.mustache",model);
   }
 }

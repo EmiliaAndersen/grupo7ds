@@ -23,6 +23,10 @@ public class GetProdServ implements @NotNull Handler {
         List<OfrecerProductos> productos = query.getResultList();
 
         model.put("productos",productos);
+        String tipoPersona = context.sessionAttribute("tipo_persona");
+        if (tipoPersona != null) {
+              model.put("tipoPersona", tipoPersona);
+        }
 
         context.render("/templates/prodserv.mustache", model);
   }

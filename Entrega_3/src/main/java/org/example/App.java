@@ -91,6 +91,8 @@ public class App {
 
     app.before("/colaboraciones_realizadas",AuthMiddleware::verificarAutenticacion);
     app.get("/colaboraciones_realizadas", new GetColaboracionesRealizadas());
+    app.post("/colaboraciones_realizadas", new PostColabos());
+
   }
 }
 
@@ -100,10 +102,6 @@ class AuthMiddleware {
     String username = context.sessionAttribute("username");
     if (!rutasPublicas.contains(context.path()) && (username == null || username.isEmpty())) {
       context.redirect("/login");
-    }
-    String tipoPersona = context.sessionAttribute("tipo_persona");
-    if (tipoPersona != null) {
-      context.attribute("tipoPersona", tipoPersona);
     }
   }
 }
