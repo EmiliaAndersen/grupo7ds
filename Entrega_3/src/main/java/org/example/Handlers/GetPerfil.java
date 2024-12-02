@@ -37,6 +37,8 @@ public class GetPerfil implements Handler {
       model.put("apellido", ph.apellido);
       model.put("direccion", ph.getDireccion());
       model.put("fechaNacimiento", ph.getFechaDeNacimiento());
+      model.put("tipo-mdc", ph.getMediosDeContacto().get(0).getTipo());
+      model.put("detalle-mdc", ph.getMediosDeContacto().get(0).getDetalle());
     }else if (context.sessionAttribute("tipo_persona").equals("persona_juridica")){
       TypedQuery<PersonaJuridica> query = em.createQuery(
           "SELECT j FROM PersonaJuridica j JOIN j.usuario u WHERE u.usuario=:usu",PersonaJuridica.class);
@@ -47,6 +49,8 @@ public class GetPerfil implements Handler {
       model.put("nombre", pj.razonSocial);
       model.put("tipo", pj.tipo);
       model.put("direccion",pj.getDireccion());
+      model.put("tipo-mdc", pj.getMediosDeContacto().get(0).getTipo());
+      model.put("detalle-mdc", pj.getMediosDeContacto().get(0).getDetalle());
 
     }
 

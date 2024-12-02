@@ -38,26 +38,26 @@
                     <h2 class="col-md-4">Mi perfil</h2>
                     <div class="col-md-4"></div>
                     <h5 class="col-md-4" id="btn-edit">Editar <i class="bi bi-pencil-fill" onclick="editar()" style="cursor: pointer;"></i></h5>
-                    <a href="/perfil" type="submit" class="col-md-4 btn btn-danger btn-sm" id="btn-cancel" style="display: none;width: 120px">Cancelar edicion</a>
+                    <a href="/perfil_persona_juridica" type="submit" class="col-md-4 btn btn-danger btn-sm" id="btn-cancel" style="display: none;width: 120px">Cancelar edicion</a>
                 </div>
                 <hr>
                 <div class="col-md-7">
                     <div class="row">
                         <div class="col-md-12">
-                            <label for="nombre">Razon Social</label>
-                            <input type="text" name="nombre" class="form-control" id="nombre" value="{{nombre}}" disabled>
+                            <label for="razon-social">Razon Social</label>
+                            <input type="text" name="razon-social" class="form-control" id="razon-social" value="{{nombre}}" disabled>
                         </div>
                         <div class="col-md-12">
-                            <label for="apellido">Tipo</label>
-                            <input type="text" name="apellido" class="form-control" id="apellido"  value="{{tipo}}" disabled>
+                            <label for="tipo">Tipo</label>
+                            <input type="text" name="tipo" class="form-control" id="tipo"  value="{{tipo}}" disabled>
                         </div>
                         <div class="col-md-12">
                             <label for="direccion">Direccion</label>
                             <input type="text" name="direccion" class="form-control" id="direccion" value="{{direccion}}" disabled>
                         </div>
                         <div class="col-md-12">
-                            <label for="medios-contacto">Medio/s de contacto</label>
-                            <input type="text" name="medios-contacto" class="form-control" id="medios-contacto" disabled>
+                            <label for="medios-contacto">Medio de contacto</label>
+                            <input type="text" name="medios-contacto" class="form-control" id="medios-contacto" value="{{tipo-mdc}} - {{detalle-mdc}}" disabled>
                         </div>
                     </div>
                 </div>
@@ -83,11 +83,9 @@
 </html>
 <script>
     function editar() {
-        document.getElementById("nombre").disabled = false;
-        document.getElementById("apellido").disabled = false;
-        //document.getElementById("colaborar").disabled = false;
+        document.getElementById("razon-social").disabled = false;
+        document.getElementById("tipo").disabled = false;
         document.getElementById("direccion").disabled = false;
-        document.getElementById("fecha-nacimiento").disabled = false;
         document.getElementById("medios-contacto").disabled = false;
         document.getElementById("btn-guardar").style.display="";
         document.getElementById("btn-edit").style.display="none";

@@ -42,7 +42,15 @@
                     <div class="form-row">
                         <div class="col-md-8">
                             <label for="usuario">Heladera</label>
-                            <input type="text" name="heladera" class="form-control" id="heladera" aria-describedby="emailHelp" required>
+                            <!--<input type="text" name="heladera" class="form-control" id="heladera" aria-describedby="emailHelp" required>-->
+                                <div class="input-group">
+                                    <select class="form-select" name="heladera" id="heladera" required>
+                                        <option value="">Seleccione...</option>
+                                        {{#heladeras}}
+                                        <option value="{{id}}">{{ubicacion.nombre}} - {{ubicacion.direccion}}</option>
+                                        {{/heladeras}}
+                                    </select>
+                                </div>
                         </div>
                     </div>
                     <div class="form-row mt-2">
