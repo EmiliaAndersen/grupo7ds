@@ -8,24 +8,55 @@
         <link href='/static/css.css?1=14' rel='stylesheet'>
     </head>
     <body style="background-color: #e6eaf2;">
+
     <nav class="navbar navbar-expand-lg bg-primary" style="background-color: #3055b5!important;" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Heladeras Solidarias</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="/colaboracion_{{tipoPersona}}">Colaborar</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Colaboraciones
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" style="color:#f5f5f5" href="/colaboracion_{{tipoPersona}}">Colaborar</a></li>
+                            <li><a class="dropdown-item" style="color:#f5f5f5" href="/colaboraciones_realizadas">Colaboraciones realizadas</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Heladeras
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" style="color:#f5f5f5" href="/suscripcion">Sucripcion heladeras</a></li>
+                            <li><a class="dropdown-item" style="color:#f5f5f5" href="/heladeras">Mis heladeras</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Heladeras
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" style="color:#f5f5f5" href="/ofrecer">Ofrecer productos</a></li>
+                            <li><a class="dropdown-item" style="color:#f5f5f5" href="/prodserv">Canjear productos</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item"><a class="nav-link" href="/personaVulnerable">Registrar Persona Vulnerable</a></li>
                     <li class="nav-item"><a class="nav-link" href="/reportar">Reportar Falla</a></li>
                     <li class="nav-item"><a class="nav-link" href="/reportes">Reportes</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/suscripcion">Sucripcion heladeras</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/heladeras">Mis heladeras</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/ofrecer">Ofrecer productos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/prodserv">Productos</a></li>
                     <li class="nav-item"><a class="nav-link active" href="/perfil_{{tipoPersona}}">Mi perfil</a></li>
+                </ul>
+                <ul class="navbar-nav flex-row flex-wrap ms-md-auto">
+                    <a class="nav-link active" href="/perfil_{{tipoPersona}}">Mi perfil</a>
+                    </li>
                 </ul>
                 <form class="d-flex" role="search" style="margin: unset;">
                     <!--<a class="btn btn-primary" href="/entrega/perfil.html">Mi perfil</a>-->
                 </form>
+                </button>
             </div>
         </div>
     </nav>

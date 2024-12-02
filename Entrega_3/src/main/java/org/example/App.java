@@ -101,5 +101,9 @@ class AuthMiddleware {
     if (!rutasPublicas.contains(context.path()) && (username == null || username.isEmpty())) {
       context.redirect("/login");
     }
+    String tipoPersona = context.sessionAttribute("tipo_persona");
+    if (tipoPersona != null) {
+      context.attribute("tipoPersona", tipoPersona);
+    }
   }
 }
