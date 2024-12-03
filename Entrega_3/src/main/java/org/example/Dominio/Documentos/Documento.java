@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import org.jetbrains.annotations.NotNull;
+
 @Entity
 @Table
 
@@ -13,7 +15,8 @@ public class Documento {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column
+  @Column(nullable = false)  // Esto asegura que no sea null en la base de datos
+  @NotNull  // Esto asegura que no sea null en la aplicación (validación)
   @Getter
   @Setter
   private Integer Documento;

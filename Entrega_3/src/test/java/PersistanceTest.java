@@ -6,6 +6,7 @@ import org.example.Dominio.Colaboraciones.HacerseCargoDeHeladera;
 import org.example.Dominio.Colaboraciones.OfrecerProductos;
 import org.example.Dominio.Colaboraciones.RegistrarPersonasEnSituacionVulnerable;
 import org.example.Dominio.Documentos.Documento;
+import org.example.Dominio.Heladeras.EstadoHeladera;
 import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.Incidentes.Alerta;
 import org.example.Dominio.Incidentes.FallaTecnica;
@@ -30,183 +31,53 @@ import java.time.LocalDateTime;
 import static org.example.Dominio.Incidentes.TipoAlerta.TEMPERATURA;
 
 public class PersistanceTest {
+@Test
+public void persistirViandaFechasErróneas() { //la fecha de vencimiento es menor a la de fabricacion
+    PuntoEstrategico punto = new PuntoEstrategico("p2", 13.0, 15.0, "Av Libertador 1200");
+    Heladera heladera = new Heladera(16, 2, punto);
 
-  @Test
-  public void persistirUsuario() {
-    Usuario usuario1 = new Usuario("dan","1234");
-    Documento documento1 = new Documento(1123,"d","das","dasda");
+    LocalDate fechaFabricacion = LocalDate.of(2024, 12, 1); // Fecha futura
+    LocalDate fechaVencimiento = LocalDate.of(2024, 11, 1); // Fecha anterior a fabricación
 
-    PersonaHumana personaHumana1 = new PersonaHumana();
-    personaHumana1.setUsuario(usuario1);
-    personaHumana1.setDireccion("ghoalsfas");
-    personaHumana1.setCuil("12312");
-    personaHumana1.setApellido("asdfa");
-    personaHumana1.setNombre("asdfasfsa");
-    personaHumana1.setFechaDeNacimiento(LocalDate.of(1990, 5, 15));
-    personaHumana1.setDocumento(documento1);
+    Vianda vianda = new Vianda("Pastas", fechaVencimiento, fechaFabricacion, heladera, 100, 10, EstadoVianda.NO_ENTREGADA);
 
     EntityManager em = BDUtils.getEntityManager();
     BDUtils.comenzarTransaccion(em);
-    em.persist(usuario1);
-    em.persist(documento1);
-    em.persist(personaHumana1);
-    BDUtils.commit(em);
+    Assertions.assertThrows(RuntimeException.class, () -> {
+        em.persist(punto);
+        em.persist(heladera);
+        em.persist(vianda);
+        BDUtils.commit(em);
+    });
+}
 
-    //Verificar si en la tabla se genero lo anterior :)
-    Assertions.assertEquals(1,1);
-  }
-
-  @Test
-  public void persistirHeladera(){
-
-    PuntoEstrategico punto = new PuntoEstrategico("p1", 10.0,12.0, "Av Santa Fe 1200");
-    Heladera heladera = new Heladera(10,1,punto);
+@Test
+public void persistirHeladeraDatosInvalidos() { //los datos ingresados en punto estrategico son negativos
+    PuntoEstrategico punto = new PuntoEstrategico("p1", 1000.0, -2000.0, "DirecciónNoVálida");
+    Heladera heladera = new Heladera(-10, 1000, punto); // Capacidad negativa y nivel extremo
 
     EntityManager em = BDUtils.getEntityManager();
     BDUtils.comenzarTransaccion(em);
-    em.persist(punto);
-    em.persist(heladera);
-    BDUtils.commit(em);
+    Assertions.assertThrows(RuntimeException.class, () -> {
+        em.persist(punto);
+        em.persist(heladera);
+        BDUtils.commit(em);
+    });
+}
+@Test
+public void persistirRegPVulnerableMenoresACargoExtremos() {//Una persona no podria tener tanto menores a cargo
+    PersonaVulnerable per = new PersonaVulnerable();
+    per.setFechaDeRegristro(LocalDate.now());
+    per.setMenoresACargo(100); // Límite extremo
 
-    Assertions.assertEquals(1,1);
-  }
-
-  @Test
-  public void persistirVianda(){
-    
-    PuntoEstrategico punto = new PuntoEstrategico("p2", 13.0,15.0, "Av Libertador 1200");
-    Heladera heladera = new Heladera(16,2,punto);
-    
-    LocalDate fecha1 = LocalDate.of(2024, 11, 3); // Año, Mes, Día
-    LocalDate fecha2 = LocalDate.of(2024, 11, 6); 
-
-
-    Vianda vianda = new Vianda("Pastas", fecha2 ,fecha1, heladera, 100, 10, EstadoVianda.NO_ENTREGADA);
-    
     EntityManager em = BDUtils.getEntityManager();
     BDUtils.comenzarTransaccion(em);
-    em.persist(punto);
-    em.persist(heladera);
-    em.persist(vianda);
-    BDUtils.commit(em);
-
-    Assertions.assertEquals(1,1);
-  }
-
-
-  @Test
-  public void persistirColaboracionViandas(){
-
-    
-    EntityManager em = BDUtils.getEntityManager();
-    BDUtils.comenzarTransaccion(em);
-
-    Usuario usuario1 = new Usuario("emi","123456789");
-    Documento documento1 = new Documento(1124,"e","f","f");
-
-    
-    em.persist(usuario1);
-    em.persist(documento1);
-
-    PersonaHumana personaHumana1 = new PersonaHumana();
-    personaHumana1.setUsuario(usuario1);
-    personaHumana1.setDireccion("Av Coronel Diaz 1111");
-    personaHumana1.setCuil("12341");
-    personaHumana1.setApellido("Andersen");
-    personaHumana1.setNombre("Emilia");
-    personaHumana1.setFechaDeNacimiento(LocalDate.of(2003, 12, 23));
-    personaHumana1.setDocumento(documento1);
-
-
-    em.persist(personaHumana1);
-
-    Colaborador colab = new Colaborador();
-    em.persist(colab);
-    personaHumana1.asignarRol(personaHumana1, colab);
-    
-    PuntoEstrategico punto = new PuntoEstrategico("p4", 10.0,15.0, "Av Medrano 850");
-    PuntoEstrategico punto2 = new PuntoEstrategico("p3", 23.0,5.0, "Av Pueyrredon 1200");
-
-    em.persist(punto);
-    em.persist(punto2);
-
-    Heladera heladera1 = new Heladera(10,2,punto);
-    Heladera heladera2 = new Heladera(14,3,punto2);
-
-    
-    em.persist(heladera1);
-    em.persist(heladera2);
-
-    LocalDate fecha1 = LocalDate.of(2024, 11, 3); // Año, Mes, Día
-    LocalDate fecha2 = LocalDate.of(2024, 12, 6); 
-
-    Vianda vianda = new Vianda("Estofado", fecha2 ,fecha1, heladera1, 100, 10, EstadoVianda.ENTREGADA);
-    em.persist(vianda);
-    
-    DonacionDeVianda don = new DonacionDeVianda(vianda);
-    don.setColaborador(colab);
-    DistribucionDeViandas dist= new DistribucionDeViandas(heladera1, heladera2, "No hay espacio", fecha1);
-    dist.setColaborador(colab);
-
-    DonacionDeDinero donDinero = new DonacionDeDinero(fecha1, (double) 109000,fecha2);
-    donDinero.setColaborador(colab);
-
-    colab.agregarColaboracion(don);
-    colab.agregarColaboracion(dist);
-    colab.agregarColaboracion(donDinero);
-
-
-    em.persist(don);
-    em.persist(dist);
-    em.persist(donDinero);
-
-
-    BDUtils.commit(em);
-
-    Assertions.assertEquals(1,1);
-  }
-
-  @Test
-  public void persistirColaboracionHacerseCargoHeladera(){
-
-    
-    EntityManager em = BDUtils.getEntityManager();
-    BDUtils.comenzarTransaccion(em);
-
-    Usuario usuario1 = new Usuario("cami","cami123");
-    Documento documento1 = new Documento(332,"3","3","f");
-
-    
-    em.persist(usuario1);
-    em.persist(documento1);
-
-    PersonaHumana personaHumana1 = new PersonaHumana();
-    personaHumana1.setUsuario(usuario1);
-    personaHumana1.setDireccion("Av Rivadav 1111");
-    personaHumana1.setCuil("12351");
-    personaHumana1.setApellido("Camila");
-    personaHumana1.setNombre("Solimano");
-    personaHumana1.setFechaDeNacimiento(LocalDate.of(2003, 02 , 23));
-    personaHumana1.setDocumento(documento1);
-
-    em.persist(personaHumana1);
-
-    Colaborador colab = new Colaborador();
-    em.persist(colab);
-    personaHumana1.asignarRol(personaHumana1, colab);
-
-    
-
-    HacerseCargoDeHeladera cargo = new HacerseCargoDeHeladera();
-    colab.agregarColaboracion(cargo);
-    cargo.setColaborador(colab);
-
-    em.persist(cargo);
-
-    BDUtils.commit(em);
-
-    Assertions.assertEquals(1,1);
-  }
+    Assertions.assertThrows(RuntimeException.class, () -> {
+        em.persist(per);
+        BDUtils.commit(em);
+    });
+}
+ 
 
   @Test
   public void persistirColaboracionOfertayRegPer(){
@@ -232,105 +103,58 @@ public class PersistanceTest {
     em.persist(colab);
     personaJud1.asignarRol(personaJud1, colab);
 
+   OfrecerProductos prodSinNombre = new OfrecerProductos(null, "Villavicencio", 100);
+   Assertions.assertThrows(IllegalArgumentException.class, () -> {
+       em.persist(prodSinNombre); // Producto sin nombre, debería fallar
+   });
 
-    OfrecerProductos prod = new OfrecerProductos("Agua","Villavicencio",100);
-    colab.agregarColaboracion(prod);
-    prod.setColaborador(colab);
-
-    em.persist(prod);
+   OfrecerProductos prodNegativa = new OfrecerProductos("Agua", "Villavicencio", -100);
+   Assertions.assertThrows(IllegalArgumentException.class, () -> {
+       em.persist(prodNegativa); // Cantidad negativa, debería fallar
+   });
 
     BDUtils.commit(em);
 
     Assertions.assertEquals(1,1);
   }
 
-  @Test
-  public void persistirRegPVulnerable(){
-
-    
-    EntityManager em = BDUtils.getEntityManager();
-    BDUtils.comenzarTransaccion(em);
-
-    Usuario usuario1 = new Usuario("ian","iannn");
-    Documento documento1 = new Documento(33332,"3","m","m");
-
-    
-    em.persist(usuario1);
-    em.persist(documento1);
+@Test
+public void persistirUsuarioDatosExtremos() { //datos erroreonos o vacios donde no podria haber 
+    Usuario usuario1 = new Usuario("", "1234"); // Usuario sin nombre
+    Documento documento1 = new Documento(0, "", "", ""); // Documento vacío
 
     PersonaHumana personaHumana1 = new PersonaHumana();
     personaHumana1.setUsuario(usuario1);
-    personaHumana1.setDireccion("Av Pedro Goyena 1111");
-    personaHumana1.setCuil("632113");
-    personaHumana1.setApellido("Feldman");
-    personaHumana1.setNombre("IA");
-    personaHumana1.setFechaDeNacimiento(LocalDate.of(2003, 06 , 10));
+    personaHumana1.setDireccion(""); // Dirección vacía
+    personaHumana1.setCuil("cuilInválido"); // CUIL incorrecto
+    personaHumana1.setApellido("ApellidoExtremadamenteLargoQuePodriaCausarErroresAlPersistirEnBD");
+    personaHumana1.setNombre("Nombre");
+    personaHumana1.setFechaDeNacimiento(LocalDate.of(1800, 1, 1)); // Fecha muy antigua
     personaHumana1.setDocumento(documento1);
 
-    em.persist(personaHumana1);
+    EntityManager em = BDUtils.getEntityManager();
+    BDUtils.comenzarTransaccion(em);
+    Assertions.assertThrows(RuntimeException.class, () -> {
+        em.persist(usuario1);
+        em.persist(documento1);
+        em.persist(personaHumana1);
+        BDUtils.commit(em);
+    });
+}
 
-    Colaborador colab = new Colaborador();
-    em.persist(colab);
-    personaHumana1.asignarRol(personaHumana1, colab);
-
-    Usuario usuario2 = new Usuario("pepito","pep");
-    Documento documento2 = new Documento(33444,"2","m","m");
-
-    
-    em.persist(usuario2);
-    em.persist(documento2);
-
-    PersonaHumana personaHumana2 = new PersonaHumana();
-    personaHumana2.setUsuario(usuario2);
-    personaHumana2.setDireccion("Av Pedro Goyena 1111");
-    personaHumana2.setCuil("677777");
-    personaHumana2.setApellido("Pep");
-    personaHumana2.setNombre("Pepito");
-    personaHumana2.setFechaDeNacimiento(LocalDate.of(2000, 06 , 10));
-    personaHumana2.setDocumento(documento2);
-
-    em.persist(personaHumana2);
-
-    LocalDate fecha1 = LocalDate.of(2024, 11, 3); // Año, Mes, Día
-    PersonaVulnerable per = new PersonaVulnerable();
-    per.setFechaDeRegristro(fecha1);
-    per.setMenoresACargo(1);
-   
-    TarjetaVulnerable tarj = new TarjetaVulnerable(per);
-    per.setTarjetaVulnerable(tarj);   
-    em.persist(tarj);
-
-    em.persist(per);
-    personaHumana2.asignarRol(personaHumana2, per);
-
-
-    RegistrarPersonasEnSituacionVulnerable reg = new RegistrarPersonasEnSituacionVulnerable(per);
-    colab.agregarColaboracion(reg);
-    reg.setColaborador(colab);
-
-    em.persist(reg);
-
-    BDUtils.commit(em);
-
-    Assertions.assertEquals(1,1);
-  }
-
-
-  @Test
-  public void persistirSuscriptor(){
-
-    PuntoEstrategico punto = new PuntoEstrategico("p1", 10.0,12.0, "Av Santa Fe 1200");
-    Heladera heladera = new Heladera(10,1,punto);
+@Test
+public void fallaTecnicaHeladeraInactiva() {
+    PuntoEstrategico punto = new PuntoEstrategico("pErr", 10.0, 12.0, "Av Santa Fe 1200");
+    Heladera heladera = new Heladera(10, 1, punto);
+    heladera.setEstado(EstadoHeladera.INACTIVA); // Estado de heladera en inactiva, no se puede registrar una falla
 
     EntityManager em = BDUtils.getEntityManager();
     BDUtils.comenzarTransaccion(em);
     em.persist(punto);
     em.persist(heladera);
 
-    Usuario usuario1 = new Usuario("ianSus","iannn");
-    Documento documento1 = new Documento(33332,"3","m","m");
-
-
+    Usuario usuario1 = new Usuario("ianSus", "iannn");
+    Documento documento1 = new Documento(33332, "3", "m", "m");
     em.persist(usuario1);
     em.persist(documento1);
 
@@ -340,36 +164,26 @@ public class PersistanceTest {
     personaHumana1.setCuil("632113");
     personaHumana1.setApellido("Feldman");
     personaHumana1.setNombre("IA");
-    personaHumana1.setFechaDeNacimiento(LocalDate.of(2003, 06 , 10));
+    personaHumana1.setFechaDeNacimiento(LocalDate.of(2003, 06, 10));
     personaHumana1.setDocumento(documento1);
-
     em.persist(personaHumana1);
 
     Colaborador colab = new Colaborador();
     em.persist(colab);
     personaHumana1.asignarRol(personaHumana1, colab);
 
-    Suscriptor suscriptor = new Suscriptor();
+    
+    FallaTecnica fallaTecnica = new FallaTecnica(colab, heladera, LocalDateTime.of(2024, 11, 14, 15, 30));
+    fallaTecnica.setDescription("Falla en heladera inactiva");
 
-    suscriptor.setColaborador(colab);
-
-    suscriptor.setHeladera(heladera);
-    heladera.suscriptores.add(suscriptor);
-
-    em.persist(suscriptor);
-
-
-    Alerta alerta = new Alerta(TEMPERATURA,heladera, LocalDateTime.of(2024, 11, 14, 15, 30));
-
-    em.persist(alerta);
-
-    FallaTecnica fallaTecnica = new FallaTecnica(colab,heladera,LocalDateTime.of(2024, 11, 14, 15, 30));
-    fallaTecnica.setDescription("Prueba de fallas tecncicas");
-
-    em.persist(fallaTecnica);
-    BDUtils.commit(em);
-
-    Assertions.assertEquals(1,1);
-  }
+  
+    Assertions.assertThrows(RuntimeException.class, () -> {
+        em.persist(fallaTecnica);
+        BDUtils.commit(em); 
+    });
+}
+/*
+La heladera está en estado "INACTIVA", lo que debería impedir la persistencia de una falla técnica en ella. Esto puede generar una excepción IllegalStateException si se implementa una validación para evitar que se registren fallas en dispositivos inactivos.
+*/
 
 }

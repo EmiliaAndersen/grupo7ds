@@ -14,7 +14,7 @@ import java.util.ArrayList;
 @Getter
 public class PersonaJuridica extends Persona {
 
-  @Column
+  @Column (nullable = false)
   @Setter
   public String razonSocial;
   @Column

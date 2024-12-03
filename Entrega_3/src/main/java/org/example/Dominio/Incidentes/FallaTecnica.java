@@ -2,6 +2,8 @@ package org.example.Dominio.Incidentes;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import org.example.Dominio.Heladeras.EstadoHeladera;
 import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.Rol.Colaborador;
 
@@ -33,8 +35,15 @@ public class FallaTecnica extends Incidente {
         this.description = description;
         this.setHeladera(heladera);
         this.setFechaYHora(fechaYHora);
+
     }
 
+    @PrePersist
+    private void validarEstadoHeladera() {
+        if (this.heladera.getEstado() == EstadoHeladera.INACTIVA) {
+            throw new IllegalStateException("No se puede reportar una falla en una heladera inactiva.");
+        }
+    }
     public FallaTecnica() {
 
     }

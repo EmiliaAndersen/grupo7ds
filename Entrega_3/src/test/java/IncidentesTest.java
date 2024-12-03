@@ -31,7 +31,7 @@ public class IncidentesTest {
 
     @Test
     public void instanciarFallaTecnica() {
-        Incidente fallaTecnica = factory.crearFalla(new Colaborador(), heladera);
+        Incidente fallaTecnica = factory.crearFalla(new Colaborador(), heladera, "Error"); //ver
 
         Assertions.assertInstanceOf(FallaTecnica.class, fallaTecnica);
     }

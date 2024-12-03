@@ -63,6 +63,14 @@ public class Vianda {
         this.estadoVianda = estadoVianda;
     }
 
+        @PrePersist
+        private void validarFechas() {
+            if (fechaDonacion != null && fechaCaducidad != null && fechaDonacion.isAfter(fechaCaducidad)) {
+                throw new IllegalArgumentException("La fecha de donación no puede ser posterior a la fecha de caducidad.");
+            }
+
+}
+
     public Vianda() {
 
     }

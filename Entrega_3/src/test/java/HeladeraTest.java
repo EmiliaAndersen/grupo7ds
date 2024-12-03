@@ -23,7 +23,7 @@ public class HeladeraTest {
         colaborador.agregarFalla(heladera);
 
         IncidenteFactory inc = new IncidenteFactory();
-        inc.crearFalla(colaborador,heladera);
+        inc.crearFalla(colaborador,heladera,"Error"); //ver
 
         Assertions.assertNotEquals(heladera.estado, ACTIVA);
     }
@@ -42,4 +42,6 @@ public class HeladeraTest {
         // Verificación
         Assertions.assertEquals(distribuidor.aperturas.size(),1);
     }
+    
 }
+
