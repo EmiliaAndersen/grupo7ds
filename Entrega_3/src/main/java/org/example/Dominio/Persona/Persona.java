@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.example.Dominio.MediosContacto.MedioDeContacto;
 import org.example.Dominio.Rol.Rol;
 import org.example.Validador.Usuario;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.util.List;
@@ -23,7 +24,8 @@ public abstract class Persona {
 
   @OneToMany(mappedBy = "persona", cascade = CascadeType.PERSIST)
   private List<MedioDeContacto> mediosDeContacto;
-  @Column
+  @Column(nullable = false)  // Esto asegura que no sea null en la base de datos
+  @NotNull  // Esto asegura que no sea null en la aplicación (validación)
   @Setter
   private String direccion;
 

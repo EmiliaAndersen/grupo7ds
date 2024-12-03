@@ -54,6 +54,7 @@ public class Heladera {
 
     @Enumerated(EnumType.STRING)
     @Setter
+    @Getter
     public EstadoHeladera estado;
 
     @OneToMany(mappedBy = "heladera", cascade = CascadeType.ALL)

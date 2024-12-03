@@ -48,6 +48,11 @@ public class PersonaVulnerable extends Rol{
         @Setter
         private TarjetaVulnerable tarjetaVulnerable;
 
-
+        @PrePersist
+        private void validarMenoresACargo() {
+            if (menoresACargo != null && menoresACargo > 15) {
+                throw new IllegalArgumentException("No se puede tener más de 15 menores a cargo.");
+            }
+        }
 
 }
