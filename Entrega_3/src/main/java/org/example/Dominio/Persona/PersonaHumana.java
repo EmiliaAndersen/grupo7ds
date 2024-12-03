@@ -29,7 +29,7 @@ public class PersonaHumana extends Persona {
   public LocalDate fechaDeNacimiento;
 
   @PrePersist
-    @PreUpdate
+  @PreUpdate
     private void validarFechaDeNacimiento() {
         if (fechaDeNacimiento != null) {
             // No permitir fechas de nacimiento mayores a 150 años

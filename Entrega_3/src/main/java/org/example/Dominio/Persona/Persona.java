@@ -24,8 +24,7 @@ public abstract class Persona {
 
   @OneToMany(mappedBy = "persona", cascade = CascadeType.PERSIST)
   private List<MedioDeContacto> mediosDeContacto;
-  @Column(nullable = false)  // Esto asegura que no sea null en la base de datos
-  @NotNull  // Esto asegura que no sea null en la aplicación (validación)
+
   @Setter
   private String direccion;
 

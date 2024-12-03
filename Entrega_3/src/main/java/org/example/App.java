@@ -2,7 +2,12 @@ package org.example;
 
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import org.example.Dominio.Persona.PersonaHumana;
+import org.example.Dominio.Rol.Admin;
 import org.example.Handlers.*;
+import org.example.Validador.Usuario;
+import org.example.repositorios.RepositorioUsuarios;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -12,6 +17,7 @@ public class App {
 
     EntityManager em = BDUtils.getEntityManager();
     BDUtils.comenzarTransaccion(em);
+    RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getRepositorioUsuarios();
 
     Javalin app = Javalin.create(javalinConfig -> {
               javalinConfig.staticFiles.add("/");
@@ -22,6 +28,28 @@ public class App {
             .start(8085);
 
     // Aplica el middleware de autenticación antes de acceder a las rutas que requieren sesión
+
+
+
+    if(repositorioUsuarios.verificarUsuarios("admin")){
+      Usuario usuario = new Usuario();
+      usuario.setUsuario("admin");
+      usuario.setContrasenia("admin");
+      Admin admin = new Admin();
+      PersonaHumana personaHumana = new PersonaHumana();
+      personaHumana.setUsuario(usuario);
+      personaHumana.asignarRol(personaHumana,admin);
+      admin.setPersona(personaHumana);
+      em.persist(usuario);
+      em.persist(personaHumana);
+      em.persist(admin);
+      BDUtils.commit(em);
+    }
+
+
+    app.before("/backoffice",AuthMiddleware::verificarAutenticacion);
+    app.get("/backoffice",new getBackoffice());
+    app.post("/backoffice", new postBackoffice());
 
 
     app.before("/",AuthMiddleware::verificarAutenticacion);
@@ -94,14 +122,26 @@ public class App {
     app.post("/colaboraciones_realizadas", new PostColabos());
 
   }
+
+
 }
 
 class AuthMiddleware {
   public static void verificarAutenticacion(Context context) {
     List<String> rutasPublicas = List.of("/login", "/signin");
     String username = context.sessionAttribute("username");
+    String rol = "noAdmin";
+    if(context.sessionAttribute("rol") != null){
+      rol = context.sessionAttribute("rol");
+    }
     if (!rutasPublicas.contains(context.path()) && (username == null || username.isEmpty())) {
       context.redirect("/login");
     }
+
+    if(!rol.equals("admin")  && context.path().equals("/backoffice")){
+      context.redirect("/perfil_"+context.sessionAttribute("tipo_persona"));
+    }
+
+
   }
 }
