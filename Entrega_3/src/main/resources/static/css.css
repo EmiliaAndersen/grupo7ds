@@ -1,4 +1,13 @@
 
+.zoom-image {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.zoom-image:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
 #mainFooter {
   padding: 40px 0 20px 0;
   background: #231b53;
