@@ -10,7 +10,16 @@ public class getBackoffice implements Handler {
   @Override
   public void handle(@NotNull Context context) throws Exception {
     var model = new HashMap<String, Object>();
-    model.put("tipoPersona", context.sessionAttribute("tipo_persona"));
-    context.render("templates/backofficeHeladeras.mustache");
+    Boolean success = context.sessionAttribute("successPost");
+    Boolean error = context.sessionAttribute("errorPost");
+    if (  success != null) {
+      model.put("successMessage", "Heladera creada correctamente");
+      context.sessionAttribute("successPost", null);
+    }
+    if ( error != null) {
+      model.put("errorMessage", "Error al crear la heladera, intentelo devuelta");
+      context.sessionAttribute("errorPost", null);
+    }
+    context.render("templates/backofficeHeladeras.mustache",model);
   }
 }

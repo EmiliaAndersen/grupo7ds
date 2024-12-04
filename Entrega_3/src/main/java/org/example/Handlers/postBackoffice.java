@@ -14,9 +14,9 @@ import java.util.Map;
 public class postBackoffice implements Handler {
   @Override
   public void handle(@NotNull Context context) throws Exception {
-    String boton = context.formParam("btn-submit");
+    String boton = context.formParam("value-submit");
 
-    if (boton == "2") {
+    if ("2".equals(boton)) {
       context.sessionAttribute("username", null);
       context.redirect("/login");
     } else {
@@ -38,12 +38,12 @@ public class postBackoffice implements Handler {
         em.persist(punto);
         em.persist(heladera);
         BDUtils.commit(em);
-        model.put("heladeraCreada", "Heladera creada exitosamente");
+        context.sessionAttribute("successPost", true);
       } catch (Exception e) {
-        model.put("ErrorheladeraCreada", "Error al crear la heladera, intente nuevamente");
+        context.sessionAttribute("errorPost", true);
       }
 
-      context.render("/templates/backofficeHeladeras.mustache", model);
+      context.redirect("/backoffice");
     }
   }
 }

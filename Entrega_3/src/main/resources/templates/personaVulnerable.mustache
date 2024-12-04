@@ -68,6 +68,12 @@
                 <div class="col-md-7">
                     <h2 class="my-4" style="font-weight: 350">Registrar persona vulnerable</h2>
                     <hr>
+                    {{#successMessage}}
+                        <div class="alert alert-success my-2" >{{successMessage}}</div>
+                    {{/successMessage}}
+                    {{#errorMessage}}
+                        <div class="alert alert-warning my-2" >{{errorMessage}}</div>
+                    {{/errorMessage}}
                     <form method="POST" action="/personaVulnerable" class="form-row mt-2" id="form-donacion-dinero">
                         <div class="form-row mt-2">
                             <div class="col-md-12">
@@ -91,28 +97,28 @@
                         </div>
                         <div class="col-md-12 mt-1">
                             <label for="tipo_documento">Tipo de documento*</label>
-                            <input type="text" name="tipo_documento" class="form-control" id="tipo_documento" style="width: 70%;" required>
+                            <div class="input-group" style="width: 70%;">
+                                <select class="form-select" name="tipo_documento" id="tipo_documento" required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="DNI">DNI</option>
+                                    <option value="CUIL">CUIL</option>
+                                    <option value="Pasaporte">Pasaporte</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="col-md-12 mt-1">
-                            <label for="numero_documento">Número de documento*</label>
-                            <input type="text" name="numero_documento" class="form-control" id="numero_documento" style="width: 70%;" required>
+                            <label for="numero_documento">Número de documento* (Sin -)</label>
+                            <input type="number" min="0" name="numero_documento" class="form-control" id="numero_documento" style="width: 70%;" required>
                         </div>
                         <div class="col-md-12 mt-1">
                             <label for="menores_cargo">Menores a cargo*</label>
                             <div class="input-group" style="width: 70%;">
-                                <select class="form-select" name="menores_cargo" id="menores_cargo" required>
-                                    <option value="">Seleccione...</option>
-                                    <option value="0">0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4+">4+</option>
-                                </select>
+                                <input class="form-control" type="number" step="1" min="0" value="0" max="12" name="menores_cargo" id="menores_cargo" required>
                             </div>
                         </div>
                         <hr>
                         <div class="form-row">
-                            <button type="submit" id="btn-login-submit" name="signin-pj" class="btn btn-primary mt-2 mb-2 col-md-4">Registrarse</button><br>
+                            <button type="submit" id="btn-login-submit" name="signin-pj" class="btn btn-primary mt-2 mb-2 col-md-4">Registrar</button><br>
                         </div>
                     </form>
                 </div>
