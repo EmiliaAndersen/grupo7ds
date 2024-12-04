@@ -19,26 +19,22 @@ public class GetSuscripcion implements @NotNull Handler {
         model.put("tipoPersona", context.sessionAttribute("tipo_persona"));
 
         EntityManager em = BDUtils.getEntityManager();
-        BDUtils.comenzarTransaccion(em);
 
-        try {
+
             List<Heladera> heladeras = em.createQuery("SELECT h FROM Heladera h", Heladera.class)
                                          .getResultList();
-            if (heladeras.isEmpty()) {
-                context.status(404).result("No se encontraron heladeras.");
-                return;
-            }
-
+     
             model.put("heladeras", heladeras);
-            context.render("/templates/suscripcion.mustache", model);
+            boolean errorMotivo = false;
 
-            BDUtils.commit(em);
-        } catch (Exception e) {
-            BDUtils.rollback(em);
-            e.printStackTrace();  // Verifica el error en la consola
-            context.status(500).result("Error al obtener heladeras: " + e.getMessage());
-        } finally {
-            em.close();
-        }
+            if(context.sessionAttribute("ErrorMotivo") != null){
+                errorMotivo = context.sessionAttribute("ErrorSignIn");
+                if(errorMotivo){
+                  model.put("ErrorMotivo","Motivo no valido: Ponga 1,2 o 3");
+                  context.sessionAttribute("ErrorMotivo",false);
+                }
+          
+            context.render("/templates/suscripcion.mustache", model);
     }
+}
 }

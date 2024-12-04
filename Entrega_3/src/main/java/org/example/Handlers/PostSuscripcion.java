@@ -28,32 +28,20 @@ public class PostSuscripcion implements @NotNull Handler {
       String nombre = context.sessionAttribute("username");
       Colaborador colab = repositorioColaboradores.obtenerColaborador(nombre);
 
-     if (colab == null) {
-           context.status(404).result("El colaborador con el nombre '" + nombre + "' no existe.");
-           return ;
-        }
-
       sr.setColaborador(colab); 
 
       String heladeraId = context.formParam("heladera");
       Long helidlong;
-      try {
-          helidlong = Long.parseLong(heladeraId);
-      } catch (NumberFormatException e) {
-          context.status(400).result("El ID de la heladera no es válido.");
-          return;
-      }
+      helidlong = Long.parseLong(heladeraId);
+       
 
 
       TypedQuery<Heladera> query = em.createQuery("SELECT h from Heladera h where h.id = :id ",Heladera.class);
       query.setParameter("id",helidlong);
       Heladera heladera;
-      try{
-        heladera = query.getSingleResult();
-      }
-       catch (NoResultException e) {
-                throw new RuntimeException("Heladera no encontrada con ID: " + heladeraId, e);
-            }
+      heladera = query.getSingleResult();
+
+    
       sr.setHeladera(heladera);
 
       String num = context.formParam("motivo");
@@ -71,8 +59,9 @@ public class PostSuscripcion implements @NotNull Handler {
              sr.setTipo(TipoSuscripcion.DESPERFECTO);
              break;
          default:
-             context.status(400).result("El motivo no es válido.");
-             return;
+         System.out.println("Motivo no valido: Ponga 1,2 o 3");
+         context.sessionAttribute("ErrorMotivo", true);
+         context.redirect("/suscripcion");
      }
 
 
@@ -82,7 +71,6 @@ public class PostSuscripcion implements @NotNull Handler {
       context.redirect("/perfil_"+tipo);
      } catch (Exception e) {
             BDUtils.rollback(em);
-            context.status(500).result("Se produjo un error: " + e.getMessage());
      }
    }
    public static int stringToInt(String str) {

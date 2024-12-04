@@ -90,6 +90,9 @@
                         <div class="col-md-8">
                             <label for="Password">Motivo</label>
                             <textarea name="motivo" class="form-control" required></textarea>
+                        {{#errorMotivo}}
+                        <div class="alert-warning alert my-2">{{errorMotivo}}</div>
+                        {{/errorMotivo}}
                         </div>
                     </div>
                     <div class="form-row mt-2">
