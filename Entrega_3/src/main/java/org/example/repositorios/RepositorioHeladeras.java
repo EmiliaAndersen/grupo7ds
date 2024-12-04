@@ -32,4 +32,11 @@ public class RepositorioHeladeras {
             return null;
         }
     }
+
+    public List<Heladera> obtenerTodasHeladeras(){
+        EntityManager em = BDUtils.getEntityManager();
+
+        List<Heladera> heladeras = em.createQuery("SELECT h FROM Heladera h", Heladera.class).getResultList();
+        return heladeras;
+    }
 }
