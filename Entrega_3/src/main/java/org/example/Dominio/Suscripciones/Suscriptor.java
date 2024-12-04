@@ -25,7 +25,7 @@ public class Suscriptor {
     private long id;
 
     @OneToOne
-    @JoinColumn(name = "colaborador_id", referencedColumnName = "id", unique = true, nullable = true)
+    @JoinColumn(name = "colaborador_id", referencedColumnName = "id",  nullable = true)
     private Colaborador colaborador;
 
     @Enumerated(EnumType.STRING)

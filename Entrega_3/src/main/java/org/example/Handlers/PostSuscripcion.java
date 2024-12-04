@@ -57,6 +57,10 @@ public class PostSuscripcion implements @NotNull Handler {
                 }else if("3".equals(num)){
                     sr.setTipo(TipoSuscripcion.DESPERFECTO);
                 }
+
+                
+
+
                 em.persist(sr);
                 BDUtils.commit(em);
                 context.sessionAttribute("successSuscripcion", true);
