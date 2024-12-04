@@ -64,6 +64,14 @@
 
         <div class="container mt-5 mb-2 border border-round shadow-1" style="background-color: #eff5ff;min-height: 600px;">
             <form method='POST' class="row p-4" id="subscriptionForm">
+            
+                        {{#ErrorMotivo}}
+                        <div class="alert-warning alert my-2">{{ErrorMotivo}}</div>
+                        {{/ErrorMotivo}}
+                        
+                        {{#successSuscripcion}}
+                        <div class="alert-success alert my-2">{{successSuscripcion}}</div>
+                        {{/successSuscripcion}}
                 <div class="row">
                     <h2>Suscripcion a heladeras</h2>
                     <hr>
@@ -89,10 +97,12 @@
                     <div class="form-row mt-2">
                         <div class="col-md-8">
                             <label for="Password">Motivo</label>
-                            <textarea name="motivo" class="form-control" required></textarea>
-                        {{#errorMotivo}}
-                        <div class="alert-warning alert my-2">{{errorMotivo}}</div>
-                        {{/errorMotivo}}
+                            <select name="motivo" class="form-select" aria-label="Default select example" required>
+                                <option selected>Seleccione motivo</option>
+                                <option value="1">Cuando queden un mínimo de viandas (seteado por usted)</option>
+                                <option value="2">Cuando falten un mínimo de viandas para llenar la heladera (seteado por usted)</option>
+                                <option value="3">Cuando la heladera sufrió un desperfecto y las viandas deben ser llevadas a otras heladeras</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-row mt-2">
@@ -134,7 +144,7 @@
             btnSubmit.addEventListener('click', function() {
                 if (form.checkValidity()) {
                     // Redirige a /perfil si el formulario es válido
-                    window.location.href = '/perfil';
+                    form.submit();
                 } else {
                     alert('Por favor complete todos los campos requeridos.'); // Mensaje de advertencia
                 }

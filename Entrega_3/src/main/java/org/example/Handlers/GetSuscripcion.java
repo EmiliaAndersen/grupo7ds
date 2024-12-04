@@ -28,13 +28,22 @@ public class GetSuscripcion implements @NotNull Handler {
             boolean errorMotivo = false;
 
             if(context.sessionAttribute("ErrorMotivo") != null){
-                errorMotivo = context.sessionAttribute("ErrorSignIn");
+                errorMotivo = context.sessionAttribute("ErrorMotivo");
                 if(errorMotivo){
                   model.put("ErrorMotivo","Motivo no valido: Ponga 1,2 o 3");
                   context.sessionAttribute("ErrorMotivo",false);
                 }
-          
+            }
+
+            boolean successSuscripcion = false;
+            if(context.sessionAttribute("successSuscripcion") != null){
+                successSuscripcion = context.sessionAttribute("successSuscripcion");
+                if(successSuscripcion){
+                  model.put("successSuscripcion","Se suscribio correctamente a la heladera");
+                  context.sessionAttribute("successSuscripcion",false);
+                }
+            }
             context.render("/templates/suscripcion.mustache", model);
+           
     }
-}
 }
