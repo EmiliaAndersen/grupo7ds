@@ -30,7 +30,7 @@ public class GetSuscripcion implements @NotNull Handler {
             if(context.sessionAttribute("ErrorMotivo") != null){
                 errorMotivo = context.sessionAttribute("ErrorMotivo");
                 if(errorMotivo){
-                  model.put("ErrorMotivo","Motivo no valido: Ponga 1,2 o 3");
+                  model.put("ErrorMotivo","Motivo no valido: Seleccione uno que corresponda.");
                   context.sessionAttribute("ErrorMotivo",false);
                 }
             }
