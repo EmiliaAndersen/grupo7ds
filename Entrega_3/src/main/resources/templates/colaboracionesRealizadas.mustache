@@ -74,11 +74,11 @@
             {{#distribuciones}}
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
-                        <h5 class="card-title text-primary">Distribución</h5>
-                        <p><strong>Heladera Origen:</strong> {{heladeraOrigen}}</p>
-                        <p><strong>Heladera Destino:</strong> {{heladeraDestino}}</p>
-                        <p><strong>Motivo:</strong> {{motivo}}</p>
+                        <h5 class="card-title text-primary">Distribución de viandas</h5>
                         <p><strong>Fecha:</strong> {{fecha}}</p>
+                        <p><strong>Heladera Origen:</strong> {{heladeraOrigen.ubicacion.nombre}}</p>
+                        <p><strong>Heladera Destino:</strong> {{heladeraDestino.ubicacion.nombre}}</p>
+                        <p><strong>Motivo:</strong> {{motivo}}</p>
                     </div>
                 </div>
             {{/distribuciones}}
@@ -91,7 +91,7 @@
                         <h5 class="card-title text-success">Donación de Dinero</h5>
                         <p><strong>Fecha:</strong> {{fecha}}</p>
                         <p><strong>Monto:</strong> ${{monto}}</p>
-                        <p><strong>Frecuencia:</strong> {{frecuencia}}</p>
+                        <p><strong>Proxima donacion:</strong> {{frecuencia}}</p>
                     </div>
                 </div>
             {{/donacionesDinero}}
@@ -102,8 +102,10 @@
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
                         <h5 class="card-title text-warning">Donación de Vianda</h5>
-                        <p><strong>Vianda ID:</strong> {{vianda.id}}</p>
-                        <p><strong>Descripción:</strong> {{vianda.descripcion}}</p>
+                        <p><strong>Fecha:</strong> {{vianda.fechaDonacion}}</p>
+                        <p><strong>Comida:</strong> {{vianda.descripcionComida}}</p>
+                        <p><strong>Calorias:</strong> {{vianda.calorias}}</p>
+                        <p><strong>Peso:</strong> {{vianda.peso}}</p>
                     </div>
                 </div>
             {{/donacionesVianda}}
@@ -130,7 +132,6 @@
                         <p><strong>Tipo de Producto:</strong> {{tipoProducto}}</p>
                         <p><strong>Marca:</strong> {{marca}}</p>
                         <p><strong>Monto:</strong> {{monto}}</p>
-                        <p><strong>Persona Vulnerable:</strong> {{personaVulnerable.nombre}}</p>
                     </div>
                 </div>
             {{/ofertasProductos}}
