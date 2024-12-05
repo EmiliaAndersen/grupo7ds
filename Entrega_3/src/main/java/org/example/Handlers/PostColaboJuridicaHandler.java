@@ -36,50 +36,54 @@ public class PostColaboJuridicaHandler implements Handler {
             ctx.render("/templates/colaboracionHumana.mustache", model);
             return;
         }
+        try {
+            switch (tipoColabo) {
+                case "hc": {
 
-        switch (tipoColabo){
-            case "hc":{
-                String heladera_id = ctx.formParam("heladera");
-                String ubicacion_desc = ctx.formParam("ubicacion");
+                    String heladera_id = ctx.formParam("heladera");
+                    String ubicacion_desc = ctx.formParam("ubicacion");
 
-                // TODO: falta ver como obtener los datos que estan en null
-                PuntoEstrategico ubicacion = new PuntoEstrategico(ubicacion_desc, null, null, null);
-                HacerseCargoDeHeladeraFactory factoryHC = new HacerseCargoDeHeladeraFactory();
-                // TODO: Repensar las cosas que necesita este tipo de colaboración para ser creado. No tiene mucho sentido lo actual
-                // Me parece que tiene mas sentido que solamente reciba una ubicacion.
-                Colaboracion hacerseCargoHeladera = factoryHC.crearColaboracion( null, ubicacion, null);
-                hacerseCargoHeladera.setColaborador(colaborador);
-                repoColaboraciones.addHacerseCargoHeladera(hacerseCargoHeladera, ubicacion);
-                break;
+                    // TODO: falta ver como obtener los datos que estan en null
+                    PuntoEstrategico ubicacion = new PuntoEstrategico(ubicacion_desc, null, null, null);
+                    HacerseCargoDeHeladeraFactory factoryHC = new HacerseCargoDeHeladeraFactory();
+                    // TODO: Repensar las cosas que necesita este tipo de colaboración para ser creado. No tiene mucho sentido lo actual
+                    // Me parece que tiene mas sentido que solamente reciba una ubicacion.
+                    Colaboracion hacerseCargoHeladera = factoryHC.crearColaboracion(null, ubicacion, null);
+                    hacerseCargoHeladera.setColaborador(colaborador);
+                    repoColaboraciones.addHacerseCargoHeladera(hacerseCargoHeladera, ubicacion);
+                    break;
+                }
+                case "op": {
+                    String tipo_producto = ctx.formParam("tipo-producto");
+                    String marca = ctx.formParam("marca");
+                    int monto = Integer.parseInt(ctx.formParam("monto"));
+
+                    OfrecerProductosFactory factoryOP = new OfrecerProductosFactory();
+                    Colaboracion ofrecerProductos = factoryOP.crearColaboracion(tipo_producto, marca, monto);
+                    ofrecerProductos.setColaborador(colaborador);
+                    repoColaboraciones.addOfrecerProducto(ofrecerProductos);
+
+                    break;
+                }
+                case "dd": {
+                    LocalDate fecha = LocalDate.parse(ctx.formParam("fecha_nacimiento"));
+                    double monto = Double.parseDouble(ctx.formParam("password"));
+                    String frecuencia = ctx.formParam("frecuencia");
+
+
+                    // TODO: Agregar un atributo session para obtener el colaborador asociado al usuario que realiza la colaboracion para linkearlo al repo
+                    DonacionDeDineroFactory factoryDD = new DonacionDeDineroFactory();
+                    Colaboracion donacionDinero = factoryDD.crearColaboracion(fecha, monto, frecuencia);
+                    donacionDinero.setColaborador(colaborador);
+                    repoColaboraciones.addDonacionDinero(donacionDinero);
+                    break;
+                }
             }
-            case "op":{
-                String tipo_producto = ctx.formParam("tipo-producto");
-                String marca = ctx.formParam("marca");
-                int monto = Integer.parseInt(ctx.formParam("monto"));
-
-                OfrecerProductosFactory factoryOP = new OfrecerProductosFactory();
-                Colaboracion ofrecerProductos = factoryOP.crearColaboracion( tipo_producto, marca, monto);
-                ofrecerProductos.setColaborador(colaborador);
-                repoColaboraciones.addOfrecerProducto(ofrecerProductos);
-
-                break;
-            }
-            case "dd":{
-                LocalDate fecha = LocalDate.parse(ctx.formParam("fecha_nacimiento"));
-                double monto = Double.parseDouble(ctx.formParam("password"));
-                String frecuencia = ctx.formParam("frecuencia");
-
-
-                // TODO: Agregar un atributo session para obtener el colaborador asociado al usuario que realiza la colaboracion para linkearlo al repo
-                DonacionDeDineroFactory factoryDD = new DonacionDeDineroFactory();
-                Colaboracion donacionDinero = factoryDD.crearColaboracion(fecha, monto, frecuencia);
-                donacionDinero.setColaborador(colaborador);
-                repoColaboraciones.addDonacionDinero(donacionDinero);
-                break;
-            }
+            model.put("successMessage", "Colaboracion creada exitosamente");
+        }catch (Exception e){
+            model.put("errorMessage","Error al crear la colaboracion");
         }
-
         System.out.println("Colaboracion creada");
-        ctx.redirect("/perfil_persona_juridica");
+        ctx.render("/templates/colaboracionJuridica.mustache",model);
     }
 }
