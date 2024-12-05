@@ -5,14 +5,12 @@ import org.example.Dominio.AreaDeCobertura.AreaCobertura;
 import org.example.Dominio.Incidentes.Incidente;
 import org.example.Dominio.Incidentes.Visita;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Table(name="tecnico")
 public class Tecnico extends Rol{
 
     //TODO: Revisar porque lista

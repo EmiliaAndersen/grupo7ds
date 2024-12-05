@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name="sensor")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)  // Usa una sola tabla para la herencia
 @DiscriminatorColumn(name = "tipo_sensor", discriminatorType = DiscriminatorType.STRING)  // Columna discriminadora
 public class Sensor {

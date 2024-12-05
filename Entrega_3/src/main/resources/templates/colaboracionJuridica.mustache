@@ -85,7 +85,14 @@
                             <div class="form-row mt-2">
                                 <div class="col-md-12">
                                     <label for="heladera">Heladera*</label>
-                                    <input type="text" name="heladera" class="form-control" id="heladera" required>
+                                    <div class="input-group">
+                                        <select class="form-select" name="heladera" id="heladera" required>
+                                            <option value="">Seleccione...</option>
+                                            {{#heladeras}}
+                                                <option value="{{id}}">{{ubicacion.nombre}} - {{ubicacion.direccion}}</option>
+                                            {{/heladeras}}
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -110,7 +117,7 @@
                             </div>
                             <div class="col-md-12 mt-1">
                                 <label for="Password">Monto*</label>
-                                <input type="password" name="password" class="form-control" id="password" required>
+                                <input type="number" name="password" class="form-control" id="password" required>
                             </div>
                             <div class="col-md-12 mt-1">
                                 <label for="Frecuencia">Frecuencia</label>

@@ -10,6 +10,7 @@ import org.example.Dominio.Persona.PersonaJuridica;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "colaboracion")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Colaboracion {
 

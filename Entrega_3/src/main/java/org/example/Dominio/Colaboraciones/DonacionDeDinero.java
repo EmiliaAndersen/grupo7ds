@@ -7,6 +7,7 @@ import org.example.Dominio.Rol.Colaborador;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.time.LocalDate;
 @Entity
 @Table(name = "donacion_de_dinero")
@@ -23,6 +24,10 @@ public class DonacionDeDinero extends Colaboracion{
   @Getter
   @Setter
   private LocalDate frecuencia;
+  @Transient
+  @Getter
+  @Setter
+  private String proxDon;
 
   public DonacionDeDinero(LocalDate fecha, Double monto, LocalDate frecuencia) {
     this.fecha = fecha;

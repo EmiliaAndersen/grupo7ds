@@ -18,7 +18,7 @@ import static org.example.Dominio.Notificador.ServiciosMail.enviarMail;
 @Getter
 @Setter
 @Entity
-@Table
+@Table(name="suscriptor")
 public class Suscriptor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -83,5 +83,21 @@
             <version>5.4.18.Final</version>
         </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>[4.0.0,]</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Main-Class>com.yourpackage.Main</Main-Class>  <!-- Replace with your main class -->
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
