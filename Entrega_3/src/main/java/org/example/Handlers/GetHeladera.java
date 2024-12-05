@@ -44,9 +44,9 @@ public class GetHeladera implements @NotNull Handler {
     String localizaciones ="";
     for (Heladera heladera : heladeras) {
         if(localizaciones == ""){
-          localizaciones = heladera.getUbicacion().getLatitud() + ","+ heladera.getUbicacion().getLongitud();
+          localizaciones = heladera.getUbicacion().getNombre() + ","+heladera.getUbicacion().getLatitud() + ","+ heladera.getUbicacion().getLongitud();
         }else{
-          localizaciones = localizaciones + ";"+ heladera.getUbicacion().getLatitud() + ","+ heladera.getUbicacion().getLongitud();
+          localizaciones = localizaciones + ";"+ heladera.getUbicacion().getNombre() + ","+ heladera.getUbicacion().getLatitud() + ","+ heladera.getUbicacion().getLongitud();
         }
     }
     model.put("localizaciones",localizaciones);

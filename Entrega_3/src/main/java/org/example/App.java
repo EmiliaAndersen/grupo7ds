@@ -47,6 +47,9 @@ public class App {
     }
 
 
+    app.get("/cerrarSesion",new CerrarSesion());
+    app.post("/cerrarSesion",new CerrarSesion());
+
     app.before("/backoffice",AuthMiddleware::verificarAutenticacion);
     app.get("/backoffice",new getBackoffice());
     app.post("/backoffice", new postBackoffice());

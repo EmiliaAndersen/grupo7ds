@@ -27,7 +27,6 @@ public class GetReportar implements @NotNull Handler {
         context.sessionAttribute("errorReportar ",false);
       }
 
-        model.put("tipoPersona", context.sessionAttribute("tipo_persona"));
       }
 
       boolean successReportar = false;
@@ -39,6 +38,7 @@ public class GetReportar implements @NotNull Handler {
           }
       }
 
-        context.render("/templates/reportar.mustache", model);
+      model.put("tipoPersona", context.sessionAttribute("tipo_persona"));
+    context.render("/templates/reportar.mustache", model);
   }
 }

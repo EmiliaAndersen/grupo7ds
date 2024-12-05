@@ -46,7 +46,12 @@
     .img-heladera{
         display:none;
     }
-}   
+}
+@media (max-width: 768px){
+    .btn-perfil{
+        width: 100%;
+    }
+}
 
 .btn-primary {    
     background: #3098b5;
