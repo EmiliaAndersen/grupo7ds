@@ -90,23 +90,48 @@
                         <div class="form-row">
                             <div class="form-row mt-2">
                                 <div class="col-md-12">
-                                    <label for="heladera">Heladera*</label>
-                                    <div class="input-group">
-                                        <select class="form-select" name="heladera" id="heladera" required>
-                                            <option value="">Seleccione...</option>
-                                            {{#heladeras}}
-                                                <option value="{{id}}">{{ubicacion.nombre}} - {{ubicacion.direccion}}</option>
-                                            {{/heladeras}}
-                                        </select>
-                                    </div>
+                                    <label for="nombre">Nombre de la Heladera*</label>
+                                    <input type="text" name="nombre" class="form-control" id="nombre" required>
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-row mt-2">
                                 <div class="col-md-12">
-                                    <label for="ubicacion">Ubicacio*</label>
-                                    <input type="text" name="ubicacion" class="form-control" id="ubicacion" required>
+                                    <label for="longitud">Longitud*</label>
+                                    <input type="text" name="longitud" class="form-control" id="longitud" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-row mt-2">
+                                <div class="col-md-12">
+                                    <label for="latitud">Latitud*</label>
+                                    <input type="text" name="latitud" class="form-control" id="latitud" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-row mt-2">
+                                <div class="col-md-12">
+                                    <label for="direccion">Direccion*</label>
+                                    <input type="text" name="direccion" class="form-control" id="direccion" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-row mt-2">
+                                <div class="col-md-12">
+                                    <label for="temp_min">Temperatura minima*</label>
+                                    <input type="text" name="temp_min" class="form-control" id="temp_min" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-row mt-2">
+                                <div class="col-md-12">
+                                    <label for="temp_max">Temperatura maxima*</label>
+                                    <input type="text" name="temp_max" class="form-control" id="temp_max" required>
                                 </div>
                             </div>
                         </div>

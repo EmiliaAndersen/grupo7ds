@@ -6,6 +6,7 @@ import org.example.Dominio.Colaboraciones.Colaboracion;
 import org.example.Dominio.Colaboraciones.Factory.DonacionDeDineroFactory;
 import org.example.Dominio.Colaboraciones.Factory.HacerseCargoDeHeladeraFactory;
 import org.example.Dominio.Colaboraciones.Factory.OfrecerProductosFactory;
+import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
 import org.example.Dominio.Rol.Colaborador;
 import org.example.repositorios.RepositorioColaboraciones;
@@ -40,18 +41,30 @@ public class PostColaboJuridicaHandler implements Handler {
             switch (tipoColabo) {
                 case "hc": {
 
-                    String heladera_id = ctx.formParam("heladera");
-                    String ubicacion_desc = ctx.formParam("ubicacion");
+                    String nombre = ctx.formParam("nombre");
+                    String longitudParam = ctx.formParam("longitud");
+                    String latitudParam = ctx.formParam("latitud");
+                    String direccion = ctx.formParam("direccion");
+                    String tempMinParam = ctx.formParam("temp_min");
+                    String tempMaxParam = ctx.formParam("temp_max");
 
-                    // TODO: falta ver como obtener los datos que estan en null
-                    PuntoEstrategico ubicacion = new PuntoEstrategico(ubicacion_desc, null, null, null);
+
+                    double longitud = Double.parseDouble(longitudParam);
+                    double latitud = Double.parseDouble(latitudParam);
+                    int tempMin = Integer.parseInt(tempMinParam);
+                    int tempMax = Integer.parseInt(tempMaxParam);
+
+
+                    PuntoEstrategico punto = new PuntoEstrategico(nombre, longitud, latitud, direccion);
+
+
+                    Heladera heladera = new Heladera(tempMax, tempMin, punto);
                     HacerseCargoDeHeladeraFactory factoryHC = new HacerseCargoDeHeladeraFactory();
-                    // TODO: Repensar las cosas que necesita este tipo de colaboración para ser creado. No tiene mucho sentido lo actual
-                    // Me parece que tiene mas sentido que solamente reciba una ubicacion.
-                    Colaboracion hacerseCargoHeladera = factoryHC.crearColaboracion(null, ubicacion, null);
+                    Colaboracion hacerseCargoHeladera = factoryHC.crearColaboracion(heladera,punto);
                     hacerseCargoHeladera.setColaborador(colaborador);
-                    repoColaboraciones.addHacerseCargoHeladera(hacerseCargoHeladera, ubicacion);
+                    repoColaboraciones.addHacerseCargoHeladera(hacerseCargoHeladera, punto, heladera);
                     break;
+
                 }
                 case "op": {
                     String tipo_producto = ctx.formParam("tipo-producto");

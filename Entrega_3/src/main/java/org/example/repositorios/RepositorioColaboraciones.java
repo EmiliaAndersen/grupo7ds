@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.example.BDUtils;
 import org.example.Dominio.Colaboraciones.Colaboracion;
 import org.example.Dominio.Colaboraciones.DonacionDeVianda;
+import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
 import org.example.Dominio.Viandas.Vianda;
 import org.example.Validador.Usuario;
@@ -53,10 +54,11 @@ public class RepositorioColaboraciones {
         BDUtils.commit(em);
     }
 
-    public void addHacerseCargoHeladera(Colaboracion hacerseCargoHeladera, PuntoEstrategico pto){
+    public void addHacerseCargoHeladera(Colaboracion hacerseCargoHeladera, PuntoEstrategico pto, Heladera heladera){
         EntityManager em = BDUtils.getEntityManager();
         BDUtils.comenzarTransaccion(em);
         em.persist(pto);
+        em.persist(heladera);
         em.persist(hacerseCargoHeladera);
         BDUtils.commit(em);
     }

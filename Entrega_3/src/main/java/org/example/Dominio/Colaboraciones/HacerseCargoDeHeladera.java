@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 
+import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
 import org.example.Dominio.Rol.Colaborador;
 import org.example.Servicio.LocalizacionEstrategicaAPI;
@@ -29,6 +30,11 @@ public class HacerseCargoDeHeladera extends Colaboracion {
   @Getter
   private Double radio;
 
+  @OneToOne
+  @JoinColumn(name = "heladera_id",referencedColumnName = "id")
+  @Getter
+  @Setter
+  private Heladera heladera;
 
   @Transient
   private final LocalizacionEstrategicaAPI localizacionEstrategicaAPI;
@@ -38,6 +44,12 @@ public class HacerseCargoDeHeladera extends Colaboracion {
     this.puntoEstrategico = puntoEstrategico;
     this.radio = radio;
   }
+  public HacerseCargoDeHeladera(PuntoEstrategico puntoEstrategico, Heladera heladera){
+    this.puntoEstrategico = puntoEstrategico;
+    this.heladera = heladera;
+    this.localizacionEstrategicaAPI = null;
+  }
+
 
   //TODO: revisar esto porque si saco el null tira error por todos lados
   public HacerseCargoDeHeladera() {
