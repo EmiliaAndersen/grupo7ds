@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name="persona")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)  // Usa una sola tabla para la herencia
 @DiscriminatorColumn(name = "tipo_persona", discriminatorType = DiscriminatorType.STRING)  // Columna discriminadora
 
