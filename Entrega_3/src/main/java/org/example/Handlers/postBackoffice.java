@@ -40,6 +40,7 @@ public class postBackoffice implements Handler {
         BDUtils.commit(em);
         context.sessionAttribute("successPost", true);
       } catch (Exception e) {
+        e.printStackTrace();
         context.sessionAttribute("errorPost", true);
       }
 

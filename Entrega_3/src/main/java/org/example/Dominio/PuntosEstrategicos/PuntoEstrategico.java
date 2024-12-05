@@ -57,14 +57,14 @@ public class PuntoEstrategico {
     }
 
 
-    @PrePersist
+   @PrePersist
     private void validarCoordenadas() {
-        if (longitud != null && longitud < 0) {
+       /*  if (longitud != null && longitud < 0) {
             throw new IllegalArgumentException("La longitud no puede ser negativa.");
         }
         if (latitud != null && latitud < 0) {
             throw new IllegalArgumentException("La latitud no puede ser negativa.");
-        }
+        }*/
     }
 
 
