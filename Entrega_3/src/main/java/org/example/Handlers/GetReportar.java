@@ -17,7 +17,28 @@ public class GetReportar implements @NotNull Handler {
         List<Heladera> heladeras = repositorioHeladeras.obtenerTodasHeladeras();
         model.put("heladeras",heladeras);
 
+
+        boolean errorReportar = false;
+
+      if(context.sessionAttribute("errorReportar ") != null){
+      errorReportar = context.sessionAttribute("errorReportar ");
+      if(errorReportar ){
+        model.put("errorMessageReportar ","Ocurrio un error");
+        context.sessionAttribute("errorReportar ",false);
+      }
+
         model.put("tipoPersona", context.sessionAttribute("tipo_persona"));
+      }
+
+      boolean successReportar = false;
+      if(context.sessionAttribute("successReportar") != null){
+          successReportar = context.sessionAttribute("successReportar");
+          if(successReportar){
+            model.put("successReportar","Se reporto correctamente");
+            context.sessionAttribute("successReportar",false);
+          }
+      }
+
         context.render("/templates/reportar.mustache", model);
   }
 }

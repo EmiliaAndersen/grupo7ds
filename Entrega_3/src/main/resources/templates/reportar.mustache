@@ -65,6 +65,15 @@
                 <div class="row">
                     <h2>Reportar fallas técnicas</h2>
                     <hr>
+
+                      {{#errorReportar}}
+                        <div class="alert-warning alert my-2">{{errorReportar}}</div>
+                        {{/errorReportar}}
+                      {{#successReportar}}
+                        <div class="alert-success alert my-2">{{successReportar}}</div>
+                        {{/successReportar}}
+
+
                     <div class="form-row">
                         <div class="col-md-8">
                             <label for="usuario">Heladera</label>

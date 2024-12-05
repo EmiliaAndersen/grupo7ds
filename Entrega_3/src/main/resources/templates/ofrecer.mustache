@@ -62,9 +62,23 @@
 </nav>
         <div class="container mt-5 mb-2 border border-round shadow-1" style="background-color: #eff5ff;min-height: 600px;">
             <form method='POST' class="p-4">
+
+
+
+
                 <div class="row">
                     <h2>Ofrecer productos</h2>
                     <hr>
+
+                                
+                         {{#errorOfrecerProd}}
+                        <div class="alert-warning alert my-2">{{errorOfrecerProd}}</div>
+                        {{/errorOfrecerProd}}
+                        
+                        {{#successOfrecerProd}}
+                        <div class="alert-success alert my-2">{{successOfrecerProd}}</div>
+                        {{/successOfrecerProd}}
+                        
                     <div class="form-row">
                         <div class="col-md-8">
                             <label for="rubro">Rubro</label>

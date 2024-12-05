@@ -30,25 +30,37 @@ public class PostReportar implements @NotNull Handler {
                  String userName = context.sessionAttribute("username");
                  Colaborador colaborador = repoColaboradores.obtenerColaborador(userName);
                  if (colaborador == null) {
-                     model.put("errorMessage", "El colaborador no existe");
+                     model.put("errorReportar", "El colaborador no existe");
                      context.render("/templates/colaboracionHumana.mustache", model);
                      return;
                  }
         
                 // Validar que los campos no estén vacíos
                 if (heladera_id == null || heladera_id.isEmpty() || descripcion == null || descripcion.isEmpty()) {
-                    context.redirect("/reportar");  // Redirigir de nuevo a la página de reporte
+                
+
+
+                    model.put("errorReportar", "La heladera no existe");
+                    context.render("/templates/colaboracionHumana.mustache", model);
+                    context.sessionAttribute("errorReportar", true);
+                    context.redirect("/reportar");
+                     return;
+
+
                 } else {
                     Heladera heladera = repoHeladeras.obtenerHeladera(heladera_id);
                     if (heladera == null) {
-                        model.put("errorMessage", "La heladera no existe");
+                        model.put("errorReportar", "La heladera no existe");
                         context.render("/templates/colaboracionHumana.mustache", model);
+                        context.sessionAttribute("errorReportar", true);
+                        context.redirect("/reportar");
                         return;
                     }
                     IncidenteFactory incidenteFactory = new IncidenteFactory();
                     Incidente falla = incidenteFactory.crearFalla(colaborador, heladera, descripcion);
-                    // Redirigir al perfil
+            
                     repoIncidentes.addIncidente(falla);
+                    context.sessionAttribute("successReportar", true);
                     context.redirect("/reportar");//agregar tipo persona al path
                 }
      }
