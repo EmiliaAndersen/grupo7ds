@@ -8,7 +8,7 @@ import javax.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
 @Entity
-@Table
+@Table(name="documento")
 
 public class Documento {
   @Id

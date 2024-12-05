@@ -45,71 +45,72 @@ public class PostColaboHumanaHandler implements Handler {
             ctx.render("/templates/colaboracionHumana.mustache", model);
             return;
         }
+        try {
+            switch (Objects.requireNonNull(tipoColabo)) {
+                case "dv": {
+                    String comida = ctx.formParam("Comida");
+                    LocalDate fecha_caducidad = LocalDate.parse(ctx.formParam("fecha-caducidad"));
+                    LocalDate fecha_donacion_vianda = LocalDate.parse(ctx.formParam("fechaDonacionVianda"));
+                    String nombreColaborador = ctx.formParam("colaborador");
+                    String heladera_id = ctx.formParam("heladera");
+                    float peso = Float.parseFloat(ctx.formParam("peso"));
+                    float calorias = Float.parseFloat(ctx.formParam("calorias"));
 
-        switch (Objects.requireNonNull(tipoColabo)) {
-            case "dv": {
-                String comida = ctx.formParam("Comida");
-                LocalDate fecha_caducidad = LocalDate.parse(ctx.formParam("fecha-caducidad"));
-                LocalDate fecha_donacion_vianda = LocalDate.parse(ctx.formParam("fechaDonacionVianda"));
-                String nombreColaborador = ctx.formParam("colaborador");
-                String heladera_id = ctx.formParam("heladera");
-                float peso = Float.parseFloat(ctx.formParam("peso"));
-                float calorias = Float.parseFloat(ctx.formParam("calorias"));
+                    Heladera heladera = repoHeladeras.obtenerHeladera(heladera_id);
+                    if (heladera == null) {
+                        model.put("errorMessage", "La heladera no existe");
+                        ctx.render("/templates/colaboracionHumana.mustache", model);
+                        return;
+                    }
 
-                Heladera heladera = repoHeladeras.obtenerHeladera(heladera_id);
-                if (heladera == null) {
-                    model.put("errorMessage", "La heladera no existe");
-                    ctx.render("/templates/colaboracionHumana.mustache", model);
-                    return;
+                    Vianda vianda = new Vianda(comida, fecha_caducidad, fecha_donacion_vianda, heladera, calorias, peso, EstadoVianda.ENTREGADA);
+                    DonacionDeViandaFactory factoryDV = new DonacionDeViandaFactory();
+                    Colaboracion donacionDeVianda = factoryDV.crearColaboracion(vianda);
+                    donacionDeVianda.setColaborador(colaborador);
+
+                    repoColaboraciones.addDonacionVianda(donacionDeVianda, vianda);
+                    break;
                 }
-
-                Vianda vianda = new Vianda(comida, fecha_caducidad, fecha_donacion_vianda, heladera, calorias, peso, EstadoVianda.ENTREGADA);
-                DonacionDeViandaFactory factoryDV = new DonacionDeViandaFactory();
-                Colaboracion donacionDeVianda = factoryDV.crearColaboracion(vianda);
-                donacionDeVianda.setColaborador(colaborador);
-
-                repoColaboraciones.addDonacionVianda(donacionDeVianda, vianda);
-                break;
-            }
-            case "dd": {
-                LocalDate fecha = LocalDate.parse(ctx.formParam("fecha_nacimiento"));
-                double monto = Double.parseDouble(ctx.formParam("password"));
-                String frecuencia = ctx.formParam("frecuencia");
+                case "dd": {
+                    LocalDate fecha = LocalDate.parse(ctx.formParam("fecha_nacimiento"));
+                    double monto = Double.parseDouble(ctx.formParam("password"));
+                    String frecuencia = ctx.formParam("frecuencia");
 
 
-                DonacionDeDineroFactory factoryDD = new DonacionDeDineroFactory();
-                Colaboracion donacionDinero = factoryDD.crearColaboracion(fecha, monto, frecuencia);
-                donacionDinero.setColaborador(colaborador);
-                repoColaboraciones.addDonacionDinero(donacionDinero);
-                break;
-            }
-            case "ddv": {
-
-                String heladera_origen_id = ctx.formParam("heladera-origen");
-                String heladera_destino_id = ctx.formParam("heladera-destino");
-                // TODO: esto me parece que no hace falta. Hay que verlo.
-                int cantidad = Integer.parseInt(ctx.formParam("cantidad"));
-                String motivo = ctx.formParam("motivos");
-
-
-                Heladera heladera_origen = repoHeladeras.obtenerHeladera(heladera_origen_id);
-                Heladera heladera_destino = repoHeladeras.obtenerHeladera(heladera_destino_id);
-
-                if (heladera_origen == null || heladera_destino == null) {
-                    model.put("errorMessage", "Alguna de las heladeras no existe.");
-                    ctx.render("/templatescolaboracionHumana.mustache", model);
+                    DonacionDeDineroFactory factoryDD = new DonacionDeDineroFactory();
+                    Colaboracion donacionDinero = factoryDD.crearColaboracion(fecha, monto, frecuencia);
+                    donacionDinero.setColaborador(colaborador);
+                    repoColaboraciones.addDonacionDinero(donacionDinero);
+                    break;
                 }
+                case "ddv": {
 
-                DistribucionDeViandasFactory factoryDDV = new DistribucionDeViandasFactory();
-                Colaboracion distribucionVianda = factoryDDV.crearColaboracion( heladera_origen, heladera_destino, motivo, LocalDate.now());
-                distribucionVianda.setColaborador(colaborador);
-                repoColaboraciones.addDistribucionVianda(distribucionVianda);
-                break;
+                    String heladera_origen_id = ctx.formParam("heladera-origen");
+                    String heladera_destino_id = ctx.formParam("heladera-destino");
+                    // TODO: esto me parece que no hace falta. Hay que verlo.
+                    int cantidad = Integer.parseInt(ctx.formParam("cantidad"));
+                    String motivo = ctx.formParam("motivos");
+
+
+                    Heladera heladera_origen = repoHeladeras.obtenerHeladera(heladera_origen_id);
+                    Heladera heladera_destino = repoHeladeras.obtenerHeladera(heladera_destino_id);
+
+                    if (heladera_origen == null || heladera_destino == null) {
+                        model.put("errorMessage", "Alguna de las heladeras no existe.");
+                        ctx.render("/templatescolaboracionHumana.mustache", model);
+                    }
+
+                    DistribucionDeViandasFactory factoryDDV = new DistribucionDeViandasFactory();
+                    Colaboracion distribucionVianda = factoryDDV.crearColaboracion(heladera_origen, heladera_destino, motivo, LocalDate.now());
+                    distribucionVianda.setColaborador(colaborador);
+                    repoColaboraciones.addDistribucionVianda(distribucionVianda);
+                    break;
+                }
             }
+            model.put("successMessage", "Colaboracion creada exitosamente");
+        }catch(Exception e){
+            model.put("errorMessage","Error al crear la colaboracion");
         }
-
-        System.out.println("Colaboracion creada");
-        ctx.redirect("/perfil_persona_humana");
-
+        ctx.render("/templates/colaboracionHumana.mustache", model);
     }
 }

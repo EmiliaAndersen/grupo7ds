@@ -16,11 +16,16 @@ public class GetPerfil implements Handler {
   public void handle(@NotNull Context context){
     var model = new HashMap<String, Object>();
     Boolean succesLogin = context.sessionAttribute("succesLogin");
+    Boolean successModify = context.sessionAttribute("successModify");
     String usuarioNombre = context.sessionAttribute("username");
 
     if ( succesLogin != null) {
       model.put("successMessage", "Session iniciada correctamente " + context.sessionAttribute("username"));
       context.sessionAttribute("succesLogin", null);
+    }
+    else if(successModify != null){
+      model.put("successMessage", "Su perfil ha sido modificado");
+      context.sessionAttribute("successModify", null);
     }
 
     EntityManager em = BDUtils.getEntityManager();

@@ -18,8 +18,9 @@ public class PostProdServ implements @NotNull Handler {
 
     public void handle(@NotNull Context context){
 
-
-      context.redirect("/ofrecer");
+  
+      
+      context.redirect("/prodserv");
 
   }
 }

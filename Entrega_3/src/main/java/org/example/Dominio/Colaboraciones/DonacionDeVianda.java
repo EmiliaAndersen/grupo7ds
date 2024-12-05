@@ -1,5 +1,6 @@
 package org.example.Dominio.Colaboraciones;
 
+import lombok.Getter;
 import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.Rol.Colaborador;
 import org.example.Dominio.Viandas.EstadoVianda;
@@ -16,7 +17,8 @@ public class DonacionDeVianda extends Colaboracion{
   @OneToOne
   @JoinColumn(name = "vianda_id",referencedColumnName = "id")
   @Setter
-  private Vianda vianda;
+  @Getter
+  public Vianda vianda;
 
     public DonacionDeVianda(Vianda viandas) {
         this.vianda = viandas;

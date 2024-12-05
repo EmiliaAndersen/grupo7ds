@@ -32,6 +32,7 @@ public class PostPerfil implements Handler {
     String accion = context.formParam("btn-accion");
     if(accion.equals("save")){
       actualizarUsuario(context);
+      context.sessionAttribute("successModify", true);
       context.redirect("/perfil_"+context.sessionAttribute("tipo_persona"));
     }else if(accion.equals("logout")){
       context.sessionAttribute("username", null);
@@ -58,8 +59,21 @@ public class PostPerfil implements Handler {
       ph.setDireccion("direccion");
       em.getTransaction().commit(); // Confirma la transacción para aplicar los cambios
       System.out.println(ph.nombre);
-    }else{
+    }else if(context.sessionAttribute("tipo_persona").equals("persona_juridica")){
+      TypedQuery<PersonaJuridica> query = em.createQuery(
+              "SELECT p FROM PersonaJuridica p JOIN p.usuario u WHERE u.usuario = :usu", PersonaJuridica.class
+      );
+      String usuarioNombre = context.sessionAttribute("username");
+      query.setParameter("usu", usuarioNombre);
 
+      PersonaJuridica pj = query.getSingleResult();
+
+      pj.razonSocial = context.formParam("razon-social");
+      em.getTransaction().commit();
+      System.out.println(pj.razonSocial);
+    }
+    else{
+      System.out.println("Error");
     }
   }
 

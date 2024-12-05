@@ -6,7 +6,7 @@ import org.example.Dominio.Persona.PersonaJuridica;
 import javax.persistence.*;
 
 @Entity
-@Table
+@Table(name="oferta")
 public class Oferta {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -60,7 +60,13 @@
         </div>
     </div>
 </nav>
-        <div class="container mt-5 mb-2 border border-round shadow-1" style="background-color: #eff5ff;min-height: 600px;">
+<div class="container mt-5 mb-2 border border-round shadow-1" style="background-color: #eff5ff;min-height: 600px;">
+    {{#successMessage}}
+        <div class="alert alert-success my-2" >{{successMessage}}</div>
+    {{/successMessage}}
+    {{#errorMessage}}
+        <div class="alert alert-warning my-2" >{{errorMessage}}</div>
+    {{/errorMessage}}
             <div class="row">
                 <div class="col-md-5">
                     <center><img src="/static/media/img-base.png" style="width:80%" class="img-heladera"></center>
@@ -84,16 +90,48 @@
                         <div class="form-row">
                             <div class="form-row mt-2">
                                 <div class="col-md-12">
-                                    <label for="heladera">Heladera*</label>
-                                    <input type="text" name="heladera" class="form-control" id="heladera" required>
+                                    <label for="nombre">Nombre de la Heladera*</label>
+                                    <input type="text" name="nombre" class="form-control" id="nombre" required>
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-row mt-2">
                                 <div class="col-md-12">
-                                    <label for="ubicacion">Ubicacio*</label>
-                                    <input type="text" name="ubicacion" class="form-control" id="ubicacion" required>
+                                    <label for="longitud">Longitud*</label>
+                                    <input type="text" name="longitud" class="form-control" id="longitud" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-row mt-2">
+                                <div class="col-md-12">
+                                    <label for="latitud">Latitud*</label>
+                                    <input type="text" name="latitud" class="form-control" id="latitud" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-row mt-2">
+                                <div class="col-md-12">
+                                    <label for="direccion">Direccion*</label>
+                                    <input type="text" name="direccion" class="form-control" id="direccion" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-row mt-2">
+                                <div class="col-md-12">
+                                    <label for="temp_min">Temperatura minima*</label>
+                                    <input type="text" name="temp_min" class="form-control" id="temp_min" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-row mt-2">
+                                <div class="col-md-12">
+                                    <label for="temp_max">Temperatura maxima*</label>
+                                    <input type="text" name="temp_max" class="form-control" id="temp_max" required>
                                 </div>
                             </div>
                         </div>
@@ -110,7 +148,7 @@
                             </div>
                             <div class="col-md-12 mt-1">
                                 <label for="Password">Monto*</label>
-                                <input type="password" name="password" class="form-control" id="password" required>
+                                <input type="number" name="password" class="form-control" id="password" required>
                             </div>
                             <div class="col-md-12 mt-1">
                                 <label for="Frecuencia">Frecuencia</label>
