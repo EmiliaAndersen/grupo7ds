@@ -1,0 +1,44 @@
+
+services:
+  db:
+    build:
+      context: ./mysql  # Ensure this directory has the Dockerfile for the MySQL custom image
+    image: db   # Custom MySQL image name
+    container_name: tpdds-db
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: tpdds2024
+    ports:
+      - "3306:3306"   # Map MySQL port
+    networks:
+      - mynetwork
+    volumes:
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: ./app   # Ensure this directory has the Dockerfile for the app
+    image: app   # Custom app image name
+    container_name: tpdds-app
+    tty: true
+    depends_on:
+      - db   # Ensure db starts before app
+    environment:
+      DB_HOST: db   # Use the service name as the host
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: 1234
+      DB_NAME: tpdds2024
+    ports:
+      - "8085:8085"   # Map app port
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
