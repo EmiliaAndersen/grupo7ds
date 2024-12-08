@@ -2,6 +2,7 @@ package org.example.repositorios;
 
 import org.example.BDUtils;
 import org.example.Dominio.Colaboraciones.DonacionDeVianda;
+import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Rol.Colaborador;
 
 import javax.persistence.EntityManager;
@@ -65,4 +66,25 @@ public class RepositorioColaboradores {
         BDUtils.commit(em);
     }
 
+    public List<Colaborador> getColaboradoresHumanos() {
+        EntityManager em = BDUtils.getEntityManager();
+        TypedQuery<Colaborador> query = em.createQuery("SELECT c FROM Colaborador c ", Colaborador.class);
+        List<Colaborador> colaboradores = query.getResultList();
+        return colaboradores.stream()
+            .filter(colaborador -> colaborador.getPersona() instanceof PersonaHumana)
+            .toList(); // Devuelve la lista filtrada
+    }
+
+    public Colaborador getColaboradorPersona(PersonaHumana persona) {
+        EntityManager em = BDUtils.getEntityManager();
+
+        TypedQuery<Colaborador> query = em.createQuery(
+            "SELECT c FROM Colaborador c JOIN c.persona p WHERE TYPE(p) = PersonaHumana AND p.nombre = :nombre AND p.apellido = :apellido",
+            Colaborador.class
+        );
+        return query
+            .setParameter("nombre", persona.getNombre())
+            .setParameter("apellido", persona.getApellido())
+            .getSingleResult();
+    }
 }

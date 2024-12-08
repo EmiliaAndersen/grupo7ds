@@ -54,6 +54,12 @@ public class App {
     app.get("/backoffice",new getBackoffice());
     app.post("/backoffice", new postBackoffice());
 
+    app.before("/front_page", AuthMiddleware::verificarAutenticacion);
+    app.get("/front_page", new GetFrontPage());
+
+    app.before("/upload_csv",AuthMiddleware::verificarAutenticacion);
+    app.get("/upload_csv", new GetUploadCSV());
+    app.post("/upload_csv", new PostUploadCSV());
 
     app.before("/",AuthMiddleware::verificarAutenticacion);
     app.before("",AuthMiddleware::verificarAutenticacion);

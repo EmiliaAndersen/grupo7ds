@@ -1,9 +1,11 @@
 package org.example.Migrador;
 
+import org.example.BDUtils;
 import org.example.Dominio.Colaboraciones.*;
 import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Rol.Colaborador;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,11 +20,20 @@ public class ServiciosColaboracion {
         Colaboracion colaboracion = generarColaboracion(formaColaboracion, fechaColaboracion, cantidad);
         if (colaboracion == null) return;
         colaborador.agregarColaboracion(colaboracion);
+        colaboracion.setColaborador(colaborador);
+        EntityManager em = BDUtils.getEntityManager();
+        BDUtils.comenzarTransaccion(em);
+        em.persist(colaboracion);
+        BDUtils.commit(em);
     }
 
 
     static void generarColaborador(PersonaHumana persona, Colaborador colaborador) {
         colaborador.setPersona(persona);
+        EntityManager em = BDUtils.getEntityManager();
+        BDUtils.comenzarTransaccion(em);
+        em.persist(colaborador);
+        BDUtils.commit(em);
     }
 
     Colaborador buscarColaboradorPorPersona(List<Colaborador> colaboradores, PersonaHumana persona) {

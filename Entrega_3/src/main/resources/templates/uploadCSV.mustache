@@ -1,15 +1,60 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>Mi perfil</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"><!-- Tipografia -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
-    <link href='/static/css.css?1=14' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front Page - Subir CSV</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css.css?1=14">
+    <style>
+        body {
+            background-color: #e6eaf2;
+            font-family: 'Raleway', sans-serif;
+        }
+        .hero {
+            background-color: #eff5ff;
+            padding: 50px;
+            text-align: center;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .hero h1 {
+            color: #3055b5;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #444;
+        }
+        .upload-section {
+            background-color: #f9f9f9;
+            padding: 30px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .upload-section h2 {
+            color: #3055b5;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        .btn-primary-custom {
+            background-color: #3055b5;
+            border: none;
+            font-size: 1.1rem;
+        }
+        .btn-primary-custom:hover {
+            background-color: #1e3e91;
+        }
+        .form-control {
+            border: 1px solid #ced4da;
+        }
+    </style>
 </head>
-<body style="background-color: #e6eaf2;">
+<body>
 
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg bg-primary" style="background-color: #3055b5!important;" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/front_page">Heladeras Solidarias</a>
@@ -73,50 +118,50 @@
     </div>
 </nav>
 
-        <div class="container mt-5 mb-2 border border-round shadow-1" style="background-color: #eff5ff;min-height: 600px;">
-            <form method='POST' class="p-4">
 
+<!-- Hero Section -->
+<div class="container hero">
+    <h1>Bienvenido a Heladeras Solidarias</h1>
+    <p>Conecta con tu comunidad, contribuye con alimentos, y apoya a quienes más lo necesitan.</p>
+</div>
 
-
-
-                <div class="row">
-                    <h2>Ofrecer productos</h2>
-                    <hr>
-
-                                
-                         {{#errorOfrecerProd}}
-                        <div class="alert-warning alert my-2">{{errorOfrecerProd}}</div>
-                        {{/errorOfrecerProd}}
-                        
-                        {{#successOfrecerProd}}
-                        <div class="alert-success alert my-2">{{successOfrecerProd}}</div>
-                        {{/successOfrecerProd}}
-                        
-                    <div class="form-row">
-                        <div class="col-md-8">
-                            <label for="rubro">Rubro</label>
-                            <input type="text" name="rubro" class="form-control" id="rubro" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-8">
-                            <label for="producto">Nombre del producto</label>
-                            <input type="text" name="producto" class="form-control" id="producto" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-8">
-                            <label for="puntos">Cantidad puntos necesarios</label>
-                            <input type="text" name="puntos" class="form-control" id="puntos" required>
-                        </div>
-                    </div>
-                    <hr class="my-3">
-                    <div class="form-row">
-                        <button type="submit" id="btn-login-submit" class="btn btn-primary mt-2 mb-2 col-md-4">Continuar</button><br>
-                    </div>
-                </div>
-            </form>
+<!-- Upload CSV Section -->
+<div class="container upload-section">
+    {{#successMessage}}
+        <div class="alert alert-success my-2" >{{successMessage}}</div>
+    {{/successMessage}}
+    {{#errorMessage}}
+        <div class="alert alert-warning my-2" >{{errorMessage}}</div>
+    {{/errorMessage}}
+    <h2>Sube tus Colaboraciones o Personas Vulnerables</h2>
+    <p>Asegúrate de que el archivo sea un CSV válido para que podamos procesarlo correctamente.</p>
+    <form id="csvUploadForm" action="/upload_csv" method="POST" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="csvFile" class="form-label">Selecciona tu archivo CSV:</label>
+            <input type="file" class="form-control" id="csvFile" name="file" accept=".csv" required>
         </div>
-   </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <button type="submit" class="btn btn-primary-custom">Subir CSV</button>
+        <p id="message" class="mt-2 text-danger" style="display: none;">Por favor, selecciona un archivo CSV válido.</p>
+    </form>
+</div>
+
+<script>
+    // Validación básica para asegurar que el archivo subido sea un .csv
+    const csvFileInput = document.getElementById('csvFile');
+    const form = document.getElementById('csvUploadForm');
+    const message = document.getElementById('message');
+
+    form.addEventListener('submit', function(event) {
+        const fileName = csvFileInput.value.toLowerCase();
+        if (!fileName.endsWith('.csv')) {
+            event.preventDefault(); // Detener el envío del formulario
+            message.style.display = 'block'; // Mostrar el mensaje de error
+        } else {
+            message.style.display = 'none';
+        }
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

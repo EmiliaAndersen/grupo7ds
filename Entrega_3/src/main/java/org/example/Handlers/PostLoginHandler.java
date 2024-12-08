@@ -51,7 +51,7 @@ public class PostLoginHandler implements Handler {
         context.sessionAttribute("username", usuarioNombre);
         context.sessionAttribute("succesLogin", true);
         context.sessionAttribute("rol","noAdmin");
-        context.redirect("/perfil_"+tipo_persona);
+        context.redirect("/front_page");
       } else {
         System.out.println("ERROR");
         model.put("errorMessage", "El nombre de usuario o la contraseña no coincide.");

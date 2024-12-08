@@ -3,6 +3,7 @@ package org.example.repositorios;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.BDUtils;
+import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Servicio.LocalizadorTecnicos;
 import org.example.Validador.Usuario;
 
@@ -54,4 +55,10 @@ public class RepositorioUsuarios {
     return !em.createQuery("SELECT u from Usuario u WHERE u.usuario = :usu and u.contrasenia = :con").setParameter("usu",nombre).setParameter("con",contrasena).getResultList().isEmpty();
   }
 
+  public List<PersonaHumana> getPersonasHumanas() {
+    EntityManager em = BDUtils.getEntityManager();
+    TypedQuery<PersonaHumana> query = em.createQuery("SELECT ph FROM PersonaHumana ph",PersonaHumana.class);
+    List<PersonaHumana> personaHumanas = query.getResultList();
+    return personaHumanas;
+  }
 }

@@ -2,6 +2,7 @@ package org.example.Migrador;
 
 import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Rol.Colaborador;
+import org.example.repositorios.RepositorioColaboradores;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,6 +19,7 @@ public class Migrador {
     }
 
     private void procesarFilas(List<PersonaHumana> personas, List<String[]> filas, List<Colaborador> colaboradores) {
+        RepositorioColaboradores repositorioColaboradores = RepositorioColaboradores.getInstance();
         for (String[] row : filas) {
             String tipoDoc = row[0];
             Integer numDocumento = Integer.valueOf(row[1]);
@@ -28,15 +30,18 @@ public class Migrador {
             String formaColaboracion = row[6];
             double cantidad = Double.parseDouble(row[7]);
 
-            PersonaHumana persona = personaService.buscarPersona(personas, tipoDoc, numDocumento);
-            Colaborador colaborador = new Colaborador();
+            PersonaHumana persona = personaService.buscarPersona(personas, nombre,apellido, numDocumento);
+
             if (persona == null) {
                 persona = personaService.generarPersona(personas, numDocumento, tipoDoc, nombre, apellido, mail);
+                Colaborador colaborador = new Colaborador();
+
                 ServiciosColaboracion.generarColaborador(persona, colaborador);
                 colaboracionService.asignarColaboracion(colaborador,formaColaboracion, fechaColaboracion, cantidad, mail);
-                colaboradores.add(colaborador);
+                //colaboradores.add(colaborador);
             }else{
-                colaborador = colaboracionService.buscarColaboradorPorPersona(colaboradores, persona);
+                Colaborador colaborador = repositorioColaboradores.getColaboradorPersona(persona);
+                //colaborador = colaboracionService.buscarColaboradorPorPersona(colaboradores, persona);
                 colaboracionService.asignarColaboracion(colaborador,formaColaboracion, fechaColaboracion, cantidad, mail);
             }
         }

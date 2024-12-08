@@ -1,18 +1,21 @@
 package org.example.Migrador;
 
+import org.example.BDUtils;
 import org.example.Dominio.Documentos.Documento;
 import org.example.Dominio.MediosContacto.MedioDeContacto;
 import org.example.Dominio.Persona.PersonaHumana;
 
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.example.Dominio.MediosContacto.TipoMedioContacto.CORREO_ELECTRONICO;
 
 public class ServiciosPersona {
-    public PersonaHumana buscarPersona(List<PersonaHumana> personas, String tipoDoc, Integer documento) {
+    public PersonaHumana buscarPersona(List<PersonaHumana> personas, String nombre, String apellido , Integer documento) {
         for (PersonaHumana persona : personas) {
-            if (persona.getDocumento().getTipo().equals(tipoDoc) &&
+            if (persona.getNombre().equals(nombre) && persona.getApellido().equals(apellido) &&
                     persona.getDocumento().getDocumento().equals(documento)) {
                 return persona;
             }
@@ -31,10 +34,18 @@ public class ServiciosPersona {
         MedioDeContacto contacto = new MedioDeContacto();
         contacto.setTipo(CORREO_ELECTRONICO);
         contacto.setDetalle(mail);
+        contacto.setPersona(persona);
 
         List<MedioDeContacto> medios = new ArrayList<>();
         medios.add(contacto);
         persona.setMediosDeContacto(medios);
+
+        EntityManager em = BDUtils.getEntityManager();
+        BDUtils.comenzarTransaccion(em);
+        em.persist(documento);
+        em.persist(persona);
+        em.persist(contacto);
+        BDUtils.commit(em);
 
         return persona;
     }
