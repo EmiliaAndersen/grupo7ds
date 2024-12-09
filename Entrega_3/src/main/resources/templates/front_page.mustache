@@ -8,36 +8,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/css.css?1=14">
-    <style>
-        body {
-            background-color: #e6eaf2;
-            font-family: 'Raleway', sans-serif;
-        }
-        .hero {
-            background-color: #eff5ff;
-            padding: 50px;
-            text-align: center;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
-        .hero h1 {
-            color: #3055b5;
-            font-size: 2.5rem;
-            font-weight: bold;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            color: #444;
-        }
-        .btn-primary-custom {
-            background-color: #3055b5;
-            border: none;
-            font-size: 1.1rem;
-        }
-        .btn-primary-custom:hover {
-            background-color: #1e3e91;
-        }
-    </style>
 </head>
 <body>
 
@@ -56,7 +26,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/colaboracion_{{tipoPersona}}" style="color:#f5f5f5">Colaborar</a></li>
-                        <li><a class="dropdown-item" href="/colaboraciones_realizadas" style="color:#f5f5f5">Colaboraciones realizadas</a></li>
+                        <li><a class="dropdown-item" href="/colaboraciones_realizadas" style="color:#f5f5f5">Colaboraciones realizadas</a></li><li><a class="dropdown-item" href="/upload_csv" style="color:#f5f5f5">Carga masiva colaboraciones</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -109,7 +79,7 @@
 <div class="container hero">
     <h1>Bienvenido a Heladeras Solidarias</h1>
     <p>Conecta con tu comunidad, contribuye con alimentos, y apoya a quienes más lo necesitan.</p>
-    <a href="/colaboracion_{{tipoPersona}}" class="btn btn-primary-custom">¡Colabora ahora!</a>
+    <a href="/colaboracion_{{tipoPersona}}" class="btn btn-primary">¡Colabora ahora!</a>
     <a href="/suscripcion" class="btn btn-outline-primary">Suscríbete</a>
 </div>
 
@@ -117,22 +87,28 @@
 <div class="container mt-5">
     <div class="row text-center">
         <div class="col-md-4">
-            <i class="bi bi-hand-thumbs-up" style="font-size: 2rem; color: #3055b5;"></i>
-            <h3>Carga masiva</h3>
-            <p>Carga masivamente un archivo CSV con colaboraciones o personas vulnerables</p>
-            <a href="/upload_csv" class="btn btn-primary-custom">Carga masiva</a>
+            <div class="mx-2 border-round border zoom-image shadow-1" style="background-color: white;padding: 8px;">
+                <i class="bi bi-hand-thumbs-up" style="font-size: 2rem; color: #3055b5;"></i>
+                <h3>Carga masiva</h3>
+                <p>Carga masivamente un archivo CSV con colaboraciones</p>
+                <a href="/upload_csv" class="btn btn-primary">Carga masiva</a>
+            </div>
         </div>
         <div class="col-md-4">
-            <i class="bi bi-geo-alt" style="font-size: 2rem; color: #3055b5;"></i>
-            <h3>Encuentra Heladeras</h3>
-            <p>Regístrate y suscríbete para recibir notificaciones de heladeras cercanas.</p>
-            <a href="/heladeras" class="btn btn-outline-primary">Mis Heladeras</a>
+            <div class="mx-2 border-round border zoom-image shadow-1" style="background-color: white;padding: 8px;">
+                <i class="bi bi-geo-alt" style="font-size: 2rem; color: #3055b5;"></i>
+                <h3>Encuentra Heladeras</h3>
+                <p>Regístrate y suscríbete para recibir notificaciones de heladeras cercanas.</p>
+                <a href="/heladeras" class="btn btn-primary">Mis Heladeras</a>
+            </div>
         </div>
         <div class="col-md-4">
-            <i class="bi bi-info-circle" style="font-size: 2rem; color: #3055b5;"></i>
-            <h3>Reporta Problemas</h3>
-            <p>Ayúdanos a mantener las heladeras en funcionamiento reportando fallas.</p>
-            <a href="/reportar" class="btn btn-primary-custom">Reportar Falla</a>
+            <div class="mx-2 border-round border zoom-image shadow-1" style="background-color: white;padding: 8px;">
+                <i class="bi bi-info-circle" style="font-size: 2rem; color: #3055b5;"></i>
+                <h3>Reporta Problemas</h3>
+                <p>Ayúdanos a mantener las heladeras en funcionamiento reportando fallas.</p>
+                <a href="/reportar" class="btn btn-primary">Reportar Falla</a>
+            </div>
         </div>
     </div>
 </div>

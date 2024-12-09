@@ -78,3 +78,24 @@ h2{
     font-weight: 350;
     color:#3098b5;
 }
+
+body {
+    background-color: #e6eaf2;
+    font-family: 'Raleway', sans-serif;
+}
+.hero {
+    background-color: #eff5ff;
+    padding: 50px;
+    text-align: center;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+.hero h1 {
+    color: #3055b5;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+.hero p {
+    font-size: 1.2rem;
+    color: #444;
+}
