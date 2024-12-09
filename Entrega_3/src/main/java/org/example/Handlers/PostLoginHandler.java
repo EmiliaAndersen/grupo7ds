@@ -1,7 +1,11 @@
 package org.example.Handlers;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonFactory;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
+import org.eclipse.jetty.server.HttpTransport;
 import org.example.BDUtils;
 import org.example.repositorios.RepositorioUsuarios;
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +21,13 @@ public class PostLoginHandler implements Handler {
   public void handle(@NotNull Context context) {
 
     RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getRepositorioUsuarios();
+
+    String tokenGoogle = context.formParam("token");
+
+    if (tokenGoogle != null && !tokenGoogle.isEmpty()) {
+      handleGoogleLogin(context, tokenGoogle);
+      return;
+    }
 
     String usuarioNombre = context.formParam("username");
     String usuarioContraseña = context.formParam("password");
@@ -59,4 +70,5 @@ public class PostLoginHandler implements Handler {
       }
     }
   }
+
 }
