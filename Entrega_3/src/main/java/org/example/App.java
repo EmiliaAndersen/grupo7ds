@@ -57,6 +57,11 @@ public class App {
     app.get("/backoffice",new getBackoffice());
     app.post("/backoffice", new postBackoffice());
 
+
+    app.before("/backoffice/tecnicos",AuthMiddleware::verificarAutenticacion);
+    app.get("/backoffice/tecnicos",new getBackofficeTecnicos());
+    app.post("/backoffice/tecnicos", new postBackofficeTecnicos());
+
     app.before("/front_page", AuthMiddleware::verificarAutenticacion);
     app.get("/front_page", new GetFrontPage());
 
@@ -153,7 +158,7 @@ class AuthMiddleware {
       context.redirect("/login");
     }
 
-    if(!rol.equals("admin")  && context.path().equals("/backoffice")){
+    if(!rol.equals("admin")  && context.path().equals("/backoffice") && context.path().equals("/backoffice/tecnicos")){
       context.redirect("/perfil_"+context.sessionAttribute("tipo_persona"));
     }
 
