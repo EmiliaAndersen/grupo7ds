@@ -2,6 +2,8 @@ package org.example;
 
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import io.micrometer.prometheus.PrometheusConfig;
+import io.micrometer.prometheus.PrometheusMeterRegistry;
 import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Rol.Admin;
 import org.example.Handlers.*;
@@ -18,6 +20,7 @@ public class App {
     EntityManager em = BDUtils.getEntityManager();
     BDUtils.comenzarTransaccion(em);
     RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getRepositorioUsuarios();
+    PrometheusMeterRegistry prometheusMeterRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
 
     Javalin app = Javalin.create(javalinConfig -> {
               javalinConfig.staticFiles.add("/");
@@ -130,6 +133,8 @@ public class App {
     app.get("/colaboraciones_realizadas", new GetColaboracionesRealizadas());
     app.post("/colaboraciones_realizadas", new PostColabos());
 
+    app.before("/micrometer/metrics",AuthMiddleware::verificarAutenticacion);
+    app.get("/micrometer/metrics", new GetMicrometerMetrics(prometheusMeterRegistry));
   }
 
 
