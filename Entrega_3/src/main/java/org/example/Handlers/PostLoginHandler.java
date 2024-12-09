@@ -2,6 +2,9 @@ package org.example.Handlers;
 
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
+import io.micrometer.prometheus.PrometheusConfig;
+import io.micrometer.prometheus.PrometheusMeterRegistry;
+
 import org.example.BDUtils;
 import org.example.repositorios.RepositorioUsuarios;
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +20,7 @@ public class PostLoginHandler implements Handler {
   public void handle(@NotNull Context context) {
 
     RepositorioUsuarios repositorioUsuarios = RepositorioUsuarios.getRepositorioUsuarios();
+ 
 
     String usuarioNombre = context.formParam("username");
     String usuarioContraseña = context.formParam("password");
@@ -43,13 +47,13 @@ public class PostLoginHandler implements Handler {
 
         String tipo_persona = (String) nativeQuery.getSingleResult();
 
-
         context.render("/templates/perfil_persona_juridica.mustache", model);
         context.sessionAttribute("tipo_persona", tipo_persona);
 
         System.out.println("Sesion iniciada");
         context.sessionAttribute("username", usuarioNombre);
         context.sessionAttribute("succesLogin", true);
+        
         context.sessionAttribute("rol","noAdmin");
         context.redirect("/front_page");
       } else {

@@ -133,6 +133,7 @@ public class App {
     app.get("/colaboraciones_realizadas", new GetColaboracionesRealizadas());
     app.post("/colaboraciones_realizadas", new PostColabos());
 
+
     app.before("/micrometer/metrics",AuthMiddleware::verificarAutenticacion);
     app.get("/micrometer/metrics", new GetMicrometerMetrics(prometheusMeterRegistry));
   }
