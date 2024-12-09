@@ -67,13 +67,15 @@ public class HacerseCargoDeHeladera extends Colaboracion {
 
   @Override
   public Double calcularPuntos() {
-    LocalDate fechaActual = LocalDate.now();
-    Period periodo = Period.between(fechaInicio,fechaActual);
-    return (double) ((periodo.getYears()*12 + periodo.getMonths())*5);
+   // LocalDate fechaActual = LocalDate.now();
+   // Period periodo = Period.between(fechaInicio,fechaActual);
+    return (double) 5;//(double) ((periodo.getYears()*12 + periodo.getMonths())*5);
   }
 
   public List<PuntoEstrategico> getLocalizacionEstrategica(){
 
     return localizacionEstrategicaAPI.getPuntoEstrategico(puntoEstrategico, radio);
   }
+
+
 }

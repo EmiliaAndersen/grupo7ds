@@ -32,7 +32,7 @@ public class RepositorioColaboraciones {
 
 
 
-    public void addDonacionVianda(Colaboracion donacionDeVianda, Vianda vianda){
+    public void addDonacionVianda( Colaboracion donacionDeVianda, Vianda vianda){
         EntityManager em = BDUtils.getEntityManager();
         BDUtils.comenzarTransaccion(em);
         em.persist(vianda);

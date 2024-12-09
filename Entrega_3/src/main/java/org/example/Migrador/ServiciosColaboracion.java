@@ -56,10 +56,10 @@ public class ServiciosColaboracion {
                 colaboracion = new DonacionDeDinero(fechaColaboracion, cantidad, null);
                 break;
             case "DONACION_VIANDAS":
-                colaboracion = new DonacionDeVianda(null);
+                colaboracion = new DonacionDeVianda(null, null);
                 break;
             case "REDISTRIBUCION_VIANDAS":
-                colaboracion = new DistribucionDeViandas(null, null, null, fechaColaboracion);
+                colaboracion = new DistribucionDeViandas(null, null, null, null, fechaColaboracion);
                 break;
             case "ENTREGA_TARJETAS":
                 colaboracion = new RegistrarPersonasEnSituacionVulnerable();

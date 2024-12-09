@@ -67,7 +67,7 @@ public class ColaboracionTest {
         Heladera heladeraOrigen = new Heladera(22.0F, 5.0F, ubi1);
         Heladera heladeraDestino = new Heladera(22.0F, 5.0F, ubi2);
 
-        DistribucionDeViandas distribucionDeViandas = new DistribucionDeViandas(heladeraOrigen, heladeraDestino, "Test", LocalDate.now());
+        DistribucionDeViandas distribucionDeViandas = new DistribucionDeViandas(heladeraOrigen, heladeraDestino, 5.0,"Test", LocalDate.now());
 
         Assertions.assertEquals(1.0, distribucionDeViandas.calcularPuntos());
     }
