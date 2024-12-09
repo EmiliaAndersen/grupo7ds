@@ -42,7 +42,12 @@
                             </div>
                             <div class="col-md-12">
                                 <label for="password1">Contraseña*</label>
-                                <input type="password" name="password1" class="form-control" id="password1">
+                                <div class="input-group">
+                                    <input type="password" name="password1" class="form-control" id="password1">
+                                    <button type="button" class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                        <i class="bi bi-eye" id="passwordIcon"></i>
+                                    </button>
+                                </div>
                                 <small> Obligatorio: Al menos un(1) numero, 8 caracteres o más.</small>
                             </div>
                         </div><br>
@@ -152,6 +157,19 @@
     </footer>
 </html>
 <script>
+    const passwordInput = document.getElementById('password1');
+    const togglePasswordButton = document.getElementById('togglePassword');
+    const passwordIcon = document.getElementById('passwordIcon');
+
+    togglePasswordButton.addEventListener('click', function () {
+        // Cambiar el tipo de input entre password y text
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+
+        // Cambiar el icono
+        passwordIcon.classList.toggle('bi-eye');
+        passwordIcon.classList.toggle('bi-eye-slash');
+    });
     window.onload = function() {
         var today = new Date();
         var year = today.getFullYear() - 18;
@@ -163,7 +181,21 @@
         var maxDate = year + '-' + month + '-' + day;
         document.getElementById('fecha_nacimiento').setAttribute('max', maxDate);
     };
+    document.getElementById('password1').addEventListener('blur', function (event) {
+        const relatedTarget = event.relatedTarget;
 
+        if (relatedTarget && relatedTarget.id === 'togglePassword') {
+            return;
+        }
+
+        const password = this.value;
+        const hasNumber = /\d/.test(password);
+        const isValidLength = password.length >= 8;
+
+        if (!hasNumber || !isValidLength) {
+            alert('La contraseña debe tener al menos un(1) número y 8 caracteres o más.');
+        }
+    });
     if(document.getElementById("tipo_colaborador")){
         document.getElementById("tipo_colaborador").addEventListener("change", function() {
             const elementsWithRequired = document.querySelectorAll("[required]");

@@ -26,7 +26,7 @@ public class GetSignIn implements Handler {
     if(context.sessionAttribute("errorContraseniaDebil") != null){
       ErrorContraseniaDebil = context.sessionAttribute("errorContraseniaDebil");
       if(ErrorContraseniaDebil){
-        model.put("errorContraseniaDebil","La contrasenia es debil. Cambiela.");
+        model.put("errorContraseniaDebil","La contrasenia es debil. Tiene que tener al menos un(1) numero, 8 caracteres o más.");
         context.sessionAttribute("errorContraseniaDebil",false);
       }
 
