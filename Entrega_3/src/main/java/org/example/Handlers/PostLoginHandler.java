@@ -6,6 +6,7 @@ import io.micrometer.prometheus.PrometheusConfig;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
 
 import org.example.BDUtils;
+import org.example.Servicio.MetricsService;
 import org.example.repositorios.RepositorioUsuarios;
 import org.jetbrains.annotations.NotNull;
 
@@ -53,7 +54,7 @@ public class PostLoginHandler implements Handler {
         System.out.println("Sesion iniciada");
         context.sessionAttribute("username", usuarioNombre);
         context.sessionAttribute("succesLogin", true);
-        
+        MetricsService.incrementRequestCounter();
         context.sessionAttribute("rol","noAdmin");
         context.redirect("/front_page");
       } else {
