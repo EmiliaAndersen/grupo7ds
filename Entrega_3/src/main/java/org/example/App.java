@@ -135,6 +135,7 @@ public class App {
 
     app.before("/micrometer/metrics",AuthMiddleware::verificarAutenticacion);
     app.get("/micrometer/metrics", new GetMicrometerMetrics());
+
   }
 
 
