@@ -2,6 +2,9 @@ package org.example;
 
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.prometheus.PrometheusConfig;
+import io.micrometer.prometheus.PrometheusMeterRegistry;
 import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Rol.Admin;
 import org.example.Handlers.*;
@@ -130,6 +133,8 @@ public class App {
     app.get("/colaboraciones_realizadas", new GetColaboracionesRealizadas());
     app.post("/colaboraciones_realizadas", new PostColabos());
 
+    app.before("/micrometer/metrics",AuthMiddleware::verificarAutenticacion);
+    app.get("/micrometer/metrics", new GetMicrometerMetrics());
   }
 
 
