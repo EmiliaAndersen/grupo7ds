@@ -12,12 +12,22 @@ public class GetSignIn implements Handler {
     var model = new HashMap<String, Object>();
     model.put("tipoPersona", context.sessionAttribute("tipo_persona"));
     boolean errorSignIn = false;
+    boolean ErrorContraseniaDebil = false;
 
     if(context.sessionAttribute("ErrorSignIn") != null){
       errorSignIn = context.sessionAttribute("ErrorSignIn");
       if(errorSignIn){
         model.put("errorMessageSignIn","El usuario ya existe");
         context.sessionAttribute("ErrorSignIn",false);
+      }
+
+    }
+
+    if(context.sessionAttribute("errorContraseniaDebil") != null){
+      ErrorContraseniaDebil = context.sessionAttribute("errorContraseniaDebil");
+      if(ErrorContraseniaDebil){
+        model.put("errorContraseniaDebil","La contrasenia es debil. Cambiela.");
+        context.sessionAttribute("errorContraseniaDebil",false);
       }
 
     }

@@ -11,7 +11,11 @@ import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Persona.PersonaJuridica;
 import org.example.Dominio.Persona.TipoJuridica;
 import org.example.Dominio.Rol.Colaborador;
+import org.example.Validador.ControlPasswordDebil;
+import org.example.Validador.Nist800;
 import org.example.Validador.Usuario;
+import org.example.Validador.Validador;
+
 import org.example.repositorios.RepositorioUsuarios;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,10 +32,25 @@ public class PostSignIn implements Handler {
   RepositorioUsuarios repoUsuarios = RepositorioUsuarios.getRepositorioUsuarios();
 
   public void handle(@NotNull Context context){
+    var model = new HashMap<String, Object>();
+
     String usuarioNombre = context.formParam("username");
     String usuarioContraseña = context.formParam("password1");
-    var model = new HashMap<String, Object>();
-     //Verifico si en el repositorio existe ese usuario, si no existe lo creo y redirigo al login
+
+    Validador validador = new Validador();
+
+    validador.addFiltro(new ControlPasswordDebil());
+    validador.addFiltro(new Nist800());
+
+    if (!validador.validarPassword(usuarioContraseña)) {
+
+      model.put("errorContraseniaDebil", "La contrasenia es debil");
+      context.render("/templates/signin.mustache", model);
+      return;
+    }
+
+
+    //Verifico si en el repositorio existe ese usuario, si no existe lo creo y redirigo al login
     // si existe lo redirigo a la misma pagina. TODO: AGREGAR ERROR PARA QUE SEPA QUE EXISTE USUARIO
 
 
@@ -59,13 +78,13 @@ public class PostSignIn implements Handler {
       Documento documento = new Documento(123123,"asd","asdas","asd");
 
       PersonaHumana ph = new PersonaHumana();
-        ph.setUsuario(usuario);
-        ph.setDireccion(context.formParam(("direccion")));
-        ph.setNombre(context.formParam("nombre"));
-        ph.setApellido(context.formParam("apellido"));
-        ph.fechaDeNacimiento = localDateConverter(context.formParam("fecha_nacimiento"));
-        ph.cuil = context.formParam("CUIL");
-        ph.setDocumento(documento);
+      ph.setUsuario(usuario);
+      ph.setDireccion(context.formParam(("direccion")));
+      ph.setNombre(context.formParam("nombre"));
+      ph.setApellido(context.formParam("apellido"));
+      ph.fechaDeNacimiento = localDateConverter(context.formParam("fecha_nacimiento"));
+      ph.cuil = context.formParam("CUIL");
+      ph.setDocumento(documento);
 
       medioDeContacto = instanciarMDC(context);
       medioDeContacto.setPersona(ph);
@@ -82,10 +101,10 @@ public class PostSignIn implements Handler {
 
     } else if(context.formParam("tipo_colaborador").equals("pj")){
       PersonaJuridica pj = new PersonaJuridica();
-        pj.setUsuario(usuario);
-        pj.razonSocial = context.formParam("razon-social");
-        pj.tipo = TipoJuridica.valueOf(context.formParam("tipo-juridica"));
-        pj.setDireccion(context.formParam(("direccionPJ")));
+      pj.setUsuario(usuario);
+      pj.razonSocial = context.formParam("razon-social");
+      pj.tipo = TipoJuridica.valueOf(context.formParam("tipo-juridica"));
+      pj.setDireccion(context.formParam(("direccionPJ")));
 
       medioDeContacto = instanciarMDCJ(context);
       medioDeContacto.setPersona(pj);
@@ -155,6 +174,5 @@ public class PostSignIn implements Handler {
     BDUtils.commit(em);
   }
 }
-
 
 
