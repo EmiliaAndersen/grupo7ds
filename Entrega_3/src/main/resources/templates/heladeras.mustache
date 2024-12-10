@@ -41,7 +41,7 @@
                         Productos
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/ofrecer" style="color:#f5f5f5">Ofrecer productos</a></li>
+
                         <li><a class="dropdown-item" href="/prodserv" style="color:#f5f5f5">Canjear productos</a></li>
                     </ul>
                 </li>
@@ -84,30 +84,43 @@
         </div>
         <div class="col-lg-5">
             <div class="border border-round shadow-1 px-2 mt-2" style="background-color: #eff5ff;">
-                <h2 class="m-2">Alertas</h2>
+                <h2 class="m-2">Fallas tecnicas reportadas</h2>
                 <hr>
 
-                {{#incidentesData}}
+                {{#fallasData}}
                     <div class="accordion my-2" id="accordionAlerts">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseA{{id}}" aria-expanded="false" aria-controls="collapseA">
-                                    Incidente {{id}}
+                                    Falla Técnica en heladera {{nombreHeladera}}
                                 </button>
                             </h2>
                             <div id="collapseA{{id}}" class="accordion-collapse collapse" data-bs-parent="#accordionAlerts">
                                 <div class="accordion-body">
-                                    {{#mostrarAlerta}}
-                                        <p>Nivel de Alerta: {{nivelAlerta}}</p>
-                                    {{/mostrarAlerta}}
-                                    {{#mostrarFallaTecnica}}
+                                        <p>Reportado por: {{nombreReportador}}</p>
                                         <p>Descripción Técnica: {{descripcionTecnica}}</p>
-                                    {{/mostrarFallaTecnica}}
+                                        <p>Fecha del reporte: {{fecha}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                {{/incidentesData}}
+                {{/fallasData}}
+                {{#alertasData}}
+                    <div class="accordion my-2" id="accordionAlerts">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseA{{id}}" aria-expanded="false" aria-controls="collapseA">
+                                    Alerta en {{nombreHeladera}}
+                                </button>
+                            </h2>
+                            <div id="collapseA{{id}}" class="accordion-collapse collapse" data-bs-parent="#accordionAlerts">
+                                <div class="accordion-body">
+                                        <p>Tipo de Alerta: {{alertaTipo}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/alertasData}}
             </div>
 
             <div class="border border-round shadow-1 px-2 mt-2" style="background-color: #eff5ff;">
@@ -118,7 +131,7 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{id}}" aria-expanded="false" aria-controls="collapse{{id}}">
-                                    Heladera {{id}}:
+                                    Heladera {{ubicacion.nombre}}:
                                 </button>
                             </h2>
                             <div id="collapse{{id}}" class="accordion-collapse collapse " data-bs-parent="#accordionHeladeras">
@@ -127,6 +140,7 @@
                                     Temperatura Maxima: <span style="width:50px" class="badge text-bg-info">{{temperaturaMaxima}}°C</span><br>
                                     Ultima Temperatura: <span style="width:50px" class="badge text-bg-info">{{temp_ult}}°C</span><br>
                                     Ubicacion: <span style="width:150px" class="badge text-bg-info">{{ubicacion.nombre}}</span><br>
+                                    Estado: <span style="width:150px" class="badge text-bg-info">{{estado}}</span><br>
                                 </div>
                             </div>
                         </div>

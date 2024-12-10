@@ -83,49 +83,11 @@
                 <hr class="my-3">
                 <div class="row">
                     <div class="mx-auto col-md-3">
-                        <button style="width: 100%" type="button" id="btn-login-submit" class="btn btn-primary mt-2 mb-2 col-md-4" value="1">Registrar heladera</button><br>
+                        <button style="width: 100%" type="submit" id="value-submit" name="value-submit" class="btn btn-primary mt-2 mb-2 col-md-4" value="1">Registrar heladera</button><br>
                     </div>
                 </div>
-                <input type="hidden" name="value-submit" id="value-submit">
             </form>
         </div>
     </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script>
-    const form = document.getElementById('subscriptionForm');
-    const btnSubmit = document.getElementById('btn-login-submit');
-    const btnCerrarSesion = document.getElementById('btn-cerrar-sesion');
-
-
-        const btnTecnicos = document.getElementById('btn-tecnicos');
-
-        btnTecnicos.addEventListener('click', function () {
-        window.location.href = '/backoffice/tecnicos'; // Redirige a la ruta de técnicos
-    });
-
-
-    // Función para verificar campos
-    function checkFields() {
-        const isFormValid = form.checkValidity();
-        btnSubmit.disabled = !isFormValid; // Habilita o deshabilita el botón
-    }
-
-    // Agregar un evento de entrada para verificar los campos
-    form.addEventListener('input', checkFields);
-
-    // Evento para el botón de continuar
-    btnSubmit.addEventListener('click', function() {
-        if (form.checkValidity()) {
-            document.getElementById('value-submit').value="1";
-            form.submit();
-        } else {
-            alert('Por favor complete todos los campos obligatorios.'); // Mensaje de advertencia
-        }
-    });
-
-    btnCerrarSesion.addEventListener('click', function() {
-        document.getElementById('value-submit').value="2";
-        form.submit();
-    });
-</script>
 </html>

@@ -4,17 +4,21 @@ import io.javalin.http.Context;
 import io.javalin.http.Handler;
 import org.example.BDUtils;
 import org.example.Dominio.AreaDeCobertura.AreaCobertura;
+import org.example.Dominio.Colaboraciones.DonacionDeDinero;
 import org.example.Dominio.Documentos.Documento;
+import org.example.Dominio.Incidentes.Incidente;
 import org.example.Dominio.MediosContacto.MedioDeContacto;
 import org.example.Dominio.MediosContacto.TipoMedioContacto;
 import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Rol.Tecnico;
 import org.example.Validador.Usuario;
+import org.example.repositorios.RepositorioIncidente;
 import org.example.repositorios.RepositorioUsuarios;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.EntityManager;
 import java.util.HashMap;
+import java.util.List;
 
 public class postBackofficeTecnicos implements Handler {
   @Override
@@ -91,6 +95,19 @@ public class postBackofficeTecnicos implements Handler {
     tecnico.setPersona(personaHumana);
     tecnico.setAreaCobertura(areaCobertura);
     em.persist(tecnico);
+
+    RepositorioIncidente repositorioIncidente = RepositorioIncidente.getInstance();
+    List<Incidente> incidentesSinTecnico = repositorioIncidente.obtenerIncidentesSinTecnico();
+
+    for (Incidente incidente : incidentesSinTecnico){
+      Double distancia = Incidente
+          .calcularDistanciaHaversine(incidente.heladera.getUbicacion().getLatitud(),incidente.heladera.getUbicacion().getLongitud()
+              , tecnico.getAreaCobertura().getLatitudCentro(),tecnico.getAreaCobertura().getLongitudCentro());
+      if(distancia <= tecnico.getAreaCobertura().getRadio()){
+        incidente.setTecnico(tecnico);
+        em.merge(incidente);
+      }
+    }
 
 
     personaHumana.asignarRol(personaHumana,tecnico);

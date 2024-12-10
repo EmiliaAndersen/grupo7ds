@@ -8,6 +8,7 @@ import org.example.Dominio.Incidentes.Visita;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,6 +28,11 @@ public class Tecnico extends Rol{
 
     @OneToMany(mappedBy = "tecnico", cascade = CascadeType.ALL)
     public List<Visita> visitas;
+
+    @OneToMany(mappedBy = "tecnico", cascade = CascadeType.ALL)
+    @Getter
+    @Setter
+    private List<Incidente> incidentes;
 
 
     public void registrarVisita(Incidente incidente){

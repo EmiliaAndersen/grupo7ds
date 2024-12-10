@@ -5,6 +5,8 @@ import org.example.Dominio.Incidentes.FallaTecnica;
 import org.example.Dominio.Incidentes.Incidente;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 public class RepositorioIncidente {
     private static RepositorioIncidente instance;
@@ -24,4 +26,24 @@ public class RepositorioIncidente {
         BDUtils.commit(em);
     }
 
+    public List<Incidente> obtenerIncidentes(){
+        EntityManager em = BDUtils.getEntityManager();
+
+        TypedQuery<Incidente> query = em.createQuery(
+            "SELECT i FROM Incidente i", Incidente.class
+        );
+
+        return query.getResultList();
+    }
+
+    public List<Incidente> obtenerIncidentesSinTecnico() {
+        EntityManager em = BDUtils.getEntityManager();
+
+        TypedQuery<Incidente> query = em.createQuery(
+            "SELECT i FROM Incidente i WHERE i.tecnico IS NULL",
+            Incidente.class
+        );
+
+        return query.getResultList();
+    }
 }
