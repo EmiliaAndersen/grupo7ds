@@ -35,6 +35,7 @@ public class Colaborador extends Rol{
 
     public Colaborador() {
         colaboraciones = new ArrayList<>();
+        puntos = 0;
     }
 
     public void agregarColaboracion(Colaboracion colaboracion){

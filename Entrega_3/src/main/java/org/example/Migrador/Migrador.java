@@ -31,19 +31,19 @@ public class Migrador {
             double cantidad = Double.parseDouble(row[7]);
 
             PersonaHumana persona = personaService.buscarPersona(personas, nombre,apellido, numDocumento);
+            Colaborador colaborador;
 
-            if (persona == null) {
+            // Si la persona no existe, la creamos
+            if(persona == null){
                 persona = personaService.generarPersona(personas, numDocumento, tipoDoc, nombre, apellido, mail);
-                Colaborador colaborador = new Colaborador();
-
+                colaborador = new Colaborador();
                 ServiciosColaboracion.generarColaborador(persona, colaborador);
-                colaboracionService.asignarColaboracion(colaborador,formaColaboracion, fechaColaboracion, cantidad, mail);
-                //colaboradores.add(colaborador);
-            }else{
-                Colaborador colaborador = repositorioColaboradores.getColaboradorPersona(persona);
-                //colaborador = colaboracionService.buscarColaboradorPorPersona(colaboradores, persona);
-                colaboracionService.asignarColaboracion(colaborador,formaColaboracion, fechaColaboracion, cantidad, mail);
             }
+            else{
+                colaborador = repositorioColaboradores.getColaboradorPersona(persona);
+            }
+
+            colaboracionService.asignarColaboracion(colaborador, formaColaboracion, fechaColaboracion, cantidad, mail);
         }
     }
 }
