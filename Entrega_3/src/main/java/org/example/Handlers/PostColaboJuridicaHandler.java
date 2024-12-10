@@ -2,6 +2,8 @@ package org.example.Handlers;
 
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
+
+import org.example.BDUtils;
 import org.example.Dominio.Colaboraciones.Colaboracion;
 import org.example.Dominio.Colaboraciones.Factory.DonacionDeDineroFactory;
 import org.example.Dominio.Colaboraciones.Factory.HacerseCargoDeHeladeraFactory;
@@ -18,6 +20,8 @@ import org.jetbrains.annotations.NotNull;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.persistence.EntityManager;
 
 public class PostColaboJuridicaHandler implements Handler {
 
@@ -42,6 +46,8 @@ public class PostColaboJuridicaHandler implements Handler {
                 case "hc": {
 
                     String nombre = ctx.formParam("nombre");
+                 
+
                     String longitudParam = ctx.formParam("longitud");
                     String latitudParam = ctx.formParam("latitud");
                     String direccion = ctx.formParam("direccion");
@@ -53,16 +59,34 @@ public class PostColaboJuridicaHandler implements Handler {
                     double latitud = Double.parseDouble(latitudParam);
                     int tempMin = Integer.parseInt(tempMinParam);
                     int tempMax = Integer.parseInt(tempMaxParam);
+                    
+                    EntityManager em = BDUtils.getEntityManager();
+                    BDUtils.comenzarTransaccion(em);
 
-
+                    try{
                     PuntoEstrategico punto = new PuntoEstrategico(nombre, longitud, latitud, direccion);
 
 
                     Heladera heladera = new Heladera(tempMax, tempMin, punto);
                     HacerseCargoDeHeladeraFactory factoryHC = new HacerseCargoDeHeladeraFactory();
-                    Colaboracion hacerseCargoHeladera = factoryHC.crearColaboracion(heladera,punto);
+                    Colaboracion hacerseCargoHeladera = factoryHC.crearColaboracion(heladera,punto,LocalDate.now());
                     hacerseCargoHeladera.setColaborador(colaborador);
                     repoColaboraciones.addHacerseCargoHeladera(hacerseCargoHeladera, punto, heladera);
+
+                    Double puntosSumados = hacerseCargoHeladera.calcularPuntos();
+                    
+                    colaborador.setPuntos(colaborador.getPuntos() + puntosSumados);
+
+                    em.merge(colaborador);
+                    BDUtils.commit(em);
+
+                    }
+                    catch(Exception e){
+                         model.put("errorMessage", "Error" + e.getMessage());
+                        ctx.render("/templates/colaboracionJuridica.mustache", model);
+                        BDUtils.rollback(em);
+                    }
+
                     break;
 
                 }
@@ -85,10 +109,27 @@ public class PostColaboJuridicaHandler implements Handler {
 
 
                     // TODO: Agregar un atributo session para obtener el colaborador asociado al usuario que realiza la colaboracion para linkearlo al repo
+                   EntityManager em = BDUtils.getEntityManager();
+                    BDUtils.comenzarTransaccion(em);
+                    try{
                     DonacionDeDineroFactory factoryDD = new DonacionDeDineroFactory();
                     Colaboracion donacionDinero = factoryDD.crearColaboracion(fecha, monto, frecuencia);
                     donacionDinero.setColaborador(colaborador);
+
+                    Double puntosSumados = donacionDinero.calcularPuntos();
+                    
+                    colaborador.setPuntos(colaborador.getPuntos() + puntosSumados);
+
                     repoColaboraciones.addDonacionDinero(donacionDinero);
+                    em.merge(colaborador);
+                    BDUtils.commit(em);
+
+                    }
+                    catch(Exception e){
+                         model.put("errorMessage", "Error");
+                        ctx.render("/templates/colaboracionJuridica.mustache", model);
+                        BDUtils.rollback(em);
+                    }
                     break;
                 }
             }

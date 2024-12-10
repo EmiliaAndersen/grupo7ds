@@ -2,6 +2,8 @@ package org.example.Dominio.Heladeras;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import org.apache.commons.digester.annotations.rules.SetTop;
 import org.example.Dominio.Heladeras.sensores.Sensor;
 import org.example.Dominio.Incidentes.Alerta;
 import org.example.Dominio.Incidentes.Incidente;
@@ -64,7 +66,8 @@ public class Heladera {
     public List <Suscriptor>suscriptores;
 
     @OneToMany(mappedBy = "heladera", cascade = CascadeType.ALL)
-    private List<ActividadHeladera> mesesActiva;
+    @Setter
+    public List<ActividadHeladera> mesesActiva;
 
     @OneToMany(mappedBy = "heladera", cascade = CascadeType.ALL)
     public List<Sensor> sensores;
