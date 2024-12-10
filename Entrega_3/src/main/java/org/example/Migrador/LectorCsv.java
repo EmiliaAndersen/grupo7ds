@@ -12,7 +12,8 @@ public class LectorCsv {
 
     public List<String[]> leerArchivoCsv(String csvPath) {
         CsvParserSettings settings = new CsvParserSettings();
-        settings.detectFormatAutomatically();
+        settings.getFormat().setDelimiter(',');
+        settings.setHeaderExtractionEnabled(true);
 
         CsvParser parser = new CsvParser(settings);
 
