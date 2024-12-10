@@ -11,7 +11,7 @@ import javax.persistence.EntityManager;
 import java.util.HashMap;
 import java.util.Map;
 
-public class postBackoffice implements Handler {
+public class postBackofficeHeladeras implements Handler {
   @Override
   public void handle(@NotNull Context context) throws Exception {
     String boton = context.formParam("value-submit");

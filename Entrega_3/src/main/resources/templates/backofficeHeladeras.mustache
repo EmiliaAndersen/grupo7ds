@@ -10,10 +10,40 @@
 </head>
 <body style="background-color: #e6eaf2;">
 
+    <nav class="navbar navbar-expand-lg bg-primary" style="background-color: #3055b5!important;" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/front_page">Heladeras Solidarias</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="/backoffice">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/backoffice/heladeras">Registro de Heladeras</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/backoffice/tecnicos">Registro de Tecnicos</a></li>
+                </ul>
+                <ul class="navbar-nav flex-row flex-wrap ms-md-auto me-3">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-tools" style="font-size: 1.5rem;"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" disabled>Bienvenido</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="POST">
+                                    <a href="/cerrarSesion" class="dropdown-item" id="cerrar-menu" name="logout">
+                                        <i class="bi bi-door-open-fill"></i> Cerrar Sesión
+                                    </a>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
         <div class="container mt-5 mb-2 border border-round shadow-1" style="background-color: #eff5ff;min-height: 600px;">
             <form method='POST' class="row p-4" id="subscriptionForm">
                 <div class="row">
-                    <h2>Crear HELADERAS</h2>
+                    <h2>Registrar Heladera</h2>
                     <hr>
                     {{#successMessage}}
                         <div class="alert alert-success my-2" >{{successMessage}}</div>
@@ -53,14 +83,8 @@
                 <hr class="my-3">
                 <div class="row">
                     <div class="mx-auto col-md-3">
-                        <button style="width: 100%" type="button" id="btn-cerrar-sesion" class="btn btn-warning mt-2 mb-2 col-md-4" value="2">Cerrar sesion</button><br>
+                        <button style="width: 100%" type="button" id="btn-login-submit" class="btn btn-primary mt-2 mb-2 col-md-4" value="1">Registrar heladera</button><br>
                     </div>
-                    <div class="mx-auto col-md-3">
-                        <button style="width: 100%" type="button" id="btn-login-submit" class="btn btn-success mt-2 mb-2 col-md-4" value="1">Crear</button><br>
-                    </div>
-                </div>
-                <div class="mx-auto col-md-3">
-                    <button style="width: 100%" type="button" id="btn-tecnicos" class="btn btn-primary mt-2 mb-2 col-md-4">Registrar Técnicos</button>
                 </div>
                 <input type="hidden" name="value-submit" id="value-submit">
             </form>

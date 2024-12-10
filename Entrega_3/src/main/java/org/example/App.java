@@ -2,9 +2,6 @@ package org.example;
 
 import io.javalin.Javalin;
 import io.javalin.http.Context;
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.prometheus.PrometheusConfig;
-import io.micrometer.prometheus.PrometheusMeterRegistry;
 import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Rol.Admin;
 import org.example.Handlers.*;
@@ -55,12 +52,16 @@ public class App {
 
     app.before("/backoffice",AuthMiddleware::verificarAutenticacion);
     app.get("/backoffice",new getBackoffice());
-    app.post("/backoffice", new postBackoffice());
+    app.post("/backoffice", new getBackoffice());
 
 
     app.before("/backoffice/tecnicos",AuthMiddleware::verificarAutenticacion);
     app.get("/backoffice/tecnicos",new getBackofficeTecnicos());
     app.post("/backoffice/tecnicos", new postBackofficeTecnicos());
+
+    app.before("/backoffice/heladeras",AuthMiddleware::verificarAutenticacion);
+    app.get("/backoffice/heladeras",new getBackofficeHeladeras());
+    app.post("/backoffice/heladeras", new postBackofficeHeladeras());
 
     app.before("/front_page", AuthMiddleware::verificarAutenticacion);
     app.get("/front_page", new GetFrontPage());
@@ -157,9 +158,15 @@ class AuthMiddleware {
     if (!rutasPublicas.contains(context.path()) && (username == null || username.isEmpty())) {
       context.redirect("/login");
     }
-
-    if(!rol.equals("admin")  && context.path().equals("/backoffice") && context.path().equals("/backoffice/tecnicos")){
+    //REVISAR
+    if(!rol.equals("admin")  && (context.path().equals("/backoffice") || context.path().equals("/backoffice/heladeras") || context.path().equals("/backoffice/tecnicos"))){
       context.redirect("/perfil_"+context.sessionAttribute("tipo_persona"));
+    }
+
+
+    //REVISAR
+    if(rol.equals("admin")  && !context.path().equals("/backoffice") && !context.path().equals("/backoffice/tecnicos")  && !context.path().equals("/backoffice/heladeras") ){
+      context.redirect("/backoffice/"+context.path());
     }
 
 

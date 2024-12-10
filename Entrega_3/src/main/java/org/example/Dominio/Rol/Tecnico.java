@@ -1,6 +1,7 @@
 package org.example.Dominio.Rol;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.example.Dominio.AreaDeCobertura.AreaCobertura;
 import org.example.Dominio.Incidentes.Incidente;
 import org.example.Dominio.Incidentes.Visita;
@@ -13,10 +14,16 @@ import java.util.List;
 @Table(name="tecnico")
 public class Tecnico extends Rol{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     //TODO: Revisar porque lista
     @Getter
-    @Transient
-    private List<AreaCobertura> areaCobertura;
+    @Setter
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "area_cobertura_id")
+    private AreaCobertura areaCobertura;
 
     @OneToMany(mappedBy = "tecnico", cascade = CascadeType.ALL)
     public List<Visita> visitas;
