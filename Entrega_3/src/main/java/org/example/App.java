@@ -159,7 +159,7 @@ class AuthMiddleware {
       context.redirect("/login");
     }
     //REVISAR
-    if(!rol.equals("admin")  && (context.path().equals("/backoffice") || context.path().equals("/backoffice/heladeras") || context.path().equals("/backoffice/tecnicos"))){
+    /*if(!rol.equals("admin")  && (context.path().equals("/backoffice") || context.path().equals("/backoffice/heladeras") || context.path().equals("/backoffice/tecnicos"))){
       context.redirect("/perfil_"+context.sessionAttribute("tipo_persona"));
     }
 
@@ -167,7 +167,7 @@ class AuthMiddleware {
     //REVISAR
     if(rol.equals("admin")  && !context.path().equals("/backoffice") && !context.path().equals("/backoffice/tecnicos")  && !context.path().equals("/backoffice/heladeras") ){
       context.redirect("/backoffice/"+context.path());
-    }
+    }*/
 
 
   }

@@ -46,10 +46,12 @@
             <h2>Registro de Técnicos</h2>
             <hr>
             <div class="col-md-12" >
-                <!-- Mensajes de error -->
-                {{#errorMessageSignIn}}
-                    <div class="alert alert-warning my-2">{{errorMessageSignIn}}</div>
-                {{/errorMessageSignIn}}
+                {{#successMessage}}
+                    <div class="alert alert-success my-2" >{{successMessage}}</div>
+                {{/successMessage}}
+                {{#errorMessage}}
+                    <div class="alert alert-warning my-2" >{{errorMessage}}</div>
+                {{/errorMessage}}
 
                 <!-- Usuario y contraseña -->
                 <div class="col-md-12">

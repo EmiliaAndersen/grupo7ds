@@ -17,8 +17,8 @@ public class postBackofficeHeladeras implements Handler {
     String boton = context.formParam("value-submit");
 
     if ("2".equals(boton)) {
-      context.sessionAttribute("username", null);
-      context.redirect("/login");
+        context.sessionAttribute("username", null);
+        context.redirect("/login");
     } else {
 
       String nombre = context.formParam("nombre");
@@ -38,13 +38,13 @@ public class postBackofficeHeladeras implements Handler {
         em.persist(punto);
         em.persist(heladera);
         BDUtils.commit(em);
-        context.sessionAttribute("successPost", true);
+        context.sessionAttribute("successMessage", true);
       } catch (Exception e) {
-        e.printStackTrace();
-        context.sessionAttribute("errorPost", true);
+          e.printStackTrace();
+          context.sessionAttribute("errorMessage", true);
       }
 
-      context.redirect("/backoffice");
+      context.redirect("/backoffice/heladeras");
     }
   }
 }

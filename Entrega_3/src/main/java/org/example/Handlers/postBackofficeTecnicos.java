@@ -34,6 +34,7 @@ public class postBackofficeTecnicos implements Handler {
       String contrasenia = context.formParam("password1");
       if (repositorioUsuarios.verificarUsuarios(usuario)){
         generarPersonaHumana(context);
+        context.sessionAttribute("successMessage", true);
 
       }else {
         model.put("errorMessage","El nombre de usuario o contraseña ya existe");
@@ -42,7 +43,7 @@ public class postBackofficeTecnicos implements Handler {
       model.put("errorMessage","Error al crear Tecnico");
     }
 
-    context.render("/templates/backofficeTecnicos.mustache",model);
+    context.redirect("/backoffice/tecnicos");
   }
 
   private void generarPersonaHumana(Context context) {
@@ -69,6 +70,7 @@ public class postBackofficeTecnicos implements Handler {
     PersonaHumana personaHumana = new PersonaHumana();
     personaHumana.setNombre(nombre);
     personaHumana.setApellido(apellido);
+    personaHumana.setUsuario(usuario1);
 
     Documento documento = new Documento(Integer.parseInt(numeroDocumento),tipoDocumento, "", "");
     em.persist(documento);
