@@ -66,7 +66,7 @@ public class App {
 
     app.before("/backoffice/incidentes",AuthMiddleware::verificarAutenticacion);
     app.get("/backoffice/incidentes",new getBackofficeIncidentes());
-    app.post("/backoffice/incidentes", new postBackofficeHeladeras());
+    app.post("/backoffice/incidentes", new postBackofficeIncidentes());
 
     app.before("/front_page", AuthMiddleware::verificarAutenticacion);
     app.get("/front_page", new GetFrontPage());

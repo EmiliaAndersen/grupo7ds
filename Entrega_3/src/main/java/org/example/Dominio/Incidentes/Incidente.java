@@ -29,7 +29,7 @@ public class Incidente {
     private Long id;
 
     @Setter
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "heladera_id")
     public Heladera heladera;
 

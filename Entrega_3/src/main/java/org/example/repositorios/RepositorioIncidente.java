@@ -1,6 +1,7 @@
 package org.example.repositorios;
 
 import org.example.BDUtils;
+import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.Incidentes.FallaTecnica;
 import org.example.Dominio.Incidentes.Incidente;
 
@@ -56,4 +57,24 @@ public class RepositorioIncidente {
 
         return query.getResultList();
     }
+
+  public Incidente obtenerIncidenteXID(Long id) {
+        EntityManager em = BDUtils.getEntityManager();
+
+        TypedQuery<Incidente> query = em.createQuery(
+            "SELECT i FROM Incidente i WHERE i.id = :id", Incidente.class
+        ).setParameter("id",id);
+
+        return query.getSingleResult();
+  }
+
+  public List<Incidente> obtenerIncidentesActivosXHeladera(Heladera heladera) {
+    EntityManager em = BDUtils.getEntityManager();
+    TypedQuery<Incidente> query = em.createQuery(
+        "SELECT i FROM Incidente i JOIN i.heladera h WHERE h.id = :id AND i.estaActiva = true",
+        Incidente.class
+    );
+    query.setParameter("id", heladera.getId());
+    return query.getResultList();
+  }
 }

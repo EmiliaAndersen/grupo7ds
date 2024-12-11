@@ -83,9 +83,11 @@ public class getBackofficeIncidentes implements Handler {
       fallaInfo.put("fecha", fechaFormateada);
 
       if (fallaTecnica.getEstaActiva()){
-        fallaInfo.put("estado","Activa");
+        fallaInfo.put("estado","Activo");
+        fallaInfo.put("color","lightcoral");
       }else {
-        fallaInfo.put("estado","Inactiva");
+        fallaInfo.put("estado","Inactivo");
+        fallaInfo.put("color","lightgreen");
       }
       fallaInfo.put("visitas",fallaTecnica.getVisitas().size());
 
