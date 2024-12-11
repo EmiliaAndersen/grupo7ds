@@ -54,6 +54,11 @@ public class Heladera {
     @Getter
     private float temperaturaMinima;
 
+    @Column
+    @Setter
+    @Getter
+    private Integer capacidad;
+
     @Enumerated(EnumType.STRING)
     @Setter
     @Getter
@@ -77,7 +82,7 @@ public class Heladera {
 
 
 
-    public Heladera(float temperaturaMaxima, float temperaturaMinima, PuntoEstrategico ubicacion){
+    public Heladera(float temperaturaMaxima, float temperaturaMinima, PuntoEstrategico ubicacion, Integer capacidad){
         this.temperaturaMaxima = temperaturaMaxima;
         this.temperaturaMinima = temperaturaMinima;
         this.ubicacion = ubicacion;
@@ -86,6 +91,7 @@ public class Heladera {
         this.estado = EstadoHeladera.ACTIVA;
         this.mesesActiva = new ArrayList<ActividadHeladera>();
         this.suscriptores = new ArrayList<Suscriptor>();
+        this.capacidad = capacidad;
     }
     public Heladera() {
         // Constructor vacío para JPA

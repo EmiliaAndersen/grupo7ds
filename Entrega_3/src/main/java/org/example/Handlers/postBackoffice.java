@@ -27,10 +27,11 @@ public class postBackoffice implements Handler {
       String direccion = context.formParam("direccion");
       double temperaturaMaxima = Double.parseDouble(context.formParam("temperaturaMaxima"));
       double temperaturaMinima = Double.parseDouble(context.formParam("temperaturaMinima"));
+      Integer capacidadViandas = Integer.parseInt(context.formParam("capacidadViandas"));
 
       PuntoEstrategico punto = new PuntoEstrategico(nombre, longitud, latitud, direccion);
 
-      Heladera heladera = new Heladera((int) temperaturaMaxima, (int) temperaturaMinima, punto);
+      Heladera heladera = new Heladera((int) temperaturaMaxima, (int) temperaturaMinima, punto, capacidadViandas);
       Map<String, Object> model = new HashMap<>();
       try {
         EntityManager em = BDUtils.getEntityManager();

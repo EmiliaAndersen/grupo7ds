@@ -53,12 +53,14 @@ public class PostColaboJuridicaHandler implements Handler {
                     String direccion = ctx.formParam("direccion");
                     String tempMinParam = ctx.formParam("temp_min");
                     String tempMaxParam = ctx.formParam("temp_max");
+                    String capacidadViandas = ctx.formParam("capacidadViandas");
 
 
                     double longitud = Double.parseDouble(longitudParam);
                     double latitud = Double.parseDouble(latitudParam);
                     int tempMin = Integer.parseInt(tempMinParam);
                     int tempMax = Integer.parseInt(tempMaxParam);
+                    int capacidad = Integer.parseInt(capacidadViandas);
                     
                     EntityManager em = BDUtils.getEntityManager();
                     BDUtils.comenzarTransaccion(em);
@@ -67,7 +69,7 @@ public class PostColaboJuridicaHandler implements Handler {
                     PuntoEstrategico punto = new PuntoEstrategico(nombre, longitud, latitud, direccion);
 
 
-                    Heladera heladera = new Heladera(tempMax, tempMin, punto);
+                    Heladera heladera = new Heladera(tempMax, tempMin, punto,capacidad);
                     HacerseCargoDeHeladeraFactory factoryHC = new HacerseCargoDeHeladeraFactory();
                     Colaboracion hacerseCargoHeladera = factoryHC.crearColaboracion(heladera,punto,LocalDate.now());
                     hacerseCargoHeladera.setColaborador(colaborador);

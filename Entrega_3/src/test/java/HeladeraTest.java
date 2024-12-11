@@ -18,7 +18,7 @@ public class HeladeraTest {
     void testReportarIncidente() {
         Colaborador colaborador = new Colaborador();
         PuntoEstrategico punto = new PuntoEstrategico("zona1", 10.0, 120.0, "Av Diaz 12");
-        Heladera heladera = new Heladera(10,0,punto);
+        Heladera heladera = new Heladera(10,0,punto,100);
 
         colaborador.agregarFalla(heladera);
 
@@ -31,7 +31,7 @@ public class HeladeraTest {
     @Test
     void testAbrirConAutorizacion() {
         PuntoEstrategico punto = new PuntoEstrategico("zona1", 10.0, 120.0, "Av Diaz 12");
-        Heladera heladera = new Heladera(10, 0, punto);
+        Heladera heladera = new Heladera(10, 0, punto,100);
         Distribuidor distribuidor = new Distribuidor();
 
         TarjetaDistribuidor tarj = new TarjetaDistribuidor();

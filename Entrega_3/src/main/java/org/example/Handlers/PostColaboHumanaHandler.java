@@ -59,22 +59,54 @@ public class PostColaboHumanaHandler implements Handler {
                     LocalDate fecha_caducidad = LocalDate.parse(ctx.formParam("fecha-caducidad"));
                     LocalDate fecha_donacion_vianda = LocalDate.parse(ctx.formParam("fechaDonacionVianda"));
                     String nombreColaborador = ctx.formParam("colaborador");
-                    String heladera_id = ctx.formParam("heladera");
+                    String heladera_idd = ctx.formParam("heladera");
                     float peso = Float.parseFloat(ctx.formParam("peso"));
                     float calorias = Float.parseFloat(ctx.formParam("calorias"));
                     String cantidadViandasStr = ctx.formParam("cantidadViandas");
+                    Long heladera_id = Long.parseLong(ctx.formParam("heladera"));
+   
 
                     EntityManager em = BDUtils.getEntityManager();
                     BDUtils.comenzarTransaccion(em);
                     try{
-                    Heladera heladera = repoHeladeras.obtenerHeladera(heladera_id);
+                    Heladera heladera = repoHeladeras.obtenerHeladera(heladera_idd);
                     if (heladera == null) {
                         model.put("errorMessage", "La heladera no existe");
                         ctx.render("/templates/colaboracionHumana.mustache", model);
                         return;
                     }
 
+
+                    
                     int cantidadViandas = Integer.parseInt(cantidadViandasStr);  
+
+                    if (cantidadViandas == 0) {
+                        model.put("errorMessage", "No puede donar cero viandas");
+                        ctx.render("/templates/colaboracionHumana.mustache", model);
+                        return;
+                    }
+                    
+                    List<Vianda> viandasEnHeladeraDestino = em.createQuery("SELECT v FROM Vianda v WHERE v.heladera.id = :heladeraId", Vianda.class)
+                    .setParameter("heladeraId", heladera_id)
+                    .getResultList();
+
+                    if(viandasEnHeladeraDestino == null){
+                        if(heladera.getCapacidad()< cantidadViandas){
+                            model.put("errorMessage", "No hay suficiente capacidad en la heladera destino.");
+                            ctx.render("/templates/colaboracionHumana.mustache", model);
+                            return;
+                        }
+                    }
+
+                    if(viandasEnHeladeraDestino != null){
+                        if (heladera.getCapacidad() - viandasEnHeladeraDestino.size() < cantidadViandas) {
+                            model.put("errorMessage", "No hay suficiente capacidad en la heladera destino.");
+                            ctx.render("/templates/colaboracionHumana.mustache", model);
+                            return;
+                        }
+                    }
+                    
+
                     List<Vianda> viandasCreadas = new ArrayList<>();  
 
                     for (int i = 0; i+1 < cantidadViandas; i++) { //porque dsp creo otro abajo
@@ -101,7 +133,7 @@ public class PostColaboHumanaHandler implements Handler {
                     BDUtils.commit(em);
                 }
                 catch (Exception e){
-                    model.put("errorMessage", "Error");
+                    model.put("errorMessage", "Error" +  e.getMessage());
                         ctx.render("/templates/colaboracionHumana.mustache", model);
                         BDUtils.rollback(em);
                 }
@@ -139,7 +171,7 @@ public class PostColaboHumanaHandler implements Handler {
 
                     String heladera_origen_id = ctx.formParam("heladera-origen");
                     String heladera_destino_id = ctx.formParam("heladera-destino");
-                    // TODO: esto me parece que no hace falta. Hay que verlo.
+               
                     Double cantidad = Double.parseDouble(ctx.formParam("cantidad"));
 
                     EntityManager em = BDUtils.getEntityManager();
@@ -149,6 +181,12 @@ public class PostColaboHumanaHandler implements Handler {
 
                     String motivo = ctx.formParam("motivos");
 
+                    if(cantidad == 0){
+                        model.put("errorMessage", "No puede distribuirse cero viandas");
+                        ctx.render("/templates/colaboracionHumana.mustache", model);
+                        return;
+                    }
+
 
                     Heladera heladera_origen = repoHeladeras.obtenerHeladera(heladera_origen_id);
                     Heladera heladera_destino = repoHeladeras.obtenerHeladera(heladera_destino_id);
@@ -156,22 +194,52 @@ public class PostColaboHumanaHandler implements Handler {
                     if (heladera_origen == null || heladera_destino == null) {
                         model.put("errorMessage", "Alguna de las heladeras no existe.");
                         ctx.render("/templatescolaboracionHumana.mustache", model);
+                        return;
                     }
 
                     Long heladeraOrigenId = Long.parseLong(heladera_origen_id);
+                    Long heladeraDestinoId = Long.parseLong(heladera_destino_id);
 
                     List<Vianda> viandasEnHeladeraOrigen = em.createQuery("SELECT v FROM Vianda v WHERE v.heladera.id = :heladeraId", Vianda.class)
                     .setParameter("heladeraId", heladeraOrigenId)
                     .getResultList();
-        
-           
-                    if (viandasEnHeladeraOrigen.size() < cantidad) {
-                        model.put("errorMessage", "No hay suficiente cantidad de viandas en la heladera de origen.");
-                        ctx.render("/templates/colaboracionHumana.mustache", model);
-                        return;
+
+                        
+                    if(viandasEnHeladeraOrigen == null){       
+                            model.put("errorMessage", "No hay viandas en la heladera origen.");
+                            ctx.render("/templates/colaboracionHumana.mustache", model);
+                            return;             
                     }
-                
-                
+
+                    if(viandasEnHeladeraOrigen != null){
+                        if (viandasEnHeladeraOrigen.size() < cantidad) {
+                            model.put("errorMessage", "No hay suficiente viandas en la heladera origen.");
+                            ctx.render("/templates/colaboracionHumana.mustache", model);
+                            return;
+                        }
+                    }
+
+
+                    List<Vianda> viandasEnHeladeraDestino = em.createQuery("SELECT v FROM Vianda v WHERE v.heladera.id = :heladeraId", Vianda.class)
+                    .setParameter("heladeraId", heladeraDestinoId)
+                    .getResultList();
+
+                    if(viandasEnHeladeraDestino == null){
+                        if(heladera_destino.getCapacidad()< cantidad){
+                            model.put("errorMessage", "No hay suficiente capacidad en la heladera destino.");
+                            ctx.render("/templates/colaboracionHumana.mustache", model);
+                            return;
+                        }
+                    }
+
+                    if(viandasEnHeladeraDestino != null){
+                        if (heladera_destino.getCapacidad() - viandasEnHeladeraDestino.size() < cantidad) {
+                            model.put("errorMessage", "No hay suficiente capacidad en la heladera destino.");
+                            ctx.render("/templates/colaboracionHumana.mustache", model);
+                            return;
+                        }
+                    }
+                    
                     List<Vianda> viandasSeleccionadas = viandasEnHeladeraOrigen.subList(0, cantidad.intValue());
                 
                     for (Vianda vianda : viandasSeleccionadas) {

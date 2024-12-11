@@ -34,7 +34,7 @@ public class PersistanceTest {
 @Test
 public void persistirViandaFechasErróneas() { //la fecha de vencimiento es menor a la de fabricacion
     PuntoEstrategico punto = new PuntoEstrategico("p2", 13.0, 15.0, "Av Libertador 1200");
-    Heladera heladera = new Heladera(16, 2, punto);
+    Heladera heladera = new Heladera(16, 2, punto,10);
 
     LocalDate fechaFabricacion = LocalDate.of(2024, 12, 1); // Fecha futura
     LocalDate fechaVencimiento = LocalDate.of(2024, 11, 1); // Fecha anterior a fabricación
@@ -54,7 +54,7 @@ public void persistirViandaFechasErróneas() { //la fecha de vencimiento es meno
 @Test
 public void persistirHeladeraDatosInvalidos() { //los datos ingresados en punto estrategico son negativos
     PuntoEstrategico punto = new PuntoEstrategico("p1", 1000.0, -2000.0, "DirecciónNoVálida");
-    Heladera heladera = new Heladera(-10, 1000, punto); // Capacidad negativa y nivel extremo
+    Heladera heladera = new Heladera(-10, 1000, punto,10); // Capacidad negativa y nivel extremo
 
     EntityManager em = BDUtils.getEntityManager();
     BDUtils.comenzarTransaccion(em);
@@ -145,7 +145,7 @@ public void persistirUsuarioDatosExtremos() { //datos erroreonos o vacios donde 
 @Test
 public void fallaTecnicaHeladeraInactiva() {
     PuntoEstrategico punto = new PuntoEstrategico("pErr", 10.0, 12.0, "Av Santa Fe 1200");
-    Heladera heladera = new Heladera(10, 1, punto);
+    Heladera heladera = new Heladera(10, 1, punto,10);
     heladera.setEstado(EstadoHeladera.INACTIVA); // Estado de heladera en inactiva, no se puede registrar una falla
 
     EntityManager em = BDUtils.getEntityManager();
