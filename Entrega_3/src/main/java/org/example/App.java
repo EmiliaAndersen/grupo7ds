@@ -63,6 +63,11 @@ public class App {
     app.get("/backoffice/heladeras",new getBackofficeHeladeras());
     app.post("/backoffice/heladeras", new postBackofficeHeladeras());
 
+
+    app.before("/backoffice/incidentes",AuthMiddleware::verificarAutenticacion);
+    app.get("/backoffice/incidentes",new getBackofficeIncidentes());
+    app.post("/backoffice/incidentes", new postBackofficeHeladeras());
+
     app.before("/front_page", AuthMiddleware::verificarAutenticacion);
     app.get("/front_page", new GetFrontPage());
 
