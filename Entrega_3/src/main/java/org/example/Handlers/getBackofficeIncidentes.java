@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Handlers;
 
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
@@ -51,7 +51,12 @@ public class getBackofficeIncidentes implements Handler {
       Heladera heladera = repositorioHeladeras.obtenerHeladera(id.toString());
       alertaInfo.put("nombreHeladera", heladera.getUbicacion().getNombre());
       alertaInfo.put("alertaTipo",alerta.getTipo());
-
+      if (alerta.getEstaActiva()){
+        alertaInfo.put("estado","Activa");
+      }else {
+        alertaInfo.put("estado","Inactiva");
+      }
+      alertaInfo.put("visitas",alerta.getVisitas().size());
       listaAlertasData.add(alertaInfo);
     }
     model.put("fallasData",listaAlertasData);
@@ -76,6 +81,13 @@ public class getBackofficeIncidentes implements Handler {
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
       String fechaFormateada = fallaTecnica.getFechaYHora().format(formatter);
       fallaInfo.put("fecha", fechaFormateada);
+
+      if (fallaTecnica.getEstaActiva()){
+        fallaInfo.put("estado","Activa");
+      }else {
+        fallaInfo.put("estado","Inactiva");
+      }
+      fallaInfo.put("visitas",fallaTecnica.getVisitas().size());
 
       fallaInfo.put("nombreReportador",nombre);
       listaFallasData.add(fallaInfo);
