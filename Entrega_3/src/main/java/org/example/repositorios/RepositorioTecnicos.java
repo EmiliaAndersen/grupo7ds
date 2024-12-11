@@ -28,4 +28,12 @@ public class RepositorioTecnicos {
     return query.getResultList();
   }
 
+  public Tecnico obtenerTecnicoXUsuario(String usuario){
+    EntityManager em = BDUtils.getEntityManager();
+    TypedQuery<Tecnico> query = em.createQuery(
+        "SELECT t FROM Tecnico t JOIN t.persona p JOIN p.usuario u WHERE u.usuario = :usu ", Tecnico.class
+    ).setParameter("usu",usuario);
+
+    return query.getSingleResult();
+  }
 }

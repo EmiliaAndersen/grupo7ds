@@ -69,6 +69,7 @@ public class postBackofficeTecnicos implements Handler {
     PersonaHumana personaHumana = new PersonaHumana();
     personaHumana.setNombre(nombre);
     personaHumana.setApellido(apellido);
+    personaHumana.setUsuario(usuario1);
 
     Documento documento = new Documento(Integer.parseInt(numeroDocumento),tipoDocumento, "", "");
     em.persist(documento);

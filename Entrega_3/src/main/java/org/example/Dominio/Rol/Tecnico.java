@@ -17,6 +17,7 @@ public class Tecnico extends Rol{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
     //TODO: Revisar porque lista
