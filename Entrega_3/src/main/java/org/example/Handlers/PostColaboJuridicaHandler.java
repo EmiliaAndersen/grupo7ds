@@ -39,7 +39,8 @@ public class PostColaboJuridicaHandler implements Handler {
         }
         try {
             switch (tipoColabo) {
-                case "hc": {
+                case "hc2":
+                case "hc1":
 
                     String nombre = ctx.formParam("nombre");
                     String longitudParam = ctx.formParam("longitud");
@@ -65,7 +66,7 @@ public class PostColaboJuridicaHandler implements Handler {
                     repoColaboraciones.addHacerseCargoHeladera(hacerseCargoHeladera, punto, heladera);
                     break;
 
-                }
+
                 case "op": {
                     String tipo_producto = ctx.formParam("tipo-producto");
                     String marca = ctx.formParam("marca");
