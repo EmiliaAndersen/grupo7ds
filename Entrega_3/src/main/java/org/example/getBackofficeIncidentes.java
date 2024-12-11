@@ -84,7 +84,7 @@ public class getBackofficeIncidentes implements Handler {
 
 
     model.put("incidentes",incidentes);
-    context.render("/templates/incidentesTecnicos.mustache",model);
+    context.render("/templates/backofficeIncidentesTecnicos.mustache",model);
 
   }
 }
