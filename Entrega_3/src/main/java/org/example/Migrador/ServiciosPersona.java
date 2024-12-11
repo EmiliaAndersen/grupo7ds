@@ -15,8 +15,8 @@ import static org.example.Dominio.MediosContacto.TipoMedioContacto.CORREO_ELECTR
 public class ServiciosPersona {
     public PersonaHumana buscarPersona(List<PersonaHumana> personas, String nombre, String apellido , Integer documento) {
         for (PersonaHumana persona : personas) {
-            if (persona.getNombre().equals(nombre) && persona.getApellido().equals(apellido) &&
-                    persona.getDocumento().getDocumento().equals(documento)) {
+            if (persona.getNombre() != null && persona.getNombre().equals(nombre) && persona.getApellido() != null && persona.getApellido().equals(apellido) &&
+                    persona.getDocumento() != null  && persona.getDocumento().getDocumento().equals(documento)) {
                 return persona;
             }
         }
