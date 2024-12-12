@@ -112,13 +112,20 @@ public class PostColaboHumanaHandler implements Handler {
                     for (int i = 0; i+1 < cantidadViandas; i++) { //porque dsp creo otro abajo
                         Vianda vianda = new Vianda(comida, fecha_caducidad, fecha_donacion_vianda, heladera, calorias, peso, EstadoVianda.ENTREGADA);
                         viandasCreadas.add(vianda);  
+                        heladera.setStock(heladera.getStock() + 1);
                     }
 
                     for (Vianda vianda : viandasCreadas) {
                         em.persist(vianda);
+                        
                     }
 
+                    
+
                     Vianda vianda = new Vianda(comida, fecha_caducidad, fecha_donacion_vianda, heladera, calorias, peso, EstadoVianda.ENTREGADA);
+                    heladera.setStock(heladera.getStock() + 1);
+                    em.merge(heladera);
+                    
                     DonacionDeViandaFactory factoryDV = new DonacionDeViandaFactory();
                     Colaboracion donacionDeVianda = factoryDV.crearColaboracion(vianda,Double.parseDouble(cantidadViandasStr));
                     donacionDeVianda.setColaborador(colaborador);
@@ -129,7 +136,7 @@ public class PostColaboHumanaHandler implements Handler {
 
                     repoColaboraciones.addDonacionVianda(donacionDeVianda, vianda);
                     em.merge(colaborador);
-                    
+              
                     BDUtils.commit(em);
                 }
                 catch (Exception e){
@@ -243,11 +250,14 @@ public class PostColaboHumanaHandler implements Handler {
                     List<Vianda> viandasSeleccionadas = viandasEnHeladeraOrigen.subList(0, cantidad.intValue());
                 
                     for (Vianda vianda : viandasSeleccionadas) {
-                        vianda.setHeladera(heladera_destino);  
+                        vianda.setHeladera(heladera_destino); 
+                        heladera_origen.setStock(heladera_origen.getStock() -1); 
+                        heladera_destino.setStock(heladera_destino.getStock() +1);
                         em.merge(vianda);  
                     }
                 
-
+                    em.merge(heladera_origen);
+                    em.merge(heladera_destino);
                     DistribucionDeViandasFactory factoryDDV = new DistribucionDeViandasFactory();
                     Colaboracion distribucionVianda = factoryDDV.crearColaboracion(heladera_origen, heladera_destino, cantidad ,motivo, LocalDate.now());
                     distribucionVianda.setColaborador(colaborador);

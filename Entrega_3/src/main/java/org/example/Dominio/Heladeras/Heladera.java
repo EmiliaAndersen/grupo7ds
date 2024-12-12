@@ -59,6 +59,11 @@ public class Heladera {
     @Getter
     private Integer capacidad;
 
+    @Column(nullable = false)
+    @Setter
+    @Getter
+    private Integer stock = 0; 
+
     @Enumerated(EnumType.STRING)
     @Setter
     @Getter
@@ -92,6 +97,7 @@ public class Heladera {
         this.mesesActiva = new ArrayList<ActividadHeladera>();
         this.suscriptores = new ArrayList<Suscriptor>();
         this.capacidad = capacidad;
+        this.stock= 0;
     }
     public Heladera() {
         // Constructor vacío para JPA
