@@ -19,6 +19,7 @@ import java.util.List;
 @Table(name="colaborador")
 public class Colaborador extends Rol{
 
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
@@ -36,6 +37,7 @@ public class Colaborador extends Rol{
 
     public Colaborador() {
         colaboraciones = new ArrayList<>();
+        puntos = 0;
     }
 
     public void agregarColaboracion(Colaboracion colaboracion){

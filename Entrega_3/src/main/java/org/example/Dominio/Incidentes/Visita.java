@@ -43,4 +43,15 @@ public class Visita {
         this.tecnico = tecnico;
         this.fechaYHora = fechaYHora;
     }
+    public Visita(Tecnico tecnico, LocalDateTime fechaYHora, Boolean pudoResolver, String comentarios, Incidente incidente) {
+        this.tecnico = tecnico;
+        this.fechaYHora = fechaYHora;
+        this.pudoResolver = pudoResolver;
+        this.comentarios = comentarios;
+        this.incidente = incidente;
+    }
+
+    public Visita() {
+
+    }
 }

@@ -20,6 +20,7 @@ public class PersonaHumana extends Persona {
 
   @Column
   @Setter
+  @Getter
   public String nombre;
   @Column
   @Setter

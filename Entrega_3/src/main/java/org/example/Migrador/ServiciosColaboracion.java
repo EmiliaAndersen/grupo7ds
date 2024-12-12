@@ -2,6 +2,10 @@ package org.example.Migrador;
 
 import org.example.BDUtils;
 import org.example.Dominio.Colaboraciones.*;
+import org.example.Dominio.Colaboraciones.Factory.DistribucionDeViandasFactory;
+import org.example.Dominio.Colaboraciones.Factory.DonacionDeDineroFactory;
+import org.example.Dominio.Colaboraciones.Factory.DonacionDeViandaFactory;
+import org.example.Dominio.Colaboraciones.Factory.RegistrarPersonasFactory;
 import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Rol.Colaborador;
 
@@ -17,14 +21,22 @@ public class ServiciosColaboracion {
             System.err.println("El colaborador es null. No se puede asignar la colaboración.");
             return;
         }
-        Colaboracion colaboracion = generarColaboracion(formaColaboracion, fechaColaboracion, cantidad);
-        if (colaboracion == null) return;
-        colaborador.agregarColaboracion(colaboracion);
-        colaboracion.setColaborador(colaborador);
-        EntityManager em = BDUtils.getEntityManager();
-        BDUtils.comenzarTransaccion(em);
-        em.persist(colaboracion);
-        BDUtils.commit(em);
+
+        if (formaColaboracion.equals("DINERO")) {
+            DonacionDeDineroFactory factoryDD = new DonacionDeDineroFactory();
+            Colaboracion colaboracion = factoryDD.crearColaboracion(fechaColaboracion, cantidad,"SinFrecuencia");
+
+            colaborador.agregarColaboracion(colaboracion);
+            colaboracion.setColaborador(colaborador);
+
+            EntityManager em = BDUtils.getEntityManager();
+            BDUtils.comenzarTransaccion(em);
+            em.persist(colaboracion);
+            BDUtils.commit(em);
+        }
+        else{
+            generarColaboraciones(formaColaboracion, fechaColaboracion, cantidad, colaborador);
+        }
     }
 
 
@@ -49,24 +61,51 @@ public class ServiciosColaboracion {
     }
 
 
-    private Colaboracion generarColaboracion(String formaColaboracion, LocalDate fechaColaboracion, double cantidad) {
-        Colaboracion colaboracion;
+    private void generarColaboraciones(String formaColaboracion, LocalDate fechaColaboracion, double cantidad, Colaborador colaborador) {
         switch (formaColaboracion) {
-            case "DINERO":
-                colaboracion = new DonacionDeDinero(fechaColaboracion, cantidad, null);
-                break;
             case "DONACION_VIANDAS":
-                colaboracion = new DonacionDeVianda(null, null);
+                DonacionDeViandaFactory factoryDV = new DonacionDeViandaFactory();
+                for(int i = 0; i < cantidad; i++){
+                    Colaboracion colaboracion = factoryDV.crearColaboracion(null,null);
+
+                    colaborador.agregarColaboracion(colaboracion);
+                    colaboracion.setColaborador(colaborador);
+
+                    EntityManager em = BDUtils.getEntityManager();
+                    BDUtils.comenzarTransaccion(em);
+                    em.persist(colaboracion);
+                    BDUtils.commit(em);
+                }
                 break;
             case "REDISTRIBUCION_VIANDAS":
-                colaboracion = new DistribucionDeViandas(null, null, null, null, fechaColaboracion);
+                DistribucionDeViandasFactory factoryDDV = new DistribucionDeViandasFactory();
+                for(int i = 0; i < cantidad; i++){
+                    Colaboracion colaboracion = factoryDDV.crearColaboracion(null, null,null, "Sin motivo", fechaColaboracion);
+
+                    colaborador.agregarColaboracion(colaboracion);
+                    colaboracion.setColaborador(colaborador);
+
+                    EntityManager em = BDUtils.getEntityManager();
+                    BDUtils.comenzarTransaccion(em);
+                    em.persist(colaboracion);
+                    BDUtils.commit(em);
+                }
                 break;
             case "ENTREGA_TARJETAS":
-                colaboracion = new RegistrarPersonasEnSituacionVulnerable();
+                RegistrarPersonasFactory factoryPV = new RegistrarPersonasFactory();
+                for(int i = 0; i < cantidad; i++){
+                    Colaboracion colaboracion = factoryPV.crearColaboracion();
+
+                    colaborador.agregarColaboracion(colaboracion);
+                    colaboracion.setColaborador(colaborador);
+
+                    EntityManager em = BDUtils.getEntityManager();
+                    BDUtils.comenzarTransaccion(em);
+                    em.persist(colaboracion);
+                    BDUtils.commit(em);
+                }
                 break;
             default:
-                return null;
         }
-        return colaboracion;
     }
 }
