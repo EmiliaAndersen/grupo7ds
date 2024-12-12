@@ -21,6 +21,7 @@ public abstract class Colaboracion {
 
   @ManyToOne()
   @JoinColumn(name = "colaborador_id")
+  @Getter
   private Colaborador colaborador;
   public abstract void procesarColaboracion(Colaborador colaborador);
 

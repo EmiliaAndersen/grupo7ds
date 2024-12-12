@@ -21,12 +21,13 @@ public class Colaborador extends Rol{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter
     private Long id;
 
     @OneToMany(mappedBy = "colaborador",cascade = CascadeType.ALL)
     @Getter
     @Setter
-    private List<Colaboracion> colaboraciones;
+    public List<Colaboracion> colaboraciones;
 
     @Column
     @Getter

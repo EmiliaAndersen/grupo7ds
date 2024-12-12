@@ -6,6 +6,7 @@ import org.example.Dominio.Colaboraciones.Colaboracion;
 import org.example.Dominio.Colaboraciones.Factory.DonacionDeDineroFactory;
 import org.example.Dominio.Colaboraciones.Factory.HacerseCargoDeHeladeraFactory;
 import org.example.Dominio.Colaboraciones.Factory.OfrecerProductosFactory;
+import org.example.Dominio.Colaboraciones.HacerseCargoDeHeladera;
 import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
 import org.example.Dominio.Rol.Colaborador;
@@ -17,7 +18,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class PostColaboJuridicaHandler implements Handler {
 
@@ -26,6 +29,8 @@ public class PostColaboJuridicaHandler implements Handler {
         RepositorioColaboradores repoColaboradores = RepositorioColaboradores.getInstance();
         RepositorioHeladeras repoHeladeras = RepositorioHeladeras.getInstance();
         RepositorioColaboraciones repoColaboraciones = RepositorioColaboraciones.getInstance();
+        Heladera heladera;
+        HacerseCargoDeHeladeraFactory factoryHC = new HacerseCargoDeHeladeraFactory();
 
         String tipoColabo = ctx.formParam("btn-colab");
         Map<String, Object> model = new HashMap<>();
@@ -40,11 +45,31 @@ public class PostColaboJuridicaHandler implements Handler {
         try {
             switch (tipoColabo) {
                 case "hc2":
+                    String heladera_id = ctx.formParam("heladeraSelect");
+                    heladera = repoHeladeras.obtenerHeladera(heladera_id);
+                    if (heladera == null) {
+                        model.put("errorMessage", "La heladera no existe");
+                        ctx.render("/templates/colaboracionJuridica.mustache", model);
+                        return;
+                    }
+                    List<HacerseCargoDeHeladera> colabs = repoColaboraciones.obtenerTodasHacerseCargoHeladera();
+                    for(HacerseCargoDeHeladera colab : colabs){
+                        if(colab.getHeladera().getId() == heladera.getId() && Objects.equals(colab.getColaborador().getId(), colaborador.getId())){
+                            model.put("errorMessage", "Ya esta a cargo de la heladera seleccionada");
+                            ctx.render("/templates/colaboracionJuridica.mustache", model);
+                            return;
+                        }
+                    }
+
+                    Colaboracion hacerseCargoHeladeraSeleccionada = factoryHC.crearColaboracion(heladera,heladera.getUbicacion());
+                    hacerseCargoHeladeraSeleccionada.setColaborador(colaborador);
+                    repoColaboraciones.addHacerseCargoHeladeraSeleccionada(hacerseCargoHeladeraSeleccionada, heladera.getUbicacion(), heladera);
+                    break;
                 case "hc1":
 
                     String nombre = ctx.formParam("nombre");
-                    String longitudParam = ctx.formParam("longitud");
-                    String latitudParam = ctx.formParam("latitud");
+                    String longitudParam = ctx.formParam("longitudInput");
+                    String latitudParam = ctx.formParam("latitudInput");
                     String direccion = ctx.formParam("direccion");
                     String tempMinParam = ctx.formParam("temp_min");
                     String tempMaxParam = ctx.formParam("temp_max");
@@ -59,11 +84,13 @@ public class PostColaboJuridicaHandler implements Handler {
                     PuntoEstrategico punto = new PuntoEstrategico(nombre, longitud, latitud, direccion);
 
 
-                    Heladera heladera = new Heladera(tempMax, tempMin, punto);
-                    HacerseCargoDeHeladeraFactory factoryHC = new HacerseCargoDeHeladeraFactory();
-                    Colaboracion hacerseCargoHeladera = factoryHC.crearColaboracion(heladera,punto);
-                    hacerseCargoHeladera.setColaborador(colaborador);
-                    repoColaboraciones.addHacerseCargoHeladera(hacerseCargoHeladera, punto, heladera);
+                    heladera = new Heladera(tempMax, tempMin, punto);
+                    Colaboracion hacerseCargoHeladeraGenerada = factoryHC.crearColaboracion(heladera,punto);
+                    hacerseCargoHeladeraGenerada.setColaborador(colaborador);
+                    repoColaboraciones.addHacerseCargoHeladeraGenerada(hacerseCargoHeladeraGenerada, punto, heladera);
+//                    List<Heladera> heladeras = repoHeladeras.obtenerTodasHeladeras();
+//                    model.put("heladeras",heladeras);
+//                    ctx.render("/templates/colaboracionJuridica.mustache", model);
                     break;
 
 

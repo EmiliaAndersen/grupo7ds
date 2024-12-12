@@ -129,9 +129,8 @@
                         </div>
                     </div>
                     <hr>
-                    <form method='POST' class="form-row mt-2" id="form-cargo-heladera" style="display: none">
-                        <input type="hidden" id="latitudeInput" name="latitud">
-                        <input type="hidden" id="longitudeInput" name="longitud">
+                    <div class="form-row mt-2" id="form-cargo-heladera" style="display: none">
+
 
                         <div class="form-row">
                             <div class="col-md-12">
@@ -146,17 +145,17 @@
                         <div class="popup" id="mapPopup">
                             <button class="close-btn" id="closeMapBtn">Cerrar</button>
                             <div id="map"></div>
-                            <p>Latitud: <span id="latitude">-</span></p>
-                            <p>Longitud: <span id="longitude">-</span></p>
+                            <p>Latitud: <span id="latitud">-</span></p>
+                            <p>Longitud: <span id="longitud">-</span></p>
                             <div class="form-row mt-3"  style="display: flex; justify-content: center; margin-top: 15px;">
                                 <button  id="confirmMapBtn" name="btn-colab" class="btn btn-primary mt-2 mb-2 col-md-4">Confirmar</button><br>
                             </div>
                         </div>
 
                         <!-- Formulario para generar una nueva heladera -->
-                        <div id="form-generar-heladera" style="display: none;">
-
-
+                        <form method="POST" class="form-row mt-2" id="form-generar-heladera" style="display: none">
+                            <input type="hidden" id="latitudInput" name="latitudInput">
+                            <input type="hidden" id="longitudInput" name="longitudInput">
                             <div class="form-row mt-2">
                                 <div class="col-md-12">
                                     <label for="nombre">Nombre de la Heladera*</label>
@@ -166,7 +165,7 @@
 
                             <div class="form-row mt-2">
                                 <div class="col-md-12">
-                                    <button id="openMapBtnGenerar" class="btn btn-primary mt-2 mb-2 col-md-4">Seleccionar Ubicación "</button>
+                                    <button id="openMapBtnGenerar" type="button" class="btn btn-primary mt-2 mb-2 col-md-4">Seleccionar Ubicación</button>
                                 </div>
                             </div>
 
@@ -176,54 +175,67 @@
                                     <input type="text" name="direccion" class="form-control" id="direccion" required>
                                 </div>
                             </div>
+
                             <div class="form-row mt-2">
                                 <div class="col-md-12">
                                     <label for="temp_min">Temperatura mínima*</label>
                                     <input type="text" name="temp_min" class="form-control" id="temp_min" required>
                                 </div>
                             </div>
+
                             <div class="form-row mt-2">
                                 <div class="col-md-12">
                                     <label for="temp_max">Temperatura máxima*</label>
                                     <input type="text" name="temp_max" class="form-control" id="temp_max" required>
                                 </div>
                             </div>
+
                             <div class="form-row mt-3">
-                                <button type="submit" id="btn-login-submit" name="btn-colab" class="btn btn-primary mt-2 mb-2 col-md-4" value="hc1">Guardar</button><br>
+                                <button type="submit" id="btn-login-submit-hc1" name="btn-colab" class="btn btn-primary mt-2 mb-2 col-md-4" value="hc1">Guardar</button>
                             </div>
-                        </div>
+                        </form>
 
                         <!-- Formulario para seleccionar una heladera existente -->
-                        <div id="form-seleccionar-heladera" style="display: none;">
+                        <form method="POST" class="form-row mt-2" id="form-seleccionar-heladera" style="display: none">
+                            <input type="hidden" id="latitudInput" name="latitudInput">
+                            <input type="hidden" id="longitudInput" name="longitudInput">
                             <div class="form-row mt-2">
                                 <div class="col-md-12">
-                                    <div class="form-row mt-2">
-                                        <div class="col-md-12">
-                                            <button id="openMapBtnSeleccionar" class="btn btn-primary mt-2 mb-2 col-md-4">Seleccionar Ubicación</button>
-                                        </div>
+                                    <button id="openMapBtnSeleccionar" type="button" class="btn btn-primary mt-2 mb-2 col-md-4">Seleccionar Ubicación</button>
+                                </div>
+                            </div>
 
-                                        <label for="radio">Radio*</label>
-                                        <input type="number" name="radio" id="radio" required>
+                            <div class="form-row mt-2">
+                                <div class="col-md-12">
+                                    <label for="radio">Radio*</label>
+                                    <input type="number" name="radio" id="radio" required>
+                                </div>
+                            </div>
 
-                                        <div class="col-md-12 mt-1" id="heladeraContainer" style="display: none;">
-                                            <label for="heladera">Heladera*</label>
-                                            <div class="input-group">
-                                                <select class="form-select" name="heladera" id="heladera" required>
-                                                    <option value="">Seleccione...</option>
-                                                    {{#heladeras}}
-                                                        <option value="{{id}}">{{ubicacion.nombre}} - {{ubicacion.direccion}}</option>
-                                                    {{/heladeras}}
-                                                </select>
-                                            </div>
-                                        </div>
+                            <div class="form-row mt-2" id="heladeraContainer" style="display: none;">
+                                <div class="col-md-12">
+                                    <label for="heladera">Heladera*</label>
+                                    <div class="input-group">
+                                        <select class="form-select" name="heladeraSelect" id="heladeraSelect"  style="display: none;"required>
+                                            <option value="">Seleccione...</option>
+                                        </select>
                                     </div>
-                                    <div class="form-row mt-3">
-                                        <button type="submit" id="btn-login-submit" name="btn-colab" class="btn btn-primary mt-2 mb-2 col-md-4" value="hc2">Guardar</button><br>
+                                    <!-- Loading Spinner -->
+                                    <div id="loadingSpinner" style="display: none; text-align: center; margin-top: 10px;">
+                                        <div class="spinner-border" role="status">
+                                            <span class="visually-hidden">Loading... </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+
+
+                            <div class="form-row mt-3">
+                                <button type="submit" id="btn-login-submit-hc2" name="btn-colab" class="btn btn-primary mt-2 mb-2 col-md-4" value="hc2">Guardar</button>
+                            </div>
+                        </form>
+
+                    </div>
                     <form method='POST' class="form-row mt-2" id="form-donacion-dinero" style="display: none">
                         <div class="form-row mt-2">
                             <div class="col-md-12">
@@ -307,101 +319,137 @@
     }
 </script>
 <script>
-    document.getElementById('tipo_accion').addEventListener('change', function() {
-        const generarForm = document.getElementById('form-generar-heladera');
-        const seleccionarForm = document.getElementById('form-seleccionar-heladera');
+    // Toggle forms based on action selection
+    document.getElementById('tipo_accion')?.addEventListener('change', function () {
+    const generarForm = document.getElementById('form-generar-heladera');
+    const seleccionarForm = document.getElementById('form-seleccionar-heladera');
 
-        if (this.value === 'generar') {
-            generarForm.style.display = '';
-            seleccionarForm.style.display = 'none';
-        } else if (this.value === 'seleccionar') {
-            generarForm.style.display = 'none';
-            seleccionarForm.style.display = '';
-        } else {
-            generarForm.style.display = 'none';
-            seleccionarForm.style.display = 'none';
-        }
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-    const latitudeInput = document.getElementById('latitudeInput');
-    const longitudeInput = document.getElementById('longitudeInput');
-    const radioInput = document.getElementById('radio');
-    const heladeraContainer = document.getElementById('heladeraContainer');
-
-    function toggleHeladeraSelector() {
-        const lat = parseFloat(latitudeInput.value) || 0;
-        const lon = parseFloat(longitudeInput.value) || 0;
-        const radio = parseFloat(radioInput.value) || 0;
-
-        if (lat !== 0 && lon !== 0 && radio > 0) {
-            heladeraContainer.style.display = 'block'; // Show the heladera selector
-        } else {
-            heladeraContainer.style.display = 'none'; // Hide the heladera selector
-        }
+    if (this.value === 'generar') {
+    generarForm.style.display = '';
+    seleccionarForm.style.display = 'none';
+    } else if (this.value === 'seleccionar') {
+    generarForm.style.display = 'none';
+    seleccionarForm.style.display = '';
+    } else {
+    generarForm.style.display = 'none';
+    seleccionarForm.style.display = 'none';
     }
-
-    // Add event listeners to the relevant inputs
-    latitudeInput.addEventListener('change', toggleHeladeraSelector);
-    longitudeInput.addEventListener('change', toggleHeladeraSelector);
-    radioInput.addEventListener('input', toggleHeladeraSelector);
-});
-
+    });
 </script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
     // References
-   const mapPopup = document.getElementById('mapPopup');
-   const closeMapBtn = document.getElementById('closeMapBtn');
-   const confirmMapBtn = document.getElementById('confirmMapBtn');
-   const latitudeSpan = document.getElementById('latitude');
-   const longitudeSpan = document.getElementById('longitude');
-   const latitudeInput = document.getElementById('latitudeInput');
-   const longitudeInput = document.getElementById('longitudeInput');
+    const mapPopup = document.getElementById('mapPopup');
+    const closeMapBtn = document.getElementById('closeMapBtn');
+    const confirmMapBtn = document.getElementById('confirmMapBtn');
+    const latitudeSpan = document.getElementById('latitud');
+    const longitudeSpan = document.getElementById('longitud');
+    const longitudInput = document.getElementById('longitudInput');
+    const latitudInput = document.getElementById('latitudInput');
 
-   // Initialize map
-   let map;
-   let marker;
+    // Initialize map
+    let map;
+    let marker;
 
-   // Function to open the map popup
-   function openMapPopup() {
-       mapPopup.classList.add('active');
-       if (!map) {
-           map = L.map('map').setView([51.505, -0.09], 13); // Initial coordinates
-           L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-               maxZoom: 19,
-           }).addTo(map);
+    // Function to open the map popup
+    function openMapPopup() {
+        mapPopup.classList.add('active');
+        if (!map) {
+            map = L.map('map').setView([51.505, -0.09], 13); // Initial coordinates
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+            }).addTo(map);
 
-           // Add click event to the map
-           map.on('click', (e) => {
-               const { lat, lng } = e.latlng;
+            // Add click event to the map
+            map.on('click', (e) => {
+                const { lat, lng } = e.latlng;
 
-               // Update marker
-               if (marker) {
-                   marker.setLatLng([lat, lng]);
-               } else {
-                   marker = L.marker([lat, lng]).addTo(map);
-               }
+                // Update marker
+                if (marker) {
+                    marker.setLatLng([lat, lng]);
+                } else {
+                    marker = L.marker([lat, lng]).addTo(map);
+                }
 
-               // Update coordinates in the interface
-               latitudeSpan.textContent = lat.toFixed(6);
-               longitudeSpan.textContent = lng.toFixed(6);
-               latitudeInput.value = lat.toFixed(6);
-               longitudeInput.value = lng.toFixed(6);
-           });
-       }
-   }
+                // Update coordinates in the interface
+                latitudeSpan.textContent = lat.toFixed(6);
+                longitudeSpan.textContent = lng.toFixed(6);
+                latitudInput.value = lat.toFixed(6);
+                longitudInput.value = lng.toFixed(6);
+            });
+        }
+    }
 
-   // Add event listeners for both buttons
-   document.getElementById('openMapBtnGenerar').addEventListener('click', openMapPopup);
-   document.getElementById('openMapBtnSeleccionar').addEventListener('click', openMapPopup);
+    // Add event listeners for buttons
+    document.getElementById('openMapBtnGenerar')?.addEventListener('click', openMapPopup);
+    document.getElementById('openMapBtnSeleccionar')?.addEventListener('click', openMapPopup);
 
-   // Close map popup
-   closeMapBtn.addEventListener('click', () => {
-       mapPopup.classList.remove('active');
-   });
+    // Close map popup
+    closeMapBtn.addEventListener('click', () => {
+        const latInput = document.getElementById('latitudInput');
+        const lonInput = document.getElementById('longitudInput');
+        mapPopup.classList.remove('active');
+    });
 
-       confirmMapBtn.addEventListener('click', () => {
-           mapPopup.classList.remove('active');
-       });
+    confirmMapBtn.addEventListener('click', () => {
+        const latInput = document.getElementById('latitudInput');
+        const lonInput = document.getElementById('longitudInput');
+        mapPopup.classList.remove('active');
+    });
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const radioInput = document.getElementById('radio');
+        const longitudInput = document.getElementById('longitudInput');
+        const latitudInput = document.getElementById('latitudInput');
+        const heladeraContainer = document.getElementById('heladeraContainer');
+        const heladeraSelect = document.getElementById('heladeraSelect');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+
+        async function fetchHeladeras(lat, lon, radio) {
+            try {
+                // Show loading spinner
+                loadingSpinner.style.display = 'block';
+                heladeraContainer.style.display = 'block';
+                heladeraSelect.style.display = 'none';
+
+                const response = await fetch(`/recomendarHeladeras?latitude=${lat}&longitude=${lon}&radio=${radio}`);
+                const heladeras = await response.json();
+
+                // Populate the dropdown
+                heladeraSelect.innerHTML = '<option value="">Seleccione...</option>'; // Reset options
+                heladeras.forEach(heladera => {
+                    const option = document.createElement('option');
+                    option.value = heladera.id;
+                    option.textContent = `${heladera.ubicacion.nombre} - ${heladera.ubicacion.direccion}`;
+                    heladeraSelect.appendChild(option);
+                });
+
+                // Show the dropdown container
+                heladeraSelect.style.display = 'block';
+            } catch (error) {
+                console.error('Error fetching heladeras:', error);
+            } finally {
+                // Hide loading spinner
+                loadingSpinner.style.display = 'none';
+            }
+        }
+
+        function handleSearch() {
+            const lat = parseFloat(latitudInput?.value) || 0;
+            const lon = parseFloat(longitudInput?.value) || 0;
+            const radio = parseFloat(radioInput?.value) || 0;
+
+            if (lat && lon && radio > 0) {
+                fetchHeladeras(lat, lon, radio);
+            }
+        }
+
+        // Add event listeners to inputs
+        radioInput?.addEventListener('input', handleSearch);
+        latitudInput?.addEventListener('change', handleSearch);
+        longitudInput?.addEventListener('change', handleSearch);
+    });
+</script>
+
