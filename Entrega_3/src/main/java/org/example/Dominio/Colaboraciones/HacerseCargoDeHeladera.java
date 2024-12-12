@@ -88,18 +88,18 @@ public class HacerseCargoDeHeladera extends Colaboracion {
 
     int cantidadHeladerasActivas = colaboraciones.size();
 
-    int totalMesesActivos = 0;
+    int totalMesesActivos = 1;
 
-for (HacerseCargoDeHeladera colaboracion : colaboraciones) {
-    Heladera heladera = colaboracion.getHeladera();
-    if (heladera != null) {
-        List<ActividadHeladera> mesesActiva = heladera.mesesActiva;
-        // Si la lista no es nula, sumar su tamaño
-        if (mesesActiva != null) {
-            totalMesesActivos += mesesActiva.size();
+    for (HacerseCargoDeHeladera colaboracion : colaboraciones) {
+        Heladera heladera = colaboracion.getHeladera();
+        if (heladera != null) {
+            List<ActividadHeladera> mesesActiva = heladera.mesesActiva;
+            // Si la lista no es nula, sumar su tamaño
+            if (mesesActiva != null) {
+                totalMesesActivos += mesesActiva.size();
+            }
         }
     }
-}
 
 
     return (double) cantidadHeladerasActivas * totalMesesActivos * 5;
