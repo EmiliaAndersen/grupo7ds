@@ -22,7 +22,7 @@ public abstract class Colaboracion {
   @ManyToOne()
   @JoinColumn(name = "colaborador_id")
   @Getter
-protected Colaborador colaborador;
+  protected Colaborador colaborador;
   public abstract void procesarColaboracion(Colaborador colaborador);
 
   public Double calcularPuntos() {

@@ -7,6 +7,7 @@ import org.example.Dominio.Rol.Admin;
 import org.example.Handlers.*;
 import org.example.Validador.Usuario;
 import org.example.repositorios.RepositorioUsuarios;
+import org.example.Servicio.RecomendarHeladerasService;
 
 import java.util.List;
 
@@ -136,6 +137,8 @@ public class App {
     app.before("/heladeras",AuthMiddleware::verificarAutenticacion);
     app.get("/heladeras", new GetHeladera());
     app.post("/heladeras", new PostHeladera());
+
+    app.get("/recomendarHeladeras", RecomendarHeladerasService::apiRecomendacion);
 
     app.before("/canjear-producto/{id}",AuthMiddleware::verificarAutenticacion);
     app.post("/canjear-producto/{id}", new CanjearProductoHandler());
