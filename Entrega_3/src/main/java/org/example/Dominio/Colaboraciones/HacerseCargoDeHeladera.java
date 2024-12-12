@@ -7,6 +7,9 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 
+import org.example.BDUtils;
+import org.example.Dominio.Heladeras.ActividadHeladera;
+import org.example.Dominio.Heladeras.EstadoHeladera;
 import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
 import org.example.Dominio.Rol.Colaborador;
@@ -44,10 +47,11 @@ public class HacerseCargoDeHeladera extends Colaboracion {
     this.puntoEstrategico = puntoEstrategico;
     this.radio = radio;
   }
-  public HacerseCargoDeHeladera(PuntoEstrategico puntoEstrategico, Heladera heladera){
+  public HacerseCargoDeHeladera(PuntoEstrategico puntoEstrategico, Heladera heladera,LocalDate fechaInc){
     this.puntoEstrategico = puntoEstrategico;
     this.heladera = heladera;
     this.localizacionEstrategicaAPI = null;
+    this.fechaInicio = fechaInc;
   }
 
 
@@ -69,11 +73,43 @@ public class HacerseCargoDeHeladera extends Colaboracion {
   public Double calcularPuntos() {
     LocalDate fechaActual = LocalDate.now();
     Period periodo = Period.between(fechaInicio,fechaActual);
-    return (double) ((periodo.getYears()*12 + periodo.getMonths())*5);
-  }
+
+    EntityManager em = BDUtils.getEntityManager();
+
+    Long colaboradorId = colaborador.getId();
+
+    List<HacerseCargoDeHeladera> colaboraciones = em.createQuery(
+      "SELECT h FROM HacerseCargoDeHeladera h " +
+      "WHERE  h.colaborador.id = :colaborador AND h.heladera.estado = :estadoActiva", 
+      HacerseCargoDeHeladera.class)
+      .setParameter("colaborador",colaboradorId)
+      .setParameter("estadoActiva", EstadoHeladera.ACTIVA)
+      .getResultList();
+
+    int cantidadHeladerasActivas = colaboraciones.size();
+
+    int totalMesesActivos = 0;
+
+for (HacerseCargoDeHeladera colaboracion : colaboraciones) {
+    Heladera heladera = colaboracion.getHeladera();
+    if (heladera != null) {
+        List<ActividadHeladera> mesesActiva = heladera.mesesActiva;
+        // Si la lista no es nula, sumar su tamaño
+        if (mesesActiva != null) {
+            totalMesesActivos += mesesActiva.size();
+        }
+    }
+}
+
+
+    return (double) cantidadHeladerasActivas * totalMesesActivos * 5;
+}
+
 
   public List<PuntoEstrategico> getLocalizacionEstrategica(){
 
     return localizacionEstrategicaAPI.getPuntoEstrategico(puntoEstrategico, radio);
   }
+
+
 }

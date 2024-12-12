@@ -2,6 +2,9 @@ package org.example.Handlers;
 
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
+
+import org.example.Dominio.Rol.Colaborador;
+import org.example.repositorios.RepositorioColaboradores;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;

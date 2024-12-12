@@ -20,9 +20,14 @@ public class RegistrarPersonasEnSituacionVulnerable extends Colaboracion{
   @Setter
   private PersonaVulnerable personaVulnerable;
 
+  @Getter
+  @Setter
+  private Double cantidad;
+
 
   public RegistrarPersonasEnSituacionVulnerable(PersonaVulnerable per){
     this.personaVulnerable=per;
+   
   }
   public RegistrarPersonasEnSituacionVulnerable(){
   }
@@ -32,12 +37,6 @@ public class RegistrarPersonasEnSituacionVulnerable extends Colaboracion{
       if (puedoProcesar) {
           Persona persona = personaVulnerable.getPersona();
           String direccion = persona.getDireccion();
-          //Enviar tarjetas a esa direccion y ver de dar de alta
-          //Ver si ya esta generada o la debo generar //PersonaVulnerable personaVulnerableRegistrada = new PersonaVulnerable();
-          // Tarjeta tarjeta = new Tarjeta(personaVulnerableRegistrada);
-          // personaVulnerableRegistrada.setTarjeta(tarjeta);
-          // this.personaVulnerable = personaVulnerableRegistrada;
-          //this.colaborador = colaborador;
       }
   }
 

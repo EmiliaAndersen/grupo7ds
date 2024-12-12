@@ -18,7 +18,7 @@ public class IncidentesTest {
     @BeforeEach
     void setUp() {
         factory = new IncidenteFactory();
-        heladera = new Heladera(0, 0, null);
+        heladera = new Heladera(0, 0, null,0);
         reporteFallas = GeneradorReporteFallas.getInstance();
     }
 

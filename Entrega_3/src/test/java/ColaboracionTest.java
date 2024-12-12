@@ -64,10 +64,10 @@ public class ColaboracionTest {
     public void colaboracion_calcularPuntos_distribucionDeViandas() {
         PuntoEstrategico ubi1 = new PuntoEstrategico("Ubi1",-34.598300,-58.420570,"Medrano 951");
         PuntoEstrategico ubi2 = new PuntoEstrategico("Ubi2",-34.598300,-58.420570,"Medrano 951");
-        Heladera heladeraOrigen = new Heladera(22.0F, 5.0F, ubi1);
-        Heladera heladeraDestino = new Heladera(22.0F, 5.0F, ubi2);
+        Heladera heladeraOrigen = new Heladera(22.0F, 5.0F, ubi1,100);
+        Heladera heladeraDestino = new Heladera(22.0F, 5.0F, ubi2,100);
 
-        DistribucionDeViandas distribucionDeViandas = new DistribucionDeViandas(heladeraOrigen, heladeraDestino, "Test", LocalDate.now());
+        DistribucionDeViandas distribucionDeViandas = new DistribucionDeViandas(heladeraOrigen, heladeraDestino, 5.0,"Test", LocalDate.now());
 
         Assertions.assertEquals(1.0, distribucionDeViandas.calcularPuntos());
     }

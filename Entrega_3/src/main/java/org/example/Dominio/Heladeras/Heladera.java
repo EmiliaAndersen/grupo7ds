@@ -2,6 +2,8 @@ package org.example.Dominio.Heladeras;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import org.apache.commons.digester.annotations.rules.SetTop;
 import org.example.Dominio.Heladeras.sensores.Sensor;
 import org.example.Dominio.Incidentes.Alerta;
 import org.example.Dominio.Incidentes.Incidente;
@@ -52,6 +54,16 @@ public class Heladera {
     @Getter
     private float temperaturaMinima;
 
+    @Column
+    @Setter
+    @Getter
+    private Integer capacidad;
+
+    @Column(nullable = false)
+    @Setter
+    @Getter
+    private Integer stock = 0; 
+
     @Enumerated(EnumType.STRING)
     @Setter
     @Getter
@@ -64,7 +76,8 @@ public class Heladera {
     public List <Suscriptor>suscriptores;
 
     @OneToMany(mappedBy = "heladera", cascade = CascadeType.ALL)
-    private List<ActividadHeladera> mesesActiva;
+    @Setter
+    public List<ActividadHeladera> mesesActiva;
 
     @OneToMany(mappedBy = "heladera", cascade = CascadeType.ALL)
     public List<Sensor> sensores;
@@ -74,7 +87,7 @@ public class Heladera {
 
 
 
-    public Heladera(float temperaturaMaxima, float temperaturaMinima, PuntoEstrategico ubicacion){
+    public Heladera(float temperaturaMaxima, float temperaturaMinima, PuntoEstrategico ubicacion, Integer capacidad){
         this.temperaturaMaxima = temperaturaMaxima;
         this.temperaturaMinima = temperaturaMinima;
         this.ubicacion = ubicacion;
@@ -83,6 +96,8 @@ public class Heladera {
         this.estado = EstadoHeladera.ACTIVA;
         this.mesesActiva = new ArrayList<ActividadHeladera>();
         this.suscriptores = new ArrayList<Suscriptor>();
+        this.capacidad = capacidad;
+        this.stock= 0;
     }
     public Heladera() {
         // Constructor vacío para JPA
