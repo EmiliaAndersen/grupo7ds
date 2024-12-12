@@ -45,8 +45,8 @@ public class RepositorioHeladeras {
         EntityManager em = BDUtils.getEntityManager();
 
         TypedQuery<Heladera> query = em.createQuery(
-            "SELECT h FROM Incidente i JOIN i.heladera h", Heladera.class
-        );
+            "SELECT h FROM Incidente i JOIN i.heladera h WHERE i.id = :id", Heladera.class
+        ).setParameter("id",incidente.getId());
         return query.getSingleResult();
     }
 }
