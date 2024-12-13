@@ -66,7 +66,7 @@ public class ServiciosColaboracion {
             case "DONACION_VIANDAS":
                 DonacionDeViandaFactory factoryDV = new DonacionDeViandaFactory();
                 for(int i = 0; i < cantidad; i++){
-                    Colaboracion colaboracion = factoryDV.crearColaboracion(null);
+                    Colaboracion colaboracion = factoryDV.crearColaboracion(null,null);
 
                     colaborador.agregarColaboracion(colaboracion);
                     colaboracion.setColaborador(colaborador);
@@ -80,7 +80,7 @@ public class ServiciosColaboracion {
             case "REDISTRIBUCION_VIANDAS":
                 DistribucionDeViandasFactory factoryDDV = new DistribucionDeViandasFactory();
                 for(int i = 0; i < cantidad; i++){
-                    Colaboracion colaboracion = factoryDDV.crearColaboracion(null, null, "Sin motivo", fechaColaboracion);
+                    Colaboracion colaboracion = factoryDDV.crearColaboracion(null, null,null, "Sin motivo", fechaColaboracion);
 
                     colaborador.agregarColaboracion(colaboracion);
                     colaboracion.setColaborador(colaborador);

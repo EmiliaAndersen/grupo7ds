@@ -19,6 +19,7 @@ import java.util.List;
 @Table(name="colaborador")
 public class Colaborador extends Rol{
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
@@ -27,7 +28,7 @@ public class Colaborador extends Rol{
     @OneToMany(mappedBy = "colaborador",cascade = CascadeType.ALL)
     @Getter
     @Setter
-    private List<Colaboracion> colaboraciones;
+    public List<Colaboracion> colaboraciones;
 
     @Column
     @Getter

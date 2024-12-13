@@ -20,6 +20,7 @@ public class FallaTecnica extends Incidente {
         this.setFechaYHora(fechaYHora);
     }
 
+    @Getter
     @OneToOne
     @JoinColumn(name = "colaborador_id", referencedColumnName = "id", nullable = false)
     private Colaborador reportero;
@@ -35,15 +36,11 @@ public class FallaTecnica extends Incidente {
         this.description = description;
         this.setHeladera(heladera);
         this.setFechaYHora(fechaYHora);
-
+        this.setEstaActiva(true);
+        asignarTecnico(heladera);
     }
 
-    @PrePersist
-    private void validarEstadoHeladera() {
-        if (this.heladera.getEstado() == EstadoHeladera.INACTIVA) {
-            throw new IllegalStateException("No se puede reportar una falla en una heladera inactiva.");
-        }
-    }
+
     public FallaTecnica() {
 
     }

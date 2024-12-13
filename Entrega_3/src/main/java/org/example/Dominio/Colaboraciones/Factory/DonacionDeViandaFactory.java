@@ -12,10 +12,10 @@ import java.util.List;
 
 public class DonacionDeViandaFactory extends ColaboracionFactory{
 
-    public Colaboracion crearColaboracion(Vianda viandas){
+    public Colaboracion crearColaboracion(Vianda viandas, Double cantidad){
 
         //this.notificarReportes();
-        return new DonacionDeVianda(viandas);
+        return new DonacionDeVianda(viandas, cantidad);
     }
 
     private void notificarReportes(){

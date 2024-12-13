@@ -26,7 +26,7 @@ public class TarjetaVulnerableTest {
         Vianda vianda6 = new Vianda(null, null, null, null, 0, 0, null);
         Vianda vianda7 = new Vianda(null, null, null, null, 0, 0, null);
         Vianda vianda8 = new Vianda(null, null, null, null, 0, 0, null);
-        heladera = new Heladera(22.0F, 5.0F, ubicacion);
+        heladera = new Heladera(22.0F, 5.0F, ubicacion,100);
         heladera.agregarVianda(vianda1);
         heladera.agregarVianda(vianda2);
         heladera.agregarVianda(vianda3);

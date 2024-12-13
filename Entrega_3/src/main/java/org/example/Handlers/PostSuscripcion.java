@@ -47,15 +47,18 @@ public class PostSuscripcion implements @NotNull Handler {
                 
                 sr.setHeladera(heladera);
 
-                sr.setNumeroAviso(stringToInt(context.formParam("motivo")));
-
-                
+               
+           
                 if ("1".equals(num) ) {
                     sr.setTipo(TipoSuscripcion.RESTANTES);
+                    sr.setNumeroAviso(stringToInt(context.formParam("viandas")));
                 }else if ("2".equals(num) ) {
                     sr.setTipo(TipoSuscripcion.FALTANTES);
+                    sr.setNumeroAviso(stringToInt(context.formParam("viandas")));
                 }else if("3".equals(num)){
                     sr.setTipo(TipoSuscripcion.DESPERFECTO);
+                  //  sr.setNumeroAviso(stringToInt(context.formParam("viandas")));
+
                 }
 
                 

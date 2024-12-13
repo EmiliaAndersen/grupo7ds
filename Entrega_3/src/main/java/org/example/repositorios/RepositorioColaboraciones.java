@@ -5,6 +5,7 @@ import lombok.Setter;
 import org.example.BDUtils;
 import org.example.Dominio.Colaboraciones.Colaboracion;
 import org.example.Dominio.Colaboraciones.DonacionDeVianda;
+import org.example.Dominio.Colaboraciones.HacerseCargoDeHeladera;
 import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
 import org.example.Dominio.Viandas.Vianda;
@@ -32,7 +33,7 @@ public class RepositorioColaboraciones {
 
 
 
-    public void addDonacionVianda(Colaboracion donacionDeVianda, Vianda vianda){
+    public void addDonacionVianda( Colaboracion donacionDeVianda, Vianda vianda){
         EntityManager em = BDUtils.getEntityManager();
         BDUtils.comenzarTransaccion(em);
         em.persist(vianda);
@@ -54,13 +55,27 @@ public class RepositorioColaboraciones {
         BDUtils.commit(em);
     }
 
-    public void addHacerseCargoHeladera(Colaboracion hacerseCargoHeladera, PuntoEstrategico pto, Heladera heladera){
+    public void addHacerseCargoHeladeraGenerada(Colaboracion hacerseCargoHeladera, PuntoEstrategico pto, Heladera heladera){
         EntityManager em = BDUtils.getEntityManager();
         BDUtils.comenzarTransaccion(em);
         em.persist(pto);
         em.persist(heladera);
         em.persist(hacerseCargoHeladera);
         BDUtils.commit(em);
+    }
+
+    public void addHacerseCargoHeladeraSeleccionada(Colaboracion hacerseCargoHeladera, PuntoEstrategico pto, Heladera heladera){
+        EntityManager em = BDUtils.getEntityManager();
+        BDUtils.comenzarTransaccion(em);
+        em.persist(hacerseCargoHeladera);
+        BDUtils.commit(em);
+    }
+
+    public List<HacerseCargoDeHeladera> obtenerTodasHacerseCargoHeladera(){
+        EntityManager em = BDUtils.getEntityManager();
+
+        List<HacerseCargoDeHeladera> colabs = em.createQuery("SELECT h FROM HacerseCargoDeHeladera h", HacerseCargoDeHeladera.class).getResultList();
+        return colabs;
     }
 
     public void addOfrecerProducto(Colaboracion ofrecerProducto){

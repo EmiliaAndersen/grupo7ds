@@ -6,7 +6,9 @@ import io.micrometer.prometheus.PrometheusConfig;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
 
 import org.example.BDUtils;
+import org.example.Dominio.Rol.Tecnico;
 import org.example.Servicio.MetricsService;
+import org.example.repositorios.RepositorioTecnicos;
 import org.example.repositorios.RepositorioUsuarios;
 import org.jetbrains.annotations.NotNull;
 
@@ -56,6 +58,10 @@ public class PostLoginHandler implements Handler {
         context.sessionAttribute("succesLogin", true);
         MetricsService.incrementRequestCounter();
         context.sessionAttribute("rol","noAdmin");
+        if (esTecnico(usuarioNombre)){
+          context.redirect("/backoffice/incidentes");
+          return;
+        }
         context.redirect("/front_page");
       } else {
         System.out.println("ERROR");
@@ -64,4 +70,12 @@ public class PostLoginHandler implements Handler {
       }
     }
   }
+
+  private boolean esTecnico(String usuarioNombre) {
+    RepositorioTecnicos repositorioTecnicos = RepositorioTecnicos.getInstance();
+
+    Tecnico tecnico = repositorioTecnicos.obtenerTecnicoXUsuario(usuarioNombre);
+    return (tecnico !=null);
+  }
 }
+

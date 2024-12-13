@@ -2,9 +2,6 @@ package org.example;
 
 import io.javalin.Javalin;
 import io.javalin.http.Context;
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.prometheus.PrometheusConfig;
-import io.micrometer.prometheus.PrometheusMeterRegistry;
 import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Reportes.*;
 import org.example.Dominio.Rol.Admin;
@@ -13,6 +10,7 @@ import org.example.Validador.Usuario;
 import org.example.repositorios.RepositorioIncidente;
 import org.example.repositorios.RepositorioUsuarios;
 import org.example.repositorios.RepositorioVianda;
+import org.example.Servicio.RecomendarHeladerasService;
 
 import java.util.List;
 
@@ -57,7 +55,21 @@ public class App {
 
     app.before("/backoffice",AuthMiddleware::verificarAutenticacion);
     app.get("/backoffice",new getBackoffice());
-    app.post("/backoffice", new postBackoffice());
+    app.post("/backoffice", new getBackoffice());
+
+
+    app.before("/backoffice/tecnicos",AuthMiddleware::verificarAutenticacion);
+    app.get("/backoffice/tecnicos",new getBackofficeTecnicos());
+    app.post("/backoffice/tecnicos", new postBackofficeTecnicos());
+
+    app.before("/backoffice/heladeras",AuthMiddleware::verificarAutenticacion);
+    app.get("/backoffice/heladeras",new getBackofficeHeladeras());
+    app.post("/backoffice/heladeras", new postBackofficeHeladeras());
+
+
+    app.before("/backoffice/incidentes",AuthMiddleware::verificarAutenticacion);
+    app.get("/backoffice/incidentes",new getBackofficeIncidentes());
+    app.post("/backoffice/incidentes", new postBackofficeIncidentes());
 
     app.before("/front_page", AuthMiddleware::verificarAutenticacion);
     app.get("/front_page", new GetFrontPage());
@@ -135,6 +147,10 @@ public class App {
     app.get("/prodserv", new GetProdServ());
     app.post("/prodserv", new PostProdServ());
 
+
+    app.post("/auth/google", new AuthController());
+
+
     app.before("/suscripcion",AuthMiddleware::verificarAutenticacion);
     app.get("/suscripcion", new GetSuscripcion());
     app.post("/suscripcion", new PostSuscripcion());
@@ -142,6 +158,8 @@ public class App {
     app.before("/heladeras",AuthMiddleware::verificarAutenticacion);
     app.get("/heladeras", new GetHeladera());
     app.post("/heladeras", new PostHeladera());
+
+    app.get("/recomendarHeladeras", RecomendarHeladerasService::apiRecomendacion);
 
     app.before("/canjear-producto/{id}",AuthMiddleware::verificarAutenticacion);
     app.post("/canjear-producto/{id}", new CanjearProductoHandler());
@@ -169,10 +187,16 @@ class AuthMiddleware {
     if (!rutasPublicas.contains(context.path()) && (username == null || username.isEmpty())) {
       context.redirect("/login");
     }
-
-    if(!rol.equals("admin")  && context.path().equals("/backoffice")){
+    //REVISAR
+    /*if(!rol.equals("admin")  && (context.path().equals("/backoffice") || context.path().equals("/backoffice/heladeras") || context.path().equals("/backoffice/tecnicos"))){
       context.redirect("/perfil_"+context.sessionAttribute("tipo_persona"));
     }
+
+
+    //REVISAR
+    if(rol.equals("admin")  && !context.path().equals("/backoffice") && !context.path().equals("/backoffice/tecnicos")  && !context.path().equals("/backoffice/heladeras") ){
+      context.redirect("/backoffice/"+context.path());
+    }*/
 
 
   }

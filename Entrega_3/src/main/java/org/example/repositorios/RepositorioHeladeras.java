@@ -2,6 +2,7 @@ package org.example.repositorios;
 
 import org.example.BDUtils;
 import org.example.Dominio.Heladeras.Heladera;
+import org.example.Dominio.Incidentes.Incidente;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -38,5 +39,14 @@ public class RepositorioHeladeras {
 
         List<Heladera> heladeras = em.createQuery("SELECT h FROM Heladera h", Heladera.class).getResultList();
         return heladeras;
+    }
+
+    public Heladera obtenerHeladeraXIncidente(Incidente incidente) {
+        EntityManager em = BDUtils.getEntityManager();
+
+        TypedQuery<Heladera> query = em.createQuery(
+            "SELECT h FROM Incidente i JOIN i.heladera h WHERE i.id = :id", Heladera.class
+        ).setParameter("id",incidente.getId());
+        return query.getSingleResult();
     }
 }

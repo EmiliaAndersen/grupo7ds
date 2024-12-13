@@ -1,13 +1,32 @@
 package org.example.Dominio.AreaDeCobertura;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
 
-public class AreaCobertura {
-    private float longitudCentro;
-    private float latitudCentro;
-    private float radio;
+import javax.persistence.*;
 
-    public boolean areaCubierta(PuntoEstrategico area){
+@Entity
+@Table
+public class AreaCobertura {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Setter
+    @Getter
+    @Column
+    private double longitudCentro;
+    @Setter
+    @Getter
+    @Column
+    private double latitudCentro;
+    @Setter
+    @Getter
+    @Column
+    private double radio;
+
+    public boolean areaCubierta(PuntoEstrategico area) {
         return this.respetaLongitud(area) && this.respetaLatitud(area);
     }
 
