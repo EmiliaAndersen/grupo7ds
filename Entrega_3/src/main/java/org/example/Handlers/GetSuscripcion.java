@@ -46,4 +46,5 @@ public class GetSuscripcion implements @NotNull Handler {
             context.render("/templates/suscripcion.mustache", model);
            
     }
+
 }
