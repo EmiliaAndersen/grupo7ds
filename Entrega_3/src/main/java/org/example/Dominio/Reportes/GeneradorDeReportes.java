@@ -1,9 +1,7 @@
 package org.example.Dominio.Reportes;
 
+import java.io.IOException;
+
 public interface GeneradorDeReportes {
-    public void update();
-
-    public double obtenerReporte();
-
-    public boolean isTypeOf(TipoReporte tipo);
+    public void generarReporte() throws IOException;
 }

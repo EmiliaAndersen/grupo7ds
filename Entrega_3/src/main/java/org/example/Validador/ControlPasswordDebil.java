@@ -7,7 +7,7 @@ public class ControlPasswordDebil implements Condicion {
   private static String commonPasswordsPath;
 
   public ControlPasswordDebil() {
-    commonPasswordsPath = "Entrega_1/src/main/java/org/example/passwords.txt";
+    commonPasswordsPath = "Entrega_3/src/main/java/org/example/Validador/passwords.txt";
   }
 
   @Override

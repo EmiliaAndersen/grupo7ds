@@ -52,7 +52,13 @@ public class Vianda {
     @Setter
     private EstadoVianda estadoVianda;
 
-    public Vianda (String descripcionComida,LocalDate fechaCaducidad, LocalDate fechaDonacion, Heladera heladera, float calorias, float peso, EstadoVianda estadoVianda) {
+    @ManyToOne
+    @JoinColumn(name = "colaborador_id")
+    @Getter
+    @Setter
+    private Colaborador colaborador;
+
+    public Vianda (String descripcionComida,LocalDate fechaCaducidad, LocalDate fechaDonacion, Heladera heladera, float calorias, float peso, EstadoVianda estadoVianda, Colaborador colaborador) {
 
         this.descripcionComida = descripcionComida;
         this.fechaCaducidad = fechaCaducidad;
@@ -61,6 +67,7 @@ public class Vianda {
         this.calorias = calorias;
         this.peso = peso;
         this.estadoVianda = estadoVianda;
+        this.colaborador = colaborador;
     }
 
         @PrePersist

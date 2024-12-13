@@ -20,6 +20,7 @@ public class RepositorioIncidente {
         }
         return instance;
     }
+
     public void addIncidente(Incidente incidente){
         EntityManager em = BDUtils.getEntityManager();
         BDUtils.comenzarTransaccion(em);

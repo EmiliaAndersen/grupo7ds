@@ -64,7 +64,7 @@ public class PostColaboHumanaHandler implements Handler {
                     float calorias = Float.parseFloat(ctx.formParam("calorias"));
                     String cantidadViandasStr = ctx.formParam("cantidadViandas");
                     Long heladera_id = Long.parseLong(ctx.formParam("heladera"));
-   
+
 
                     EntityManager em = BDUtils.getEntityManager();
                     BDUtils.comenzarTransaccion(em);
@@ -77,15 +77,15 @@ public class PostColaboHumanaHandler implements Handler {
                     }
 
 
-                    
-                    int cantidadViandas = Integer.parseInt(cantidadViandasStr);  
+
+                    int cantidadViandas = Integer.parseInt(cantidadViandasStr);
 
                     if (cantidadViandas == 0) {
                         model.put("errorMessage", "No puede donar cero viandas");
                         ctx.render("/templates/colaboracionHumana.mustache", model);
                         return;
                     }
-                    
+
                     List<Vianda> viandasEnHeladeraDestino = em.createQuery("SELECT v FROM Vianda v WHERE v.heladera.id = :heladeraId", Vianda.class)
                     .setParameter("heladeraId", heladera_id)
                     .getResultList();
@@ -105,38 +105,38 @@ public class PostColaboHumanaHandler implements Handler {
                             return;
                         }
                     }
-                    
 
-                    List<Vianda> viandasCreadas = new ArrayList<>();  
+
+                    List<Vianda> viandasCreadas = new ArrayList<>();
 
                     for (int i = 0; i+1 < cantidadViandas; i++) { //porque dsp creo otro abajo
-                        Vianda vianda = new Vianda(comida, fecha_caducidad, fecha_donacion_vianda, heladera, calorias, peso, EstadoVianda.ENTREGADA);
-                        viandasCreadas.add(vianda);  
+                        Vianda vianda = new Vianda(comida, fecha_caducidad, fecha_donacion_vianda, heladera, calorias, peso, EstadoVianda.ENTREGADA, colaborador);
+                        viandasCreadas.add(vianda);
                         heladera.setStock(heladera.getStock() + 1);
                     }
 
                     for (Vianda vianda : viandasCreadas) {
                         em.persist(vianda);
-                        
+
                     }
 
-                    
 
-                    Vianda vianda = new Vianda(comida, fecha_caducidad, fecha_donacion_vianda, heladera, calorias, peso, EstadoVianda.ENTREGADA);
+
+                    Vianda vianda = new Vianda(comida, fecha_caducidad, fecha_donacion_vianda, heladera, calorias, peso, EstadoVianda.ENTREGADA, colaborador);
                     heladera.setStock(heladera.getStock() + 1);
                     em.merge(heladera);
-                    
+
                     DonacionDeViandaFactory factoryDV = new DonacionDeViandaFactory();
                     Colaboracion donacionDeVianda = factoryDV.crearColaboracion(vianda,Double.parseDouble(cantidadViandasStr));
                     donacionDeVianda.setColaborador(colaborador);
 
                     Double puntosSumados = donacionDeVianda.calcularPuntos();
-                    
+
                     colaborador.setPuntos(colaborador.getPuntos() + puntosSumados);
 
                     repoColaboraciones.addDonacionVianda(donacionDeVianda, vianda);
                     em.merge(colaborador);
-              
+
                     BDUtils.commit(em);
                 }
                 catch (Exception e){
@@ -159,7 +159,7 @@ public class PostColaboHumanaHandler implements Handler {
                     donacionDinero.setColaborador(colaborador);
 
                     Double puntosSumados = donacionDinero.calcularPuntos();
-                    
+
                     colaborador.setPuntos(colaborador.getPuntos() + puntosSumados);
 
                     repoColaboraciones.addDonacionDinero(donacionDinero);
@@ -178,7 +178,7 @@ public class PostColaboHumanaHandler implements Handler {
 
                     String heladera_origen_id = ctx.formParam("heladera-origen");
                     String heladera_destino_id = ctx.formParam("heladera-destino");
-               
+
                     Double cantidad = Double.parseDouble(ctx.formParam("cantidad"));
 
                     EntityManager em = BDUtils.getEntityManager();
@@ -211,11 +211,11 @@ public class PostColaboHumanaHandler implements Handler {
                     .setParameter("heladeraId", heladeraOrigenId)
                     .getResultList();
 
-                        
-                    if(viandasEnHeladeraOrigen == null){       
+
+                    if(viandasEnHeladeraOrigen == null){
                             model.put("errorMessage", "No hay viandas en la heladera origen.");
                             ctx.render("/templates/colaboracionHumana.mustache", model);
-                            return;             
+                            return;
                     }
 
                     if(viandasEnHeladeraOrigen != null){
@@ -246,16 +246,16 @@ public class PostColaboHumanaHandler implements Handler {
                             return;
                         }
                     }
-                    
+
                     List<Vianda> viandasSeleccionadas = viandasEnHeladeraOrigen.subList(0, cantidad.intValue());
-                
+
                     for (Vianda vianda : viandasSeleccionadas) {
-                        vianda.setHeladera(heladera_destino); 
-                        heladera_origen.setStock(heladera_origen.getStock() -1); 
+                        vianda.setHeladera(heladera_destino);
+                        heladera_origen.setStock(heladera_origen.getStock() -1);
                         heladera_destino.setStock(heladera_destino.getStock() +1);
-                        em.merge(vianda);  
+                        em.merge(vianda);
                     }
-                
+
                     em.merge(heladera_origen);
                     em.merge(heladera_destino);
                     DistribucionDeViandasFactory factoryDDV = new DistribucionDeViandasFactory();
@@ -265,18 +265,18 @@ public class PostColaboHumanaHandler implements Handler {
 
 
                     Double puntosSumados = distribucionVianda.calcularPuntos();
-                    
+
                     colaborador.setPuntos(colaborador.getPuntos() + puntosSumados);
 
                     em.merge(colaborador);
 
                     BDUtils.commit(em);
-               
+
 
                 }
                 catch(Exception e){
                     model.put("errorMessage", "Error" + e.getMessage());
-    e.printStackTrace(); 
+    e.printStackTrace();
                    ctx.render("/templates/colaboracionHumana.mustache", model);
                    BDUtils.rollback(em);
                }

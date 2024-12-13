@@ -3,10 +3,13 @@ package org.example;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import org.example.Dominio.Persona.PersonaHumana;
+import org.example.Dominio.Reportes.*;
 import org.example.Dominio.Rol.Admin;
 import org.example.Handlers.*;
 import org.example.Validador.Usuario;
+import org.example.repositorios.RepositorioIncidente;
 import org.example.repositorios.RepositorioUsuarios;
+import org.example.repositorios.RepositorioVianda;
 import org.example.Servicio.RecomendarHeladerasService;
 
 import java.util.List;
@@ -29,7 +32,6 @@ public class App {
             .start(8085);
 
     // Aplica el middleware de autenticación antes de acceder a las rutas que requieren sesión
-
 
 
     if(repositorioUsuarios.verificarUsuarios("admin")){
@@ -118,6 +120,21 @@ public class App {
     app.get("/personaVulnerable", new GetPersVulnHandler());
     app.post("/personaVulnerable", new PostPersVulnHandler());
 
+    RepositorioVianda repoVianda = RepositorioVianda.getInstance();
+    RepositorioIncidente repoIncidente = RepositorioIncidente.getInstance();
+
+    FileService fileService = new CSVFileService();
+    DataService dataService = new DataServiceRep(repoIncidente, repoVianda);
+
+    List<GeneradorDeReportes> generadores = List.of(
+            new ReporteFallasPorHeladera(dataService, fileService),
+            new ReporteViandasPorColaborador(dataService, fileService),
+            new ReporteViandasPorHeladera(dataService, fileService)
+    );
+
+    ReporteScheduler scheduler = new ReporteScheduler(generadores);
+    scheduler.iniciarScheduler();
+
     app.before("/reportes",AuthMiddleware::verificarAutenticacion);
     app.get("/reportes", new GetReportes());
     app.post("/reportes", new PostReportes());
@@ -130,7 +147,7 @@ public class App {
     app.get("/prodserv", new GetProdServ());
     app.post("/prodserv", new PostProdServ());
 
-    
+
     app.post("/auth/google", new AuthController());
 
 
