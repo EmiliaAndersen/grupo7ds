@@ -1,25 +1,23 @@
 import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.Incidentes.*;
-import org.example.Dominio.Reportes.GeneradorReporteFallas;
+import org.example.Dominio.Reportes.ReporteFallasPorHeladera;
 import org.example.Dominio.Rol.Colaborador;
 import org.example.Dominio.Rol.Tecnico;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
-
 public class IncidentesTest {
 
     IncidenteFactory factory;
     Heladera heladera;
-    GeneradorReporteFallas reporteFallas;
+    ReporteFallasPorHeladera reporteFallas;
 
     @BeforeEach
     void setUp() {
         factory = new IncidenteFactory();
         heladera = new Heladera(0, 0, null);
-        reporteFallas = GeneradorReporteFallas.getInstance();
+        //reporteFallas = ReporteFallasPorHeladera.getInstance();
     }
 
     @Test

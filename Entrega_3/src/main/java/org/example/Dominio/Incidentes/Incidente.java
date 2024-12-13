@@ -4,9 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.example.Dominio.Heladeras.EstadoHeladera;
 import org.example.Dominio.Heladeras.Heladera;
-import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
 import org.example.Dominio.Reportes.GeneradorDeReportes;
-import org.example.Dominio.Reportes.GeneradorReporteFallas;
 import org.example.Servicio.LocalizadorTecnicos;
 import org.example.Dominio.Rol.Tecnico;
 
@@ -28,6 +26,7 @@ public class Incidente {
     private Long id;
 
     @Setter
+    @Getter
     @ManyToOne()
     @JoinColumn(name = "heladera_id")
     public Heladera heladera;

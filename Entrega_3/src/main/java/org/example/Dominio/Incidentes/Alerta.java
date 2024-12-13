@@ -3,7 +3,6 @@ package org.example.Dominio.Incidentes;
 
 import lombok.Getter;
 import org.example.Dominio.Heladeras.Heladera;
-import org.example.Dominio.Reportes.GeneradorReporteFallas;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

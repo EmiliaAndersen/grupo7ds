@@ -22,9 +22,9 @@ public class IncidenteFactory {
     }
 
     private void notificarReporte(){
-        for(GeneradorDeReportes reporte : suscriptores){
-            reporte.update();
-        }
+//        for(GeneradorDeReportes reporte : suscriptores){
+//            reporte.update();
+//        }
     }
 
     public void agregarSuscriptor(GeneradorDeReportes reporte){

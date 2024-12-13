@@ -19,8 +19,8 @@ public class GeneradorReporteCantidadViandasColaborador implements GeneradorDeRe
         this.cantidadDeViandas++;
     }
 
-    public double obtenerReporte() {
-        return (double)cantidadDeViandas/cantidadColaboradores;
+    public void generarReporte() {
+        //return (double)cantidadDeViandas/cantidadColaboradores;
     }
 
     public boolean isTypeOf(TipoReporte tipo) {
