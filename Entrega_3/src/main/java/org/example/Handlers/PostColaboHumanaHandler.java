@@ -122,7 +122,7 @@ public class PostColaboHumanaHandler implements Handler {
 
 
 
-                    Vianda vianda = new Vianda(comida, fecha_caducidad, fecha_donacion_vianda, heladera, calorias, peso, EstadoVianda.ENTREGADA);
+                    Vianda vianda = new Vianda(comida, fecha_caducidad, fecha_donacion_vianda, heladera, calorias, peso, EstadoVianda.ENTREGADA, colaborador);
                     heladera.setStock(heladera.getStock() + 1);
                     em.merge(heladera);
 
