@@ -8,6 +8,7 @@ import org.example.Dominio.Colaboraciones.Colaboracion;
 import org.example.Dominio.Colaboraciones.Factory.DonacionDeDineroFactory;
 import org.example.Dominio.Colaboraciones.Factory.HacerseCargoDeHeladeraFactory;
 import org.example.Dominio.Colaboraciones.Factory.OfrecerProductosFactory;
+import org.example.Dominio.Colaboraciones.HacerseCargoDeHeladera;
 import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.PuntosEstrategicos.PuntoEstrategico;
 import org.example.Dominio.Rol.Colaborador;
@@ -19,7 +20,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.persistence.EntityManager;
 
@@ -30,6 +33,10 @@ public class PostColaboJuridicaHandler implements Handler {
         RepositorioColaboradores repoColaboradores = RepositorioColaboradores.getInstance();
         RepositorioHeladeras repoHeladeras = RepositorioHeladeras.getInstance();
         RepositorioColaboraciones repoColaboraciones = RepositorioColaboraciones.getInstance();
+        Heladera heladera;
+        HacerseCargoDeHeladeraFactory factoryHC = new HacerseCargoDeHeladeraFactory();
+
+        EntityManager em;
 
         String tipoColabo = ctx.formParam("btn-colab");
         Map<String, Object> model = new HashMap<>();
@@ -43,13 +50,41 @@ public class PostColaboJuridicaHandler implements Handler {
         }
         try {
             switch (tipoColabo) {
-                case "hc": {
+                case "hc2":
+                    String heladera_id = ctx.formParam("heladeraSelect");
+                    heladera = repoHeladeras.obtenerHeladera(heladera_id);
+                    if (heladera == null) {
+                        model.put("errorMessage", "La heladera no existe");
+                        ctx.render("/templates/colaboracionJuridica.mustache", model);
+                        return;
+                    }
+                    List<HacerseCargoDeHeladera> colabs = repoColaboraciones.obtenerTodasHacerseCargoHeladera();
+                    for(HacerseCargoDeHeladera colab : colabs){
+                        if(colab.getHeladera().getId() == heladera.getId() && Objects.equals(colab.getColaborador().getId(), colaborador.getId())){
+                            model.put("errorMessage", "Ya esta a cargo de la heladera seleccionada");
+                            ctx.render("/templates/colaboracionJuridica.mustache", model);
+                            return;
+                        }
+                    }
+                    Colaboracion hacerseCargoHeladeraSeleccionada = factoryHC.crearColaboracion(heladera,heladera.getUbicacion(),LocalDate.now());
+                    hacerseCargoHeladeraSeleccionada.setColaborador(colaborador);
+                    repoColaboraciones.addHacerseCargoHeladeraSeleccionada(hacerseCargoHeladeraSeleccionada, heladera.getUbicacion(), heladera);
+
+                    Double puntosSumados = hacerseCargoHeladeraSeleccionada.calcularPuntos();
+
+                    colaborador.setPuntos(colaborador.getPuntos() + puntosSumados);
+
+                    em = BDUtils.getEntityManager();
+                    BDUtils.comenzarTransaccion(em);
+                    em.merge(colaborador);
+                    BDUtils.commit(em);
+
+                    break;
+                case "hc1":
 
                     String nombre = ctx.formParam("nombre");
-                 
-
-                    String longitudParam = ctx.formParam("longitud");
-                    String latitudParam = ctx.formParam("latitud");
+                    String longitudParam = ctx.formParam("longitudInput");
+                    String latitudParam = ctx.formParam("latitudInput");
                     String direccion = ctx.formParam("direccion");
                     String tempMinParam = ctx.formParam("temp_min");
                     String tempMaxParam = ctx.formParam("temp_max");
@@ -61,37 +96,36 @@ public class PostColaboJuridicaHandler implements Handler {
                     int tempMin = Integer.parseInt(tempMinParam);
                     int tempMax = Integer.parseInt(tempMaxParam);
                     int capacidad = Integer.parseInt(capacidadViandas);
-                    
-                    EntityManager em = BDUtils.getEntityManager();
+
+                    em = BDUtils.getEntityManager();
                     BDUtils.comenzarTransaccion(em);
 
                     try{
-                    PuntoEstrategico punto = new PuntoEstrategico(nombre, longitud, latitud, direccion);
+                        PuntoEstrategico punto = new PuntoEstrategico(nombre, longitud, latitud, direccion);
 
 
-                    Heladera heladera = new Heladera(tempMax, tempMin, punto,capacidad);
-                    HacerseCargoDeHeladeraFactory factoryHC = new HacerseCargoDeHeladeraFactory();
-                    Colaboracion hacerseCargoHeladera = factoryHC.crearColaboracion(heladera,punto,LocalDate.now());
-                    hacerseCargoHeladera.setColaborador(colaborador);
-                    repoColaboraciones.addHacerseCargoHeladera(hacerseCargoHeladera, punto, heladera);
+                        heladera = new Heladera(tempMax, tempMin, punto,capacidad);
+                        factoryHC = new HacerseCargoDeHeladeraFactory();
+                        Colaboracion hacerseCargoHeladera = factoryHC.crearColaboracion(heladera,punto,LocalDate.now());
+                        hacerseCargoHeladera.setColaborador(colaborador);
+                        repoColaboraciones.addHacerseCargoHeladeraGenerada(hacerseCargoHeladera, punto, heladera);
 
-                    Double puntosSumados = hacerseCargoHeladera.calcularPuntos();
-                    
-                    colaborador.setPuntos(colaborador.getPuntos() + puntosSumados);
+                        Double puntosSumados2 = hacerseCargoHeladera.calcularPuntos();
 
-                    em.merge(colaborador);
-                    BDUtils.commit(em);
+                        colaborador.setPuntos(colaborador.getPuntos() + puntosSumados2);
+
+                        em.merge(colaborador);
+                        BDUtils.commit(em);
 
                     }
                     catch(Exception e){
-                         model.put("errorMessage", "Error" + e.getMessage());
+                        model.put("errorMessage", "Error" + e.getMessage());
                         ctx.render("/templates/colaboracionJuridica.mustache", model);
                         BDUtils.rollback(em);
                     }
-
                     break;
 
-                }
+
                 case "op": {
                     String tipo_producto = ctx.formParam("tipo-producto");
                     String marca = ctx.formParam("marca");
@@ -111,16 +145,16 @@ public class PostColaboJuridicaHandler implements Handler {
 
 
                     // TODO: Agregar un atributo session para obtener el colaborador asociado al usuario que realiza la colaboracion para linkearlo al repo
-                   EntityManager em = BDUtils.getEntityManager();
+                    em = BDUtils.getEntityManager();
                     BDUtils.comenzarTransaccion(em);
                     try{
                     DonacionDeDineroFactory factoryDD = new DonacionDeDineroFactory();
                     Colaboracion donacionDinero = factoryDD.crearColaboracion(fecha, monto, frecuencia);
                     donacionDinero.setColaborador(colaborador);
 
-                    Double puntosSumados = donacionDinero.calcularPuntos();
-                    
-                    colaborador.setPuntos(colaborador.getPuntos() + puntosSumados);
+                    Double puntosSumados3 = donacionDinero.calcularPuntos();
+
+                    colaborador.setPuntos(colaborador.getPuntos() + puntosSumados3);
 
                     repoColaboraciones.addDonacionDinero(donacionDinero);
                     em.merge(colaborador);
@@ -143,3 +177,4 @@ public class PostColaboJuridicaHandler implements Handler {
         ctx.render("/templates/colaboracionJuridica.mustache",model);
     }
 }
+

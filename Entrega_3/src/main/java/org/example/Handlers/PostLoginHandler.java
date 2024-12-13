@@ -58,10 +58,10 @@ public class PostLoginHandler implements Handler {
         context.sessionAttribute("succesLogin", true);
         MetricsService.incrementRequestCounter();
         context.sessionAttribute("rol","noAdmin");
-     //   if (esTecnico(usuarioNombre)){
-        //  context.redirect("/backoffice/incidentes");
-       //   return;
-      //  }
+        if (esTecnico(usuarioNombre)){
+          context.redirect("/backoffice/incidentes");
+          return;
+        }
         context.redirect("/front_page");
       } else {
         System.out.println("ERROR");
@@ -78,3 +78,4 @@ public class PostLoginHandler implements Handler {
     return (tecnico !=null);
   }
 }
+

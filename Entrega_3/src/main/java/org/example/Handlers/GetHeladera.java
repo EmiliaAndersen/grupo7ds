@@ -66,7 +66,7 @@ public class GetHeladera implements @NotNull Handler {
             "JOIN s.colaborador c " +
             "JOIN c.persona p " +
             "JOIN p.usuario u " +
-            "WHERE u.usuario = :usu", Incidente.class
+            "WHERE u.usuario = :usu AND i.estaActiva = true", Incidente.class
     );
 
 

@@ -1,3 +1,4 @@
+
 package org.example.Handlers;
 
 import io.javalin.http.Context;
@@ -55,7 +56,7 @@ public class postBackofficeIncidentes implements Handler {
       }
 
 
-      Visita visita = new Visita(tecnico,localDateConverter(context.formParam("fecha_hora")) , pudoResolver, context.formParam("descripcion"), incidente);
+      Visita visita = new Visita(tecnico,LocalDateTime.now() , pudoResolver, context.formParam("descripcion"), incidente);
       incidente.getVisitas().add(visita);
       em.persist(visita);
       BDUtils.commit(em);

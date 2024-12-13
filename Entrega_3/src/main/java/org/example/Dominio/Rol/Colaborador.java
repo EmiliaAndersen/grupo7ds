@@ -28,7 +28,7 @@ public class Colaborador extends Rol{
     @OneToMany(mappedBy = "colaborador",cascade = CascadeType.ALL)
     @Getter
     @Setter
-    private List<Colaboracion> colaboraciones;
+    public List<Colaboracion> colaboraciones;
 
     @Column
     @Getter
