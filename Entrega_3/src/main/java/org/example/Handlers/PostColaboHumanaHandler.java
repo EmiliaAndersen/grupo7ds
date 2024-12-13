@@ -63,7 +63,7 @@ public class PostColaboHumanaHandler implements Handler {
                         return;
                     }
 
-                    Vianda vianda = new Vianda(comida, fecha_caducidad, fecha_donacion_vianda, heladera, calorias, peso, EstadoVianda.ENTREGADA);
+                    Vianda vianda = new Vianda(comida, fecha_caducidad, fecha_donacion_vianda, heladera, calorias, peso, EstadoVianda.ENTREGADA, colaborador);
                     DonacionDeViandaFactory factoryDV = new DonacionDeViandaFactory();
                     Colaboracion donacionDeVianda = factoryDV.crearColaboracion(vianda);
                     donacionDeVianda.setColaborador(colaborador);
