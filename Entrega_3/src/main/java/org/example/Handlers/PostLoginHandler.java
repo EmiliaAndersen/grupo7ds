@@ -78,3 +78,4 @@ public class PostLoginHandler implements Handler {
     return (tecnico !=null);
   }
 }
+

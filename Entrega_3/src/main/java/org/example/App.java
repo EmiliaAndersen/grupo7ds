@@ -130,6 +130,10 @@ public class App {
     app.get("/prodserv", new GetProdServ());
     app.post("/prodserv", new PostProdServ());
 
+    
+    app.post("/auth/google", new AuthController());
+
+
     app.before("/suscripcion",AuthMiddleware::verificarAutenticacion);
     app.get("/suscripcion", new GetSuscripcion());
     app.post("/suscripcion", new PostSuscripcion());

@@ -177,3 +177,4 @@ public class PostColaboJuridicaHandler implements Handler {
         ctx.render("/templates/colaboracionJuridica.mustache",model);
     }
 }
+
