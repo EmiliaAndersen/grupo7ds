@@ -7,6 +7,7 @@ import org.example.BDUtils;
 import org.example.Dominio.Colaboraciones.OfrecerProductos;
 import org.example.Dominio.Rol.Colaborador;
 import org.example.repositorios.RepositorioColaboradores;
+import org.example.repositorios.RepositorioNotificaciones;
 import org.jetbrains.annotations.NotNull;
 
 import io.javalin.http.Context;
@@ -18,6 +19,13 @@ import javax.persistence.TypedQuery;
 public class GetProdServ implements @NotNull Handler {
   public void handle(@NotNull Context context){
         var model = new HashMap<String, Object>();
+    RepositorioNotificaciones repositorioNotificaciones = RepositorioNotificaciones.getInstance();
+    String usuarioAVerificar = context.sessionAttribute("username");
+    if (repositorioNotificaciones.obtenerNotificacionesActivasXUsuario(usuarioAVerificar).isEmpty()){
+      model.put("notificacionActiva","<i class=\"bi bi-bell\"></i>");
+    }else {
+      model.put("notificacionActiva","<i class=\"bi bi-bell-fill\"></i>");
+    }
         EntityManager em = BDUtils.getEntityManager();
         BDUtils.comenzarTransaccion(em);
 

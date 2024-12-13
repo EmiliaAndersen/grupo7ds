@@ -17,6 +17,7 @@ import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Rol.Colaborador;
 import org.example.repositorios.RepositorioColaboradores;
 import org.example.repositorios.RepositorioHeladeras;
+import org.example.repositorios.RepositorioNotificaciones;
 import org.jetbrains.annotations.NotNull;
 
 import io.javalin.http.Context;
@@ -27,9 +28,16 @@ import javax.persistence.TypedQuery;
 
 public class GetHeladera implements @NotNull Handler {
   public void handle(@NotNull Context context){
-        var model = new HashMap<String, Object>();
-        EntityManager em = BDUtils.getEntityManager();
-        BDUtils.comenzarTransaccion(em);
+  var model = new HashMap<String, Object>();
+    RepositorioNotificaciones repositorioNotificaciones = RepositorioNotificaciones.getInstance();
+    String usuarioAVerificar = context.sessionAttribute("username");
+    if (repositorioNotificaciones.obtenerNotificacionesActivasXUsuario(usuarioAVerificar).isEmpty()){
+      model.put("notificacionActiva","<i class=\"bi bi-bell\"></i>");
+    }else {
+      model.put("notificacionActiva","<i class=\"bi bi-bell-fill\"></i>");
+    }
+  EntityManager em = BDUtils.getEntityManager();
+  BDUtils.comenzarTransaccion(em);
     RepositorioColaboradores repositorioColaboradores = RepositorioColaboradores.getInstance();
     RepositorioHeladeras repositorioHeladeras = RepositorioHeladeras.getInstance();
 

@@ -28,6 +28,8 @@ public class Suscriptor {
     @JoinColumn(name = "colaborador_id", referencedColumnName = "id",  nullable = true)
     private Colaborador colaborador;
 
+    @Getter
+    @Setter
     @Enumerated(EnumType.STRING)
     private TipoSuscripcion tipo;
 

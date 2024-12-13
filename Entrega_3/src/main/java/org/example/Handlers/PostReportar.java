@@ -4,7 +4,9 @@ import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.Incidentes.FallaTecnica;
 import org.example.Dominio.Incidentes.Incidente;
 import org.example.Dominio.Incidentes.IncidenteFactory;
+import org.example.Dominio.Notificador.Notificador;
 import org.example.Dominio.Rol.Colaborador;
+import org.example.Dominio.Suscripciones.TipoSuscripcion;
 import org.example.repositorios.RepositorioColaboradores;
 import org.example.repositorios.RepositorioHeladeras;
 import org.example.repositorios.RepositorioIncidente;
@@ -19,13 +21,14 @@ import java.util.Map;
 public class PostReportar implements @NotNull Handler {
      public void handle(@NotNull Context context){
 
-                // Obtener los datos del formulario
-                String heladera_id = context.formParam("heladera");
-                String descripcion = context.formParam("motivo");
-                RepositorioHeladeras repoHeladeras = RepositorioHeladeras.getInstance();
-                RepositorioIncidente repoIncidentes = RepositorioIncidente.getInstance();
-                RepositorioColaboradores repoColaboradores = RepositorioColaboradores.getInstance();
-                Map<String, Object> model = new HashMap<>();
+       // Obtener los datos del formulario
+       String heladera_id = context.formParam("heladera");
+       String descripcion = context.formParam("motivo");
+       RepositorioHeladeras repoHeladeras = RepositorioHeladeras.getInstance();
+       RepositorioIncidente repoIncidentes = RepositorioIncidente.getInstance();
+       RepositorioColaboradores repoColaboradores = RepositorioColaboradores.getInstance();
+       Map<String, Object> model = new HashMap<>();
+       Notificador notificador = Notificador.getInstance();
 
                  String userName = context.sessionAttribute("username");
                  Colaborador colaborador = repoColaboradores.obtenerColaborador(userName);
@@ -60,7 +63,9 @@ public class PostReportar implements @NotNull Handler {
                     Incidente falla = incidenteFactory.crearFalla(colaborador, heladera, descripcion);
             
                     repoIncidentes.addIncidente(falla);
+                    notificador.movimientoHeladera(heladera, TipoSuscripcion.DESPERFECTO);
                     context.sessionAttribute("successReportar", true);
+
                     context.redirect("/reportar");//agregar tipo persona al path
                 }
      }

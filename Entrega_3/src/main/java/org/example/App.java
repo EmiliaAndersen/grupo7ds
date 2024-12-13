@@ -66,6 +66,9 @@ public class App {
     app.get("/backoffice/heladeras",new getBackofficeHeladeras());
     app.post("/backoffice/heladeras", new postBackofficeHeladeras());
 
+    app.before("/notificaciones",AuthMiddleware::verificarAutenticacion);
+    app.get("/notificaciones",new getNotificaciones());
+    app.post("/notificaciones", new postNotificaciones());
 
     app.before("/backoffice/incidentes",AuthMiddleware::verificarAutenticacion);
     app.get("/backoffice/incidentes",new getBackofficeIncidentes());
