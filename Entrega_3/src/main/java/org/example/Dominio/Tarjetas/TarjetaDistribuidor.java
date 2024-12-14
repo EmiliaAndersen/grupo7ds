@@ -33,10 +33,11 @@ public class TarjetaDistribuidor extends Tarjeta {
       return permisoHasta.isAfter(LocalDateTime.now());
     }
 
-  public void solicitarAcceso(){
-      SolicitudPermisos solicitud = new SolicitudPermisos(LocalDateTime.now());
+  public SolicitudPermisos solicitarAcceso(Heladera heladera){
+      SolicitudPermisos solicitud = new SolicitudPermisos(LocalDateTime.now(), heladera, this);
       solicitudesPasadas.add(solicitud);
       AdministradorPermisos.getInstance().darAcceso(this);
+      return solicitud;
   }
 
   public void abrirHeladera(Heladera heladera) {

@@ -5,9 +5,11 @@ import io.javalin.http.Context;
 import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Reportes.*;
 import org.example.Dominio.Rol.Admin;
+import org.example.Dominio.Tarjetas.TarjetaDistribuidor;
 import org.example.Handlers.*;
 import org.example.Validador.Usuario;
 import org.example.repositorios.RepositorioIncidente;
+import org.example.repositorios.RepositorioTarjetasDist;
 import org.example.repositorios.RepositorioUsuarios;
 import org.example.repositorios.RepositorioVianda;
 import org.example.Servicio.RecomendarHeladerasService;
@@ -167,6 +169,16 @@ public class App {
     app.before("/colaboraciones_realizadas",AuthMiddleware::verificarAutenticacion);
     app.get("/colaboraciones_realizadas", new GetColaboracionesRealizadas());
     app.post("/colaboraciones_realizadas", new PostColabos());
+
+    RepositorioTarjetasDist repositorioTarjetasDist = RepositorioTarjetasDist.getInstance();
+    for(int i = 1; i <= 5; i++){
+        TarjetaDistribuidor tarjetaDistribuidor = new TarjetaDistribuidor();
+        repositorioTarjetasDist.addTarjeta(tarjetaDistribuidor);
+    }
+
+    app.before("/solicitar_autorizacion", AuthMiddleware::verificarAutenticacion);
+    app.get("/solicitar_autorizacion", new GetAutorizacion());
+    app.post("/solicitar_autorizacion", new PostAutorizacion());
 
     app.before("/micrometer/metrics",AuthMiddleware::verificarAutenticacion);
     app.get("/micrometer/metrics", new GetMicrometerMetrics());
