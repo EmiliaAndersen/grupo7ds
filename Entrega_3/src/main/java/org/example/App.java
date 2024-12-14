@@ -16,6 +16,7 @@ import org.example.repositorios.RepositorioIncidente;
 import org.example.repositorios.RepositorioUsuarios;
 import org.example.repositorios.RepositorioVianda;
 import org.example.Servicio.RecomendarHeladerasService;
+import org.example.Servicio.UbicacionService;
 
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -189,26 +190,20 @@ public class App {
 
 
     app.get("/recomendarUbicacion", ctx -> {
-      String apiUrl = "http://localhost:8080/api/points/nearby?latitude=-34.604&longitude=-58.381&radioKm=10000";
-      HttpClient client = HttpClient.newHttpClient();
-      HttpRequest request = HttpRequest.newBuilder()
-              .uri(java.net.URI.create(apiUrl))
-              .GET()
-              .build();
-
+      UbicacionService ubicacionService = new UbicacionService();
+  
       try {
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-        // Map response to a list of PuntoGeografico
-        ObjectMapper mapper = new ObjectMapper();
-        List<PuntoGeografico> puntos = mapper.readValue(response.body(), new TypeReference<>() {});
-
-        ctx.json(puntos); // Return as JSON to the frontend
+          double latitude = -34.604;
+          double longitude = -58.381;
+          int radioKm = 10000;
+  
+          List<PuntoGeografico> puntos = ubicacionService.getNearbyPoints(latitude, longitude, radioKm);
+          ctx.json(puntos); // Return as JSON to the frontend
       } catch (Exception e) {
-        ctx.status(500).result("Error contacting nearby points API: " + e.getMessage());
+          ctx.status(500).result("Error contacting nearby points API: " + e.getMessage());
       }
-    });
-  }
+  });
+  
 
   }
 
