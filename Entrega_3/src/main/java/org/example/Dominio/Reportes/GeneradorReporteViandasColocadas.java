@@ -19,8 +19,8 @@ public class GeneradorReporteViandasColocadas implements GeneradorDeReportes{
         this.cantidadDeViandasColocadas++;
     }
 
-    public double obtenerReporte() {
-        return (double) this.cantidadDeViandasColocadas/this.cantidadDeHeladeras;
+    public void generarReporte() {
+        //return (double) this.cantidadDeViandasColocadas/this.cantidadDeHeladeras;
     }
 
     public boolean isTypeOf(TipoReporte tipo) {

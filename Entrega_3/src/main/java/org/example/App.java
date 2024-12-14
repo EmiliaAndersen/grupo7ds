@@ -4,18 +4,24 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.Persona.PersonaHumana;
+import org.example.Dominio.Reportes.*;
 import org.example.Dominio.PuntosEstrategicos.PuntoGeografico;
 import org.example.Dominio.Rol.Admin;
 import org.example.Handlers.*;
 import org.example.Validador.Usuario;
+import org.example.repositorios.RepositorioHeladeras;
+import org.example.repositorios.RepositorioIncidente;
 import org.example.repositorios.RepositorioUsuarios;
+import org.example.repositorios.RepositorioVianda;
 import org.example.Servicio.RecomendarHeladerasService;
 
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
@@ -35,7 +41,6 @@ public class App {
             .start(8085);
 
     // Aplica el middleware de autenticación antes de acceder a las rutas que requieren sesión
-
 
 
     if(repositorioUsuarios.verificarUsuarios("admin")){
@@ -70,6 +75,9 @@ public class App {
     app.get("/backoffice/heladeras",new getBackofficeHeladeras());
     app.post("/backoffice/heladeras", new postBackofficeHeladeras());
 
+    app.before("/notificaciones",AuthMiddleware::verificarAutenticacion);
+    app.get("/notificaciones",new getNotificaciones());
+    app.post("/notificaciones", new postNotificaciones());
 
     app.before("/backoffice/incidentes",AuthMiddleware::verificarAutenticacion);
     app.get("/backoffice/incidentes",new getBackofficeIncidentes());
@@ -124,6 +132,21 @@ public class App {
     app.get("/personaVulnerable", new GetPersVulnHandler());
     app.post("/personaVulnerable", new PostPersVulnHandler());
 
+    RepositorioVianda repoVianda = RepositorioVianda.getInstance();
+    RepositorioIncidente repoIncidente = RepositorioIncidente.getInstance();
+
+    FileService fileService = new CSVFileService();
+    DataService dataService = new DataServiceRep(repoIncidente, repoVianda);
+
+    List<GeneradorDeReportes> generadores = List.of(
+            new ReporteFallasPorHeladera(dataService, fileService),
+            new ReporteViandasPorColaborador(dataService, fileService),
+            new ReporteViandasPorHeladera(dataService, fileService)
+    );
+
+    ReporteScheduler scheduler = new ReporteScheduler(generadores);
+    scheduler.iniciarScheduler();
+
     app.before("/reportes",AuthMiddleware::verificarAutenticacion);
     app.get("/reportes", new GetReportes());
     app.post("/reportes", new PostReportes());
@@ -136,7 +159,7 @@ public class App {
     app.get("/prodserv", new GetProdServ());
     app.post("/prodserv", new PostProdServ());
 
-    
+
     app.post("/auth/google", new AuthController());
 
 
@@ -159,6 +182,11 @@ public class App {
 
     app.before("/micrometer/metrics",AuthMiddleware::verificarAutenticacion);
     app.get("/micrometer/metrics", new GetMicrometerMetrics());
+
+    app.before("/notificaciones/redistribucion",AuthMiddleware::verificarAutenticacion);
+    app.get("/notificaciones/redistribucion", new GetDistribucionHandler());
+    app.post("/notificaciones/redistribucion", new PostDistribucion());
+
 
     app.get("/recomendarUbicacion", ctx -> {
       String apiUrl = "http://localhost:8080/api/points/nearby?latitude=-34.604&longitude=-58.381&radioKm=10000";

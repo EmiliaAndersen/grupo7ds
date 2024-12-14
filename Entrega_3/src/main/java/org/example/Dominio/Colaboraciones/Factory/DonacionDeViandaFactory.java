@@ -14,7 +14,7 @@ public class DonacionDeViandaFactory extends ColaboracionFactory{
 
     public Colaboracion crearColaboracion(Vianda viandas, Double cantidad){
 
-        this.notificarReportes();
+        //this.notificarReportes();
         return new DonacionDeVianda(viandas, cantidad);
     }
 
