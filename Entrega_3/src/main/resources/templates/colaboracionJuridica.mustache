@@ -163,9 +163,41 @@
 
                             <div class="form-row mt-2">
                                 <div class="col-md-12">
-                                    <button id="openMapBtnGenerar" type="button" class="btn btn-primary mt-2 mb-2 col-md-4">Seleccionar Ubicación</button>
+                                    <!-- Selector para elegir qué acción mostrar -->
+                                    <label for="actionSelector">Elegir ubicación:</label>
+                                    <select id="actionSelector" name="actionSelector" class="form-select col-md-4">
+                                        <option value="">-- Seleccione una opción --</option>
+                                        <option value="recomendar">Recomendar Ubicación</option>
+                                        <option value="seleccionar">Seleccionar Ubicación</option>
+                                    </select>
                                 </div>
+
+                                <!-- Botón para seleccionar ubicación -->
+                                <div class="col-md-12" id="seleccionarUbicacionContainer" style="display: none;">
+                                    <button id="openMapBtnGenerar" type="button" class="btn btn-primary mt-2 mb-2 col-md-4">Seleccionar Ubicación</button>
+                                    <div class="mt-3">
+                                        <p id="latitudDisplay">Latitud: N/A</p>
+                                        <p id="longitudDisplay">Longitud: N/A</p>
+                                    </div>
+                                </div>
+
+                                <!-- Botón para recomendar ubicación -->
+                                <div class="col-md-12" id="recomendarUbicacionContainer" style="display: none;">
+                                    <button id="recomendarUbicacion" type="button" class="btn btn-primary mt-2 mb-2 col-md-4">Recomendar Ubicación</button>
+
+                                    <div class="col-md-12 mt-3" id="pointsDropdownContainer" style="display: none;">
+                                        <label for="pointsDropdown">Seleccione un punto recomendado:</label>
+                                        <select id="pointsDropdown" name="pointsDropdown" class="form-select col-md-4">
+                                            <option value="">-- Seleccione un punto --</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
                             </div>
+
+
+
 
                             <div class="form-row mt-2">
                                 <div class="col-md-12">
@@ -347,6 +379,8 @@
     const longitudeSpan = document.getElementById('longitud');
     const longitudInput = document.getElementById('longitudInput');
     const latitudInput = document.getElementById('latitudInput');
+    const latitudDisplay = document.getElementById("latitudDisplay");
+    const longitudDisplay = document.getElementById("longitudDisplay");
 
     // Initialize map
     let map;
@@ -375,6 +409,8 @@
                 // Update coordinates in the interface
                 latitudeSpan.textContent = lat.toFixed(6);
                 longitudeSpan.textContent = lng.toFixed(6);
+                latitudDisplay.textContent = `Latitud: ${lat.toFixed(6)}`;
+                longitudDisplay.textContent = `Longitud: ${lng.toFixed(6)}`;
                 latitudInput.value = lat.toFixed(6);
                 longitudInput.value = lng.toFixed(6);
             });
@@ -454,4 +490,76 @@
     });
 </script>
 
+
+<script>
+    // Elementos de la interfaz
+    const actionSelector = document.getElementById("actionSelector");
+    const seleccionarUbicacionContainer = document.getElementById("seleccionarUbicacionContainer");
+    const recomendarUbicacionContainer = document.getElementById("recomendarUbicacionContainer");
+    const pointsDropdownContainer = document.getElementById("pointsDropdownContainer");
+    const pointsDropdown = document.getElementById("pointsDropdown");
+
+    // Manejar cambio en el selector de acciones
+    actionSelector.addEventListener("change", () => {
+        const selectedAction = actionSelector.value;
+
+        // Resetear visibilidad
+        seleccionarUbicacionContainer.style.display = "none";
+        recomendarUbicacionContainer.style.display = "none";
+        pointsDropdownContainer.style.display = "none";
+
+        if (selectedAction === "recomendar") {
+            recomendarUbicacionContainer.style.display = "block";
+            pointsDropdownContainer.style.display = "block";
+        } else if (selectedAction === "seleccionar") {
+            seleccionarUbicacionContainer.style.display = "block";
+        }
+    });
+
+    // Función para manejar la recomendación de ubicación
+    document.getElementById("recomendarUbicacion").addEventListener("click", () => {
+        fetch("/recomendarUbicacion", {
+            method: "GET"
+        })
+            .then(response => response.json())
+            .then(data => {
+                pointsDropdown.innerHTML = '<option value="">-- Seleccione un punto --</option>'; // Limpiar opciones previas
+                data.forEach((point, index) => {
+                    const option = document.createElement("option");
+                    option.value = index;
+                    option.textContent = `Lat: ${point.latitude}, Lon: ${point.longitude}`;
+                    pointsDropdown.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching nearby points:", error);
+                alert("No se pudieron obtener los puntos recomendados.");
+            });
+    });
+</script>
+
+<script>
+    document.getElementById("pointsDropdown").addEventListener("change", function () {
+        const selectedText = this.options[this.selectedIndex].text; // Obtener el texto de la opción seleccionada
+        const latLonMatch = selectedText.match(/Lat:\s*([-\d.]+),\s*Lon:\s*([-\d.]+)/); // Usar regex para extraer latitud y longitud
+
+        if (latLonMatch) {
+            const latitud = latLonMatch[1]; // Captura la latitud
+            const longitud = latLonMatch[2]; // Captura la longitud
+
+            // Actualizar los campos ocultos
+            document.getElementById("latitudInput").value = latitud;
+            document.getElementById("longitudInput").value = longitud;
+
+            // Opcional: Mostrar en consola para verificar
+            console.log("Latitud seleccionada:", latitud);
+            console.log("Longitud seleccionada:", longitud);
+        } else {
+            // Si no coincide, limpiar los valores
+            document.getElementById("latitudInput").value = "";
+            document.getElementById("longitudInput").value = "";
+            console.warn("Formato inválido para la opción seleccionada");
+        }
+    });
+</script>
 

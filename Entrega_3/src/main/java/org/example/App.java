@@ -1,14 +1,20 @@
 package org.example;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import org.example.Dominio.Persona.PersonaHumana;
+import org.example.Dominio.PuntosEstrategicos.PuntoGeografico;
 import org.example.Dominio.Rol.Admin;
 import org.example.Handlers.*;
 import org.example.Validador.Usuario;
 import org.example.repositorios.RepositorioUsuarios;
 import org.example.Servicio.RecomendarHeladerasService;
 
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -154,10 +160,32 @@ public class App {
     app.before("/micrometer/metrics",AuthMiddleware::verificarAutenticacion);
     app.get("/micrometer/metrics", new GetMicrometerMetrics());
 
+    app.get("/recomendarUbicacion", ctx -> {
+      String apiUrl = "http://localhost:8080/api/points/nearby?latitude=-34.604&longitude=-58.381&radioKm=10000";
+      HttpClient client = HttpClient.newHttpClient();
+      HttpRequest request = HttpRequest.newBuilder()
+              .uri(java.net.URI.create(apiUrl))
+              .GET()
+              .build();
+
+      try {
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        // Map response to a list of PuntoGeografico
+        ObjectMapper mapper = new ObjectMapper();
+        List<PuntoGeografico> puntos = mapper.readValue(response.body(), new TypeReference<>() {});
+
+        ctx.json(puntos); // Return as JSON to the frontend
+      } catch (Exception e) {
+        ctx.status(500).result("Error contacting nearby points API: " + e.getMessage());
+      }
+    });
+  }
+
   }
 
 
-}
+
 
 class AuthMiddleware {
   public static void verificarAutenticacion(Context context) {
