@@ -2,17 +2,20 @@ package org.example;
 
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+import org.example.Dominio.Heladeras.Heladera;
 import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Reportes.*;
 import org.example.Dominio.Rol.Admin;
 import org.example.Handlers.*;
 import org.example.Validador.Usuario;
+import org.example.repositorios.RepositorioHeladeras;
 import org.example.repositorios.RepositorioIncidente;
 import org.example.repositorios.RepositorioUsuarios;
 import org.example.repositorios.RepositorioVianda;
 import org.example.Servicio.RecomendarHeladerasService;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 
@@ -173,6 +176,10 @@ public class App {
 
     app.before("/micrometer/metrics",AuthMiddleware::verificarAutenticacion);
     app.get("/micrometer/metrics", new GetMicrometerMetrics());
+
+    app.before("/notificaciones/redistribucion",AuthMiddleware::verificarAutenticacion);
+    app.get("/notificaciones/redistribucion", new GetDistribucionHandler());
+    app.post("/notificaciones/redistribucion", new PostDistribucion());
 
   }
 

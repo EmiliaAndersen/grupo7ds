@@ -76,46 +76,6 @@
         </div>
     </div>
 </nav>
-<div class="modal fade" id="modalVisitaFalla" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <form method="POST" class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar Visita Falla Técnica</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="col-md-6 mt-3">
-                    <label for="fecha-hora">Fecha y hora*</label>
-                    <input type="datetime-local" name="fecha_hora" class="form-control" id="fecha-hora" required>
-                </div>
-
-                <div class="col-md-6 mt-3">
-                    <label for="resultado">¿Pudo resolver?*</label>
-                    <select name="resultado" class="form-select" id="resuelto" required>
-                        <option value="">Seleccione una opción</option>
-                        <option value="1">Sí</option>
-                        <option value="0">No</option>
-                    </select>
-                </div>
-
-                <div class="col-md-12 mt-3">
-                    <label for="foto">Adjuntar foto (opcional)</label>
-                    <input type="file" name="foto" class="form-control" id="foto" accept="image/*">
-                </div>
-
-                <div class="col-md-12 mt-3">
-                    <label for="comentarios">Comentarios*</label>
-                    <textarea name="comentarios" class="form-control" id="comentarios" rows="4" required></textarea>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <input type="hidden" name="id_incidente" id="id_incidente">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
-                <button type="submit" class="btn btn-success" name="visita" value="1">Guardar visita</button>
-            </div>
-        </form>
-    </div>
-</div>
 <div class="container-fluid mt-5 mb-2" style="min-height: 600px;">
     <div class="row p-4">
         <div class="col-lg-12">
@@ -167,7 +127,11 @@
                                     <div class="accordion-body text-center">
                                         <p>{{mensajeEnviado}}</p>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalDistribucion" data-bs-id-heladera="{{id}}">
+                                    <button type="button"
+                                            id="redistribuirBtn"
+                                            class="btn btn-primary btn-sm"
+                                            data-viandas="{{heladera.stock}}"
+                                            data-heladera-id="{{heladera.id}}">>
                                         Distribuir viandas
                                     </button>
                                 </div>
@@ -216,5 +180,15 @@
                     console.error('Error de red:', error);
                 });
     }
+    document.querySelectorAll("#redistribuirBtn").forEach(button => {
+        button.addEventListener("click", () => {
+            const cantidadViandas = button.getAttribute("data-viandas");
+            const heladeraId = button.getAttribute("data-heladera-id");
+            const url = `/notificaciones/redistribucion?viandas=${cantidadViandas}&heladera_id=${heladeraId}`;
+            window.location.href = url; // Redirige a la nueva ruta
+        });
+    });
+
+
 </script>
 </html>
