@@ -83,6 +83,7 @@ public class PostColaboJuridicaHandler implements Handler {
                 case "hc1":
 
                     String nombre = ctx.formParam("nombre");
+                    String actionSelector = ctx.formParam("actionSelector"); // Tipo de acción
                     String longitudParam = ctx.formParam("longitudInput");
                     String latitudParam = ctx.formParam("latitudInput");
                     String direccion = ctx.formParam("direccion");

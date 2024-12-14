@@ -5,6 +5,7 @@ import io.javalin.http.Handler;
 import org.example.BDUtils;
 import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Persona.PersonaJuridica;
+import org.example.repositorios.RepositorioNotificaciones;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.EntityManager;
@@ -15,6 +16,13 @@ public class GetPerfil implements Handler {
 
   public void handle(@NotNull Context context){
     var model = new HashMap<String, Object>();
+    RepositorioNotificaciones repositorioNotificaciones = RepositorioNotificaciones.getInstance();
+    String usuarioAVerificar = context.sessionAttribute("username");
+    if (repositorioNotificaciones.obtenerNotificacionesActivasXUsuario(usuarioAVerificar).isEmpty()){
+      model.put("notificacionActiva","<i class=\"bi bi-bell\"></i>");
+    }else {
+      model.put("notificacionActiva","<i class=\"bi bi-bell-fill\"></i>");
+    }
     Boolean succesLogin = context.sessionAttribute("succesLogin");
     Boolean successModify = context.sessionAttribute("successModify");
     String usuarioNombre = context.sessionAttribute("username");

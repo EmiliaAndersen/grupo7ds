@@ -49,4 +49,13 @@ public class RepositorioHeladeras {
         ).setParameter("id",incidente.getId());
         return query.getSingleResult();
     }
+
+  public List<Heladera> obtenerHeladerasDisponibles(Integer viandas) {
+      EntityManager em = BDUtils.getEntityManager();
+
+      TypedQuery<Heladera> query = em.createQuery(
+          "SELECT h FROM Heladera h WHERE h.capacidad - h.stock > :viandas", Heladera.class
+      ).setParameter("viandas",viandas);
+      return query.getResultList();
+  }
 }

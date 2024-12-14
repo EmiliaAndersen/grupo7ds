@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
+    <title>Suscripción heladeras</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heladeras Solidarias</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"><!-- Tipografia -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/css.css?1=14">
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
+    <link href='/static/css.css?1=14' rel='stylesheet'>
 </head>
-<body>
+<body style="background-color: #e6eaf2;">
 
-<!-- Navbar -->
+
 <nav class="navbar navbar-expand-lg bg-primary" style="background-color: #3055b5!important;" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/front_page">Heladeras Solidarias</a>
@@ -77,61 +76,59 @@
     </div>
 </nav>
 
-<!-- Hero Section -->
-<div class="container hero">
-    <h1>Bienvenido a Heladeras Solidarias</h1>
-    <p>Conecta con tu comunidad, contribuye con alimentos, y apoya a quienes más lo necesitan.</p>
-    <a href="/colaboracion_{{tipoPersona}}" class="btn btn-primary">¡Colabora ahora!</a>
-    <a href="/suscripcion" class="btn btn-outline-primary">Suscríbete</a>
+<div class="container mt-5 mb-2 border border-round shadow-1" style="background-color: #eff5ff;min-height: 600px;">
+    <form method='POST' class="row p-4" id="subscriptionForm">
+
+        {{#ErrorMotivo}}
+            <div class="alert-warning alert my-2">{{ErrorMotivo}}</div>
+        {{/ErrorMotivo}}
+        <div class="row">
+            <h2>Distribucion de viandas de desperfecto</h2>
+            <hr>
+            <div class="form-row">
+                <div class="col-md-8">
+                    <label for="usuario">Heladera</label>
+                    <div class="input-group">
+                        <select class="form-select" name="heladera" id="heladera" required>
+                            <option value="">Seleccione...</option>
+                            {{#heladeras}}
+                                <option value="{{id}}">{{ubicacion.nombre}} - {{ubicacion.direccion}}</option>
+                            {{/heladeras}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+                <hr class="my-3">
+                <div class="form-row">
+                    <button type="submit" id="btn-login-submit" class="btn btn-primary mt-2 mb-2 col-md-4" disabled>Continuar</button><br>
+                </div>
+        </div>
+    </form>
 </div>
 
-<!-- Call-to-Action Section -->
-<div class="container mt-5">
-    <div class="row text-center g-4">
-        <div class="col-md-4">
-            <div class="mx-2 border-round border zoom-image shadow-1" style="background-color: white;padding: 8px;">
-                <i class="bi bi-hand-thumbs-up" style="font-size: 2rem; color: #3055b5;"></i>
-                <h3>Carga masiva</h3>
-                <p>Carga masivamente un archivo CSV con colaboraciones</p>
-                <a href="/upload_csv" class="btn btn-primary">Carga masiva</a>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="mx-2 border-round border zoom-image shadow-1" style="background-color: white;padding: 8px;">
-                <i class="bi bi-geo-alt" style="font-size: 2rem; color: #3055b5;"></i>
-                <h3>Encuentra Heladeras</h3>
-                <p>Regístrate y suscríbete para recibir notificaciones de heladeras cercanas.</p>
-                <a href="/heladeras" class="btn btn-primary">Mis Heladeras</a>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="mx-2 border-round border zoom-image shadow-1" style="background-color: white;padding: 8px;">
-                <i class="bi bi-info-circle" style="font-size: 2rem; color: #3055b5;"></i>
-                <h3>Reporta Problemas</h3>
-                <p>Ayúdanos a mantener las heladeras en funcionamiento reportando fallas.</p>
-                <a href="/reportar" class="btn btn-primary">Reportar Falla</a>
-            </div>
-        </div>
-        <div class="col-md-4 mx-auto">
-            <div class="mx-2 border-round border zoom-image shadow-1" style="background-color: white;padding: 8px;">
-                <i class="bi bi-file-earmark-bar-graph" style="font-size: 2rem; color: #3055b5;"></i>
-                <h3>Reportes</h3>
-                <p>Accede a reportes de estadísticas.</p>
-                <a href="/reportes" class="btn btn-primary">Ver Reportes</a>
-            </div>
-        </div>
-        <div class="col-md-4 mx-auto">
-            <div class="mx-2 border-round border zoom-image shadow-1" style="background-color: white;padding: 8px;">
-                <i class="bi bi-credit-card" style="font-size: 2rem; color: #3055b5;"></i>
-                <h3>Permisos</h3>
-                <p>Habilitá tu tarjeta para poder abrir las heladeras</p>
-                <a href="/solicitar_autorizacion" class="btn btn-primary">Habilitar</a>
-            </div>
-        </div>
-    </div>
-</div>
-<hr>
+<script>
+    const form = document.getElementById('subscriptionForm');
+    const btnSubmit = document.getElementById('btn-login-submit');
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    // Función para verificar campos
+    function checkFields() {
+        const isFormValid = form.checkValidity();
+        btnSubmit.disabled = !isFormValid; // Habilita o deshabilita el botón
+    }
+
+    // Agregar un evento de entrada para verificar los campos
+    form.addEventListener('input', checkFields);
+
+    // Evento para el botón de continuar
+    btnSubmit.addEventListener('click', function() {
+        if (form.checkValidity()) {
+            // Redirige a /perfil si el formulario es válido
+            form.submit();
+        } else {
+            alert('Por favor complete todos los campos requeridos.'); // Mensaje de advertencia
+        }
+    });
+</script>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </html>

@@ -11,7 +11,9 @@ import org.example.Dominio.Colaboraciones.Factory.DistribucionDeViandasFactory;
 import org.example.Dominio.Colaboraciones.Factory.DonacionDeDineroFactory;
 import org.example.Dominio.Colaboraciones.Factory.DonacionDeViandaFactory;
 import org.example.Dominio.Heladeras.Heladera;
+import org.example.Dominio.Notificador.Notificador;
 import org.example.Dominio.Rol.Colaborador;
+import org.example.Dominio.Suscripciones.TipoSuscripcion;
 import org.example.Dominio.Viandas.EstadoVianda;
 import org.example.Dominio.Viandas.Vianda;
 import org.example.repositorios.RepositorioColaboraciones;
@@ -39,6 +41,7 @@ public class PostColaboHumanaHandler implements Handler {
         RepositorioColaboradores repoColaboradores = RepositorioColaboradores.getInstance();
         RepositorioHeladeras repoHeladeras = RepositorioHeladeras.getInstance();
         RepositorioColaboraciones repoColaboraciones = RepositorioColaboraciones.getInstance();
+        Notificador notificador = Notificador.getInstance();
 
 
         String tipoColabo = ctx.formParam("btn-colab");
@@ -125,6 +128,9 @@ public class PostColaboHumanaHandler implements Handler {
                     Vianda vianda = new Vianda(comida, fecha_caducidad, fecha_donacion_vianda, heladera, calorias, peso, EstadoVianda.ENTREGADA, colaborador);
                     heladera.setStock(heladera.getStock() + 1);
                     em.merge(heladera);
+                    notificador.movimientoHeladera(heladera, TipoSuscripcion.FALTANTES);
+
+
 
                     DonacionDeViandaFactory factoryDV = new DonacionDeViandaFactory();
                     Colaboracion donacionDeVianda = factoryDV.crearColaboracion(vianda,Double.parseDouble(cantidadViandasStr));
@@ -257,7 +263,9 @@ public class PostColaboHumanaHandler implements Handler {
                     }
 
                     em.merge(heladera_origen);
+                    notificador.movimientoHeladera(heladera_origen, TipoSuscripcion.RESTANTES);
                     em.merge(heladera_destino);
+                    notificador.movimientoHeladera(heladera_destino,TipoSuscripcion.FALTANTES);
                     DistribucionDeViandasFactory factoryDDV = new DistribucionDeViandasFactory();
                     Colaboracion distribucionVianda = factoryDDV.crearColaboracion(heladera_origen, heladera_destino, cantidad ,motivo, LocalDate.now());
                     distribucionVianda.setColaborador(colaborador);
@@ -283,11 +291,12 @@ public class PostColaboHumanaHandler implements Handler {
                     break;
                 }
             }
+            ctx.sessionAttribute("successMessage","Colaboracion creada exitosamente");
             model.put("successMessage", "Colaboracion creada exitosamente");
         }catch(Exception e){
             model.put("errorMessage","Error al crear la colaboracion"+ e.getMessage());
             e.printStackTrace();
         }
-        ctx.render("/templates/colaboracionHumana.mustache", model);
+        ctx.redirect("/colaboracion_persona_humana");
     }
 }

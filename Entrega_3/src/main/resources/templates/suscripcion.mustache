@@ -42,7 +42,6 @@
                         Productos
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/ofrecer" style="color:#f5f5f5">Ofrecer productos</a></li>
                         <li><a class="dropdown-item" href="/prodserv" style="color:#f5f5f5">Canjear productos</a></li>
                     </ul>
                 </li>
@@ -50,6 +49,9 @@
                 <li class="nav-item"><a class="nav-link" href="/reportar">Reportar Falla</a></li>
             </ul>
             <ul class="navbar-nav flex-row flex-wrap ms-md-auto me-3">
+                <li class="nav-item"><a class="nav-link" href="/notificaciones">
+                    {{{notificacionActiva}}}
+                </a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-tools" style="font-size: 1.5rem;"></i>
@@ -73,7 +75,6 @@
         </div>
     </div>
 </nav>
-
 
         <div class="container mt-5 mb-2 border border-round shadow-1" style="background-color: #eff5ff;min-height: 600px;">
             <form method='POST' class="row p-4" id="subscriptionForm">
