@@ -21,7 +21,13 @@ public class UbicacionService {
     private static final String API_BASE_URL = Config.get("api.ubicacion.base.url") + "/api/points/nearby";
 
     public List<PuntoGeografico> getNearbyPoints(double latitude, double longitude, int radioKm) throws Exception {
-        String apiUrl = String.format("%s?latitude=%f&longitude=%f&radioKm=%d", API_BASE_URL, latitude, longitude, radioKm);
+        // Convert latitude and longitude to strings and sanitize them
+        String sanitizedLatitude = String.valueOf(latitude).replace(",", ".");
+        String sanitizedLongitude = String.valueOf(longitude).replace(",", ".");
+
+        String apiUrl = String.format("%s?latitude=%s&longitude=%s&radioKm=%d",
+                API_BASE_URL, sanitizedLatitude, sanitizedLongitude, radioKm);
+
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(apiUrl))
@@ -35,6 +41,7 @@ public class UbicacionService {
         return mapper.readValue(response.body(), new TypeReference<>() {});
     }
 }
+
 
 
 
