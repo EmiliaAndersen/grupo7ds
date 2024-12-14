@@ -26,9 +26,9 @@ public class DonacionDeVianda extends Colaboracion{
     public Double cantidad;
   
       public DonacionDeVianda(Vianda vianda, Double cantidad) {
-  
           this.vianda = vianda;
           this.cantidad = cantidad;
+
       } 
 
     public DonacionDeVianda() {

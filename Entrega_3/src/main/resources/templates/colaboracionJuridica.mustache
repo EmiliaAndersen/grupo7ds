@@ -416,7 +416,7 @@
                 heladeraSelect.style.display = 'none';
 
                 const response = await fetch(`/recomendarHeladeras?latitude=${lat}&longitude=${lon}&radio=${radio}`);
-                const heladeras = await response.json();
+                const heladeras = await response.json(); 
 
                 // Populate the dropdown
                 heladeraSelect.innerHTML = '<option value="">Seleccione...</option>'; // Reset options
