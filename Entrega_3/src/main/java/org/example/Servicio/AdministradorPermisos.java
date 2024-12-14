@@ -12,7 +12,7 @@ public class AdministradorPermisos {
 
   @Getter
   @Setter
-  private long tiempoLimite;
+  private long tiempoLimite = 3;
 
 
   private AdministradorPermisos() {}

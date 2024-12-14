@@ -35,7 +35,7 @@ public class HeladeraTest {
         Distribuidor distribuidor = new Distribuidor();
 
         TarjetaDistribuidor tarj = new TarjetaDistribuidor();
-        tarj.solicitarAcceso();
+        tarj.solicitarAcceso(heladera);
         tarj.abrirHeladera(heladera);
 
 

@@ -2,6 +2,7 @@ package org.example.Dominio.Tarjetas;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.Dominio.Heladeras.Heladera;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -23,8 +24,14 @@ public class SolicitudPermisos {
   @Getter
   private TarjetaDistribuidor tarjetaDistribuidor;
 
-  public SolicitudPermisos(LocalDateTime fechaYHora){
+  @ManyToOne
+  @JoinColumn(name = "heladera_id")
+  private Heladera heladera;
+
+  public SolicitudPermisos(LocalDateTime fechaYHora, Heladera heladera, TarjetaDistribuidor tarjeta){
     this.fechaYHora = fechaYHora;
+    this.heladera = heladera;
+    this.tarjetaDistribuidor = tarjeta;
   }
 
   public SolicitudPermisos() {
