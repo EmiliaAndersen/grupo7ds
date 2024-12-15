@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.example.BDUtils;
 import org.example.Dominio.Colaboraciones.DonacionDeDinero;
@@ -53,7 +54,13 @@ public class GetHeladera implements @NotNull Handler {
     String usuarioNombre = context.sessionAttribute("username");
     query.setParameter("usu", usuarioNombre);
 
-    List<Heladera> heladeras = query.getResultList();
+    List<Heladera> heladerass = query.getResultList();
+
+
+    List<Heladera> heladeras = heladerass.stream()
+    .distinct() 
+    .collect(Collectors.toList());
+
 
     model.put("heladeras",heladeras);
 
@@ -80,7 +87,12 @@ public class GetHeladera implements @NotNull Handler {
 
     queryIncidente.setParameter("usu", usuarioNombre);
 
-    List<Incidente> incidentes = queryIncidente.getResultList();
+    List<Incidente> incidentess = queryIncidente.getResultList();
+
+    List<Incidente> incidentes  = incidentess.stream()
+    .distinct() 
+    .collect(Collectors.toList());
+
 
     List<Alerta> alertas = incidentes.stream()
         .filter(i -> i instanceof Alerta)

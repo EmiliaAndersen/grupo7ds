@@ -19,8 +19,8 @@ class SuscriptorTest {
         suscriptor.setColaborador(colaborador);
         heladera.agregarSuscriptor(suscriptor);
 
-        Vianda vianda1 = new Vianda(null, null, null, null, 0, 0, null);
-        Vianda vianda2 = new Vianda(null, null, null, null, 0, 0, null);
+        Vianda vianda1 = new Vianda(null, null, null, null, 0, 0, null,null);
+        Vianda vianda2 = new Vianda(null, null, null, null, 0, 0, null,null);
         heladera.agregarVianda(vianda1);
         heladera.agregarVianda(vianda2);
 

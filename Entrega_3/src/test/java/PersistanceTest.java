@@ -39,7 +39,7 @@ public void persistirViandaFechasErróneas() { //la fecha de vencimiento es meno
     LocalDate fechaFabricacion = LocalDate.of(2024, 12, 1); // Fecha futura
     LocalDate fechaVencimiento = LocalDate.of(2024, 11, 1); // Fecha anterior a fabricación
 
-    Vianda vianda = new Vianda("Pastas", fechaVencimiento, fechaFabricacion, heladera, 100, 10, EstadoVianda.NO_ENTREGADA);
+    Vianda vianda = new Vianda("Pastas", fechaVencimiento, fechaFabricacion, heladera, 100, 10, EstadoVianda.NO_ENTREGADA, null);
 
     EntityManager em = BDUtils.getEntityManager();
     BDUtils.comenzarTransaccion(em);
