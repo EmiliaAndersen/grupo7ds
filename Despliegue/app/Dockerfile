@@ -12,6 +12,8 @@ RUN git clone https://github.com/EmiliaAndersen/grupo7ds.git
 # Set the working directory to the specific folder within the cloned repo
 WORKDIR /grupo7ds/Entrega_3
 
+COPY ./UbicacionService.properties ./src/main/resources/UbicacionService.properties
+
 COPY ./persistence.xml ./src/main/resources/META-INF/persistence.xml
 
 # Build the Maven project

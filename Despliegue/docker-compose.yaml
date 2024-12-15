@@ -41,14 +41,13 @@ services:
       - "8085:8085"   # Map app port
     networks:
       - mynetwork
-    restart: unless-stopped
 
 
-  api_ubi:
+  apiUbi:
     build:
-      context: ./api_ubi   # Ensure this directory has the Dockerfile for the app
+      context: ./apiUbi   # Ensure this directory has the Dockerfile for the app
     image: api_ubi   # Custom app image name
-    container_name: tpdds-api_ubi
+    container_name: tpdds-apiUbi
     tty: true
     ports:
       - "8080:8080"   # Map app port
@@ -59,7 +58,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    restart: unless-stopped
 
 
 networks:

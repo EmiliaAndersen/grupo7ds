@@ -20,5 +20,6 @@ RUN mvn clean install -Dmaven.test.skip=true
 EXPOSE 8080
 
 # Run the application
-CMD ["mvn", "exec:java", "-Dexec.mainClass=dds.api_res1.Aplication"]
+CMD ["mvn", "exec:java", "-Dexec.mainClass=dds.api_rest1.Application"]
+
 
