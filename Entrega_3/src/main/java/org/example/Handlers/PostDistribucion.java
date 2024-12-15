@@ -127,7 +127,8 @@ public class PostDistribucion implements Handler {
       em.merge(colaborador);
 
       BDUtils.commit(em);
-
+      ctx.sessionAttribute("successMessage","Distribucion realizada correctamente");
+      ctx.redirect("/front_page");
 
     }
     catch(Exception e){

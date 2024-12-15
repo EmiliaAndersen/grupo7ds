@@ -65,8 +65,9 @@ public class AuthController implements Handler {
         
             // Extraer los valores del payload (como email y nombre)
             String email = payload.get("email").toString();
-            String nombre = payload.get("name").toString();
-        
+            String nombre = payload.get("given_name").toString();
+            String apellido = payload.get("family_name").toString();
+
             if (repoUsuarios.verificarUsuarios(email)) {
                 // Crear un nuevo usuario
                 Usuario usu = new Usuario(email, nombre);
@@ -78,15 +79,15 @@ public class AuthController implements Handler {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
                 LocalDate loc = LocalDate.parse(dateString, formatter);
 
-                p.setFechaDeNacimiento(loc);
+                //p.setFechaDeNacimiento(loc);
                 p.setNombre(nombre);
-                p.setApellido(nombre);
-                p.setDireccion("Dir");     
+                p.setApellido(apellido);
+                p.setDireccion("");
                 p.setUsuario(usu);
                 MedioDeContacto m = new MedioDeContacto();
                 m.setPersona(p);
-                m.setTipo(TipoMedioContacto.TELEFONO);
-                m.setDetalle("1111");
+                m.setTipo(TipoMedioContacto.CORREO_ELECTRONICO);
+                m.setDetalle(email);
              
                 p.getMediosDeContacto().add(m);
 

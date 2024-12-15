@@ -17,10 +17,7 @@ import org.example.repositorios.RepositorioTecnicos;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class getBackofficeIncidentes implements Handler {
   @Override
@@ -35,6 +32,7 @@ public class getBackofficeIncidentes implements Handler {
     Tecnico tecnico = repositorioTecnicos.obtenerTecnicoXUsuario(nombreUsuario);
 
     List<Incidente> incidentes = repositorioIncidente.obtenerIncidentesXTecnicos(tecnico.getId());
+    Collections.reverse(incidentes);
 
     List<Alerta> alertas = incidentes.stream()
         .filter(i -> i instanceof Alerta)
@@ -84,7 +82,10 @@ public class getBackofficeIncidentes implements Handler {
 
       if (fallaTecnica.getEstaActiva()){
         fallaInfo.put("estado","Activo");
-        fallaInfo.put("color","lightcoral");
+        fallaInfo.put("color","");
+        fallaInfo.put("boton", "<button type=\"button\" class=\"btn btn-primary btn-sm\" data-bs-toggle=\"modal\" data-bs-target=\"#modalVisitaFalla\" data-bs-id-incidente=\"{{id}}\">\n" +
+            "                                                Registrar visita\n" +
+            "                                            </button>");
       }else {
         fallaInfo.put("estado","Inactivo");
         fallaInfo.put("color","lightgreen");

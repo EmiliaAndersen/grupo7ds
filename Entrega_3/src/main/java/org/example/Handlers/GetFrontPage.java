@@ -20,8 +20,9 @@ public class GetFrontPage implements Handler{
       model.put("notificacionActiva","<i class=\"bi bi-bell-fill\"></i>");
     }
     String tipoPersona = context.sessionAttribute("tipo_persona");
+    model.put("successMessage",context.sessionAttribute("successMessage"));
     model.put("tipoPersona",tipoPersona);
-
+    context.sessionAttribute("successMessage",null);
     context.render("templates/front_page.mustache",model);
 
   }

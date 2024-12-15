@@ -54,9 +54,14 @@ public class PostPerfil implements Handler {
 
       PersonaHumana ph = query.getSingleResult();
 
+      String dateString = context.formParam("fecha-nacimiento");
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+      LocalDate loc = LocalDate.parse(dateString, formatter);
+
       ph.nombre = context.formParam("nombre");
       ph.apellido = context.formParam("apellido");
-      ph.setDireccion("direccion");
+      ph.setDireccion(context.formParam("direccion"));
+      ph.setFechaDeNacimiento(loc);
       em.getTransaction().commit(); // Confirma la transacción para aplicar los cambios
       System.out.println(ph.nombre);
     }else if(context.sessionAttribute("tipo_persona").equals("persona_juridica")){
@@ -69,6 +74,7 @@ public class PostPerfil implements Handler {
       PersonaJuridica pj = query.getSingleResult();
 
       pj.razonSocial = context.formParam("razon-social");
+      pj.setDireccion(context.formParam("direccion"));
       em.getTransaction().commit();
       System.out.println(pj.razonSocial);
     }
