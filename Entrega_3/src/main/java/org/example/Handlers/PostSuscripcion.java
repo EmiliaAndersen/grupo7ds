@@ -6,6 +6,8 @@ import javax.persistence.TypedQuery;
 
 import org.example.BDUtils;
 import org.example.Dominio.Heladeras.Heladera;
+import org.example.Dominio.MediosContacto.MedioDeContacto;
+import org.example.Dominio.MediosContacto.TipoMedioContacto;
 import org.example.Dominio.Persona.PersonaHumana;
 import org.example.Dominio.Rol.Colaborador;
 import org.example.Dominio.Suscripciones.Suscriptor;
@@ -30,9 +32,21 @@ public class PostSuscripcion implements @NotNull Handler {
                 RepositorioColaboradores repositorioColaboradores = RepositorioColaboradores.getInstance();
                 String nombre = context.sessionAttribute("username");
                 Colaborador colab = repositorioColaboradores.obtenerColaborador(nombre);
+                TipoMedioContacto tipoMedioContacto = null;
+                if (context.formParam("tipo_medio_contacto").equals("CORREO_ELECTRONICO")){
+                     tipoMedioContacto = TipoMedioContacto.CORREO_ELECTRONICO;
+                } else if (context.formParam("tipo_medio_contacto").equals("WHATSAPP")) {
+                     tipoMedioContacto = TipoMedioContacto.WHATSAPP;
+                }
+
+                MedioDeContacto medioDeContacto = new MedioDeContacto();
+                medioDeContacto.setPersona(colab.getPersona());
+                medioDeContacto.setTipo(tipoMedioContacto);
+                medioDeContacto.setDetalle(context.formParam("contacto"));
+                em.persist(medioDeContacto);
 
                 sr.setColaborador(colab); 
-
+                sr.setMdc(medioDeContacto);
                 String heladeraId = context.formParam("heladera");
                 Long helidlong;
                 helidlong = Long.parseLong(heladeraId);

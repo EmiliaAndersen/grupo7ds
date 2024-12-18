@@ -128,6 +128,7 @@ public class PostDistribucion implements Handler {
 
       BDUtils.commit(em);
       ctx.sessionAttribute("successMessage","Distribucion realizada correctamente");
+
       ctx.redirect("/front_page");
 
     }

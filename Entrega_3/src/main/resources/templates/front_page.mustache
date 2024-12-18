@@ -78,15 +78,15 @@
 </nav>
 
 <!-- Hero Section -->
+{{#successMessage}}
+    <div class="alert alert-success my-2" >{{successMessage}}</div>
+{{/successMessage}}
 <div class="container hero">
     <h1>Bienvenido a Heladeras Solidarias</h1>
     <p>Conecta con tu comunidad, contribuye con alimentos, y apoya a quienes más lo necesitan.</p>
     <a href="/colaboracion_{{tipoPersona}}" class="btn btn-primary">¡Colabora ahora!</a>
     <a href="/suscripcion" class="btn btn-outline-primary">Suscríbete</a>
 </div>
-{{#successMessage}}
-    <div class="alert alert-success my-2" >{{successMessage}}</div>
-{{/successMessage}}
 <!-- Call-to-Action Section -->
 <div class="container mt-5">
     <div class="row text-center g-4">

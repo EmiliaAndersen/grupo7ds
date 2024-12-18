@@ -30,6 +30,12 @@ public class Suscriptor {
 
     @Getter
     @Setter
+    @OneToOne
+    @JoinColumn(name = "medio_de_contacto_id",referencedColumnName = "id", nullable = true)
+    private MedioDeContacto mdc;
+
+    @Getter
+    @Setter
     @Enumerated(EnumType.STRING)
     private TipoSuscripcion tipo;
 

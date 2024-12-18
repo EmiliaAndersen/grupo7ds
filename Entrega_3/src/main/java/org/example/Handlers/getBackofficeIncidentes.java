@@ -8,6 +8,7 @@ import org.example.Dominio.Incidentes.FallaTecnica;
 import org.example.Dominio.Incidentes.Incidente;
 import org.example.Dominio.Persona.Persona;
 import org.example.Dominio.Persona.PersonaHumana;
+import org.example.Dominio.Persona.PersonaJuridica;
 import org.example.Dominio.Rol.Colaborador;
 import org.example.Dominio.Rol.Tecnico;
 import org.example.repositorios.RepositorioColaboradores;
@@ -77,7 +78,12 @@ public class getBackofficeIncidentes implements Handler {
 
       Colaborador colaborador = repositorioColaboradores.obtenerColaboradorxID(fallaTecnica.getReportero().getId());
       Persona persona = colaborador.getPersona();
-      String nombre = ((PersonaHumana) persona).getNombre();
+      String nombre = null;
+          if(persona instanceof PersonaHumana){
+            nombre = ((PersonaHumana) persona).getNombre();
+          }else if (persona instanceof PersonaJuridica){
+            nombre = ((PersonaJuridica) persona).getRazonSocial();
+      }
       fallaInfo.put("id",fallaTecnica.getId());
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
       String fechaFormateada = fallaTecnica.getFechaYHora().format(formatter);

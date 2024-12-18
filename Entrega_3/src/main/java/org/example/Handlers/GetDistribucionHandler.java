@@ -8,6 +8,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.Arrays.stream;
 
 public class GetDistribucionHandler implements Handler {
   @Override
@@ -19,8 +22,17 @@ public class GetDistribucionHandler implements Handler {
 
     if (cantidadViandas != null && heladeraId != null) {
       List<Heladera> heladeras = repositorioHeladeras.obtenerHeladerasDisponibles(Integer.parseInt(cantidadViandas));
-      model.put("heladeras",heladeras);
-      context.render("/templates/distribucion.mustache",model);
+      heladeras.stream()
+          .filter(heladera -> heladera.getId() != Long.parseLong(heladeraId)) // Filtrar por ID
+          .collect(Collectors.toList());
+      if (heladeras.isEmpty()){
+        model.put("ErrorMotivo","No hay heladeras disponibles");
+        context.render("/templates/distribucion.mustache",model);
+
+      }else {
+        model.put("heladeras",heladeras);
+        context.render("/templates/distribucion.mustache",model);
+      }
     }else{
       model.put("ErrorMotivo","error");
       context.render("/templates/distribucion.mustache",model);
