@@ -28,6 +28,9 @@ public class getBackofficeIncidentes implements Handler {
     RepositorioHeladeras repositorioHeladeras = RepositorioHeladeras.getInstance();
     RepositorioColaboradores repositorioColaboradores = RepositorioColaboradores.getInstance();
 
+    model.put("errorMessage",context.sessionAttribute("errorMessage"));
+    context.sessionAttribute("errorMessage",null);
+
     String nombreUsuario = context.sessionAttribute("username");
     Tecnico tecnico = repositorioTecnicos.obtenerTecnicoXUsuario(nombreUsuario);
 
@@ -83,7 +86,7 @@ public class getBackofficeIncidentes implements Handler {
       if (fallaTecnica.getEstaActiva()){
         fallaInfo.put("estado","Activo");
         fallaInfo.put("color","");
-        fallaInfo.put("boton", "<button type=\"button\" class=\"btn btn-primary btn-sm\" data-bs-toggle=\"modal\" data-bs-target=\"#modalVisitaFalla\" data-bs-id-incidente=\"{{id}}\">\n" +
+        fallaInfo.put("boton", "<button type=\"button\" class=\"btn btn-primary btn-sm\" data-bs-toggle=\"modal\" data-bs-target=\"#modalVisitaFalla\" data-bs-id-incidente='"+fallaTecnica.getId()+"'>\n" +
             "                                                Registrar visita\n" +
             "                                            </button>");
       }else {

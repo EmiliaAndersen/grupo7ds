@@ -44,7 +44,7 @@ public class getNotificaciones implements Handler {
     model.put("restantes",restantes);
     model.put("faltantes",faltantes);
     model.put("desperfecto",desperfecto);
-
+    model.put("notificaciones",notificaciones);
     String tipoPersona = context.sessionAttribute("tipo_persona");
     model.put("tipoPersona",tipoPersona);
     context.render("/templates/notificaciones.mustache",model);

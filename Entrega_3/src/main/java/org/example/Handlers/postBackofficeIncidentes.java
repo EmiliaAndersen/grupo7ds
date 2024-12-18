@@ -60,7 +60,6 @@ public class postBackofficeIncidentes implements Handler {
       incidente.getVisitas().add(visita);
       em.persist(visita);
       BDUtils.commit(em);
-      context.sessionAttribute("successMessage","Visita generada con exito");
     }catch (Exception e){
       context.sessionAttribute("errorMessage","Error al crear la visita");
     }
